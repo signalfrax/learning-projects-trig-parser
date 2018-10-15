@@ -1,0 +1,31 @@
+{
+    "name": "signalfrax/rdf-php",
+    "description": "RDF library for PHP. Contains readers for the following RDF formats: TriG",
+    "keywords": ["rdf", "php", "trig"],
+    "license": "MIT License",
+    "authors": [
+        {
+            "name": "Francis Thodé",
+            "email": "francis@intellilogiq.com"
+        }
+    ],
+    "type": "project",
+    "require": {
+		"php": ">=7.2"
+    },
+    "require-dev": {
+		"phpunit/phpunit": "7.*",
+        "jetbrains/phpstorm-stubs": "v2018.1.2"
+    },
+    "autoload": {
+        "classmap": [
+            "tests"
+        ],
+        "psr-4": {
+            "RDF\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "Tests\\": "tests/"
+    }
+}
