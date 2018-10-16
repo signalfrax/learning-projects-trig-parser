@@ -781,6 +781,427 @@ class TrigParserTest extends TestCase
             [Parser::OBJECT => ['x']],
             [Parser::GRAPH => ['http://example/graph']],
         ], $actual);
-
     }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_LITERAL_LONG1_ascii_boundaries()
+    {
+        $content = $this->loadFixture("w3c-test-suite/LITERAL_LONG1_ascii_boundaries.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_LITERAL_LONG1_with_1_squote()
+    {
+        $content = $this->loadFixture("w3c-test-suite/LITERAL_LONG1_with_1_squote.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ["x'y"]],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ["x'y"]],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_LITERAL_LONG1_with_2_squotes()
+    {
+        $content = $this->loadFixture("w3c-test-suite/LITERAL_LONG1_with_2_squotes.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ["x''y"]],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ["x''y"]],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_LITERAL_LONG1_with_UTF8_boundaries()
+    {
+        $content = $this->loadFixture("w3c-test-suite/LITERAL_LONG1_with_UTF8_boundaries.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ['߿ࠀ࿿က쿿퀀퟿�𐀀𿿽񀀀󿿽􀀀􏿽']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+        ], $actual);
+    }
+
+    public function test_LITERAL_LONG2()
+    {
+        $content = $this->loadFixture("w3c-test-suite/LITERAL_LONG2.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ['x']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ['x']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_LITERAL_LONG2_ascii_boundaries()
+    {
+        $content = $this->loadFixture("w3c-test-suite/LITERAL_LONG2_ascii_boundaries.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_LITERAL_LONG2_with_1_squote()
+    {
+        $content = $this->loadFixture("w3c-test-suite/LITERAL_LONG2_with_1_squote.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ['x"y']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ['x"y']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_LITERAL_LONG2_with_2_squotes()
+    {
+        $content = $this->loadFixture("w3c-test-suite/LITERAL_LONG2_with_2_squotes.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ['x""y']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ['x""y']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_LITERAL_LONG2_with_REVERSE_SOLIDUS()
+    {
+        $content = $this->loadFixture("w3c-test-suite/LITERAL_LONG2_with_REVERSE_SOLIDUS.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example.org/ns#']],
+            [Parser::SUBJECT => ['http://example.org/ns#s']],
+            [Parser::PREDICATE => ['http://example.org/ns#p1']],
+            [Parser::OBJECT => ['test-\\\\']],
+            [Parser::SUBJECT => ['http://example.org/ns#s']],
+            [Parser::PREDICATE => ['http://example.org/ns#p1']],
+            [Parser::OBJECT => ['test-\\\\']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_LITERAL_LONG2_with_UTF8_boundaries()
+    {
+        $content = $this->loadFixture("w3c-test-suite/LITERAL_LONG2_with_UTF8_boundaries.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ['߿ࠀ࿿က쿿퀀퟿�𐀀𿿽񀀀󿿽􀀀􏿽']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+        ], $actual);
+    }
+
+    public function test_literal_true()
+    {
+        $content = $this->loadFixture("w3c-test-suite/literal_true.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ['true']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ['true']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_literal_with_BACKSPACE()
+    {
+        $content = $this->loadFixture("w3c-test-suite/literal_with_BACKSPACE.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ["\x08"]],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ["\x08"]],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_literal_with_CARRIAGE_RETURN()
+    {
+        $content = $this->loadFixture("w3c-test-suite/literal_with_CARRIAGE_RETURN.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ["\x0d"]],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ["\x0d"]],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_literal_with_CHARACTER_TABULATION()
+    {
+        $content = $this->loadFixture("w3c-test-suite/literal_with_CHARACTER_TABULATION.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ["\t"]],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ["\t"]],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_literal_with_escaped_BACKSPACE()
+    {
+        $content = $this->loadFixture("w3c-test-suite/literal_with_escaped_BACKSPACE.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ['\\b']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ['\\b']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_literal_with_escaped_CARRIAGE_RETURN()
+    {
+        $content = $this->loadFixture("w3c-test-suite/literal_with_escaped_CARRIAGE_RETURN.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ['\\r']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ['\\r']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_literal_with_escaped_CHARACTER_TABULATION()
+    {
+        $content = $this->loadFixture("w3c-test-suite/literal_with_escaped_CHARACTER_TABULATION.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ['\\t']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ['\\t']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_literal_with_escaped_FORM_FEED()
+    {
+        $content = $this->loadFixture("w3c-test-suite/literal_with_escaped_FORM_FEED.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ['\\f']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ['\\f']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_literal_with_escaped_LINE_FEED()
+    {
+        $content = $this->loadFixture("w3c-test-suite/literal_with_escaped_LINE_FEED.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ['\\n']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ['\\n']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_literal_with_FORM_FEED()
+    {
+        $content = $this->loadFixture("w3c-test-suite/literal_with_FORM_FEED.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ["\x0c"]],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ["\x0c"]],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_literal_with_LINE_FEED()
+    {
+        $content = $this->loadFixture("w3c-test-suite/literal_with_LINE_FEED.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ["\n"]],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT => ["\n"]],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+
 }
