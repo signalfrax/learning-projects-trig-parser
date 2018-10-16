@@ -40,14 +40,14 @@ class TrigParser implements Parser
     const ECHAR = "\\\\[tbnrf\"'\\\\]";
     const NIL = "\((" . self::WS. ")*\)";
     const ANON = "\[(" . self::WS . ")*\]";
-    const IRIREF = '<([^<>\x00-\x20\{\}"\|\^`\\\\]| '. self::UCHAR .')*>';
+    const IRIREF = '<([^<>\x00-\x20\{\}"\|\^`\\\\]|'. self::UCHAR .')*>';
     const LANGTAG = "@[a-zA-Z]+(-[a-zA-Z0-9]+)*";
     const INTEGER = "[+-]?[0-9]+";
     const DECIMAL = '[+-]?([0-9]*\.[0-9]+)';
     const EXPONENT = '[eE][+-]?[0-9]+';
     const DOUBLE = '[+-]?([0-9]+\.[0-9]*' . self::EXPONENT. '|\.[0-9]+' . self::EXPONENT . '|[0-9]+' . self::EXPONENT . ')';
     const STRING_LITERAL_QUOTE = '\"([^\x22\x5C\xA\xD]|' . self::ECHAR. '|' . self::UCHAR . ')*\"';
-    const STRING_LITERAL_SINGLE_QUOTE = '\\\'([^\x22\x5C\xA\xD]|' . self::ECHAR . '|' . self::UCHAR . ')*\\\'';
+    const STRING_LITERAL_SINGLE_QUOTE = '\\\'([^\x27\x5C\xA\xD]|' . self::ECHAR . '|' . self::UCHAR . ')*\\\'';
     const STRING_LITERAL_LONG_SINGLE_QUOTE = "'''(('|'')?([^'\\\\]|" . self::ECHAR . "|" . self::UCHAR . "))*'''";
     const STRING_LITERAL_LONG_QUOTE = '\"\"\"((\"|\"\")?([^\"\\\\]|'. self::ECHAR . "|" . self::UCHAR . '))*\"\"\"';
     const PN_CHARS_BASE = '[A-Z]|[a-z]|[\X00C0-\X00D6]|[\X00D8-\X00F6]|[\X00F8-\X02FF]|[\X0370-\X037D]|[\X037F-\X1FFF]|[\X200C-\X200D]|[\X2070-\X218F]|[\X2C00-\X2FEF]|[\X3001-\XD7FF]|[\XF900-\XFDCF]|[\XFDF0-\XFFFD]|[\X10000-\XEFFFF]';
@@ -166,7 +166,7 @@ class TrigParser implements Parser
                         case $this->rules['objectStringIri']:
                             yield Parser::OBJECT_WITH_DATATYPE => [
                                 trim($this->parser->sigil(0), '"\''),
-                                (isset($this->resolvedPrefixedIri[$this->parser->sigil(2)])) ? $this->resolvedPrefixedIri[$this->parser->sigil(2)] : $this->parser->sigil(2),
+                                (isset($this->resolvedPrefixedIri[$this->parser->sigil(2)])) ? $this->resolvedPrefixedIri[$this->parser->sigil(2)] : trim($this->parser->sigil(2), '<>'),
                             ];
                             break;
                         case $this->rules['objectStringLang']:
