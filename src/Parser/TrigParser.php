@@ -50,9 +50,10 @@ class TrigParser implements Parser
     const STRING_LITERAL_SINGLE_QUOTE = '\\\'([^\x27\x5C\xA\xD]|' . self::ECHAR . '|' . self::UCHAR . ')*\\\'';
     const STRING_LITERAL_LONG_SINGLE_QUOTE = "'''(('|'')?([^'\\\\]|" . self::ECHAR . "|" . self::UCHAR . "))*'''";
     const STRING_LITERAL_LONG_QUOTE = '\"\"\"((\"|\"\")?([^\"\\\\]|'. self::ECHAR . "|" . self::UCHAR . '))*\"\"\"';
-    const PN_CHARS_BASE = '[A-Z]|[a-z]|[\X00C0-\X00D6]|[\X00D8-\X00F6]|[\X00F8-\X02FF]|[\X0370-\X037D]|[\X037F-\X1FFF]|[\X200C-\X200D]|[\X2070-\X218F]|[\X2C00-\X2FEF]|[\X3001-\XD7FF]|[\XF900-\XFDCF]|[\XFDF0-\XFFFD]|[\X10000-\XEFFFF]';
+    const LATIN1_RANGE = '(\xc3\x80|\xc3\x81|\xc3\x82|\xc3\x83|\xc3\x84|\xc3\x85|\xc3\x86|\xc3\x87|\xc3\x88|\xc3\x89|\xc3\x8a|\xc3\x8b|\xc3\x8c|\xc3\x8d|\xc3\x8e|\xc3\x8f|\xc3\x90|\xc3\x91|\xc3\x92|\xc3\x93|\xc3\x94|\xc3\x95|\xc3\x96|\xc3\x98|\xc3\x99|\xc3\x9a|\xc3\x9b|\xc3\x9c|\xc3\x9d|\xc3\x9e|\xc3\x9f|\xc3\xa0|\xc3\xa1|\xc3\xa2|\xc3\xa3|\xc3\xa4|\xc3\xa5|\xc3\xa6|\xc3\xa7|\xc3\xa8|\xc3\xa9|\xc3\xaa|\xc3\xab|\xc3\xac|\xc3\xad|\xc3\xae|\xc3\xaf|\xc3\xb0|\xc3\xb1|\xc3\xb2|\xc3\xb3|\xc3\xb4|\xc3\xb5|\xc3\xb6|\xc3\xb8|\xc3\xb9|\xc3\xba|\xc3\xbb|\xc3\xbc|\xc3\xbd|\xc3\xbe|\xc3\xbf)';
+    const PN_CHARS_BASE = '[A-Z]|[a-z]|' . self::LATIN1_RANGE;
     const PN_CHARS_U = self::PN_CHARS_BASE . '|_';
-    const PN_CHARS = self::PN_CHARS_U . '|-|[0-9]|\X00B7|[\X0300-\X036F]|[\X203F-\X2040]';
+    const PN_CHARS = self::PN_CHARS_U . '|-|[0-9]';
     const PN_PREFIX = self::PN_CHARS_BASE . '((' . self::PN_CHARS . '|\.)*' . self::PN_CHARS . ')?';
     const PLX = self::PERCENT . '|' . self::PN_LOCAL_ESC;
     const PN_LOCAL = '(' .self:: PN_CHARS_U . '|:|[0-9]|' . self::PLX. ')((' . self::PN_CHARS . '|\.|:|' . self::PLX . ')*(' . self::PN_CHARS . '|:|' . self::PLX . '))?';
