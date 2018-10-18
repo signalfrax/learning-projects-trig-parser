@@ -2155,6 +2155,289 @@ class TrigParserTest extends TestCase
             [Parser::GRAPH => ['http://example/g']],
         ], $actual);
     }
-    
+
+    public function test_trig_kw_graph_04()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-kw-graph-04.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+            [Parser::GRAPH => ['http://example/g1']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+            [Parser::GRAPH => ['http://example/g2']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+            [Parser::GRAPH => ['http://example/g3']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+            [Parser::GRAPH => ['http://example/g4']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+            [Parser::GRAPH => ['http://example/g5']],
+        ], $actual);
+    }
+
+    public function test_trig_kw_graph_05()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-kw-graph-05.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+            [Parser::GRAPH => ['http://example/g']],
+        ], $actual);
+    }
+
+    public function test_trig_kw_graph_06()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-kw-graph-06.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+            [Parser::GRAPH => ['_:a']],
+        ], $actual);
+    }
+
+    public function test_trig_kw_graph_07()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-kw-graph-07.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+            [Parser::GRAPH => ['[]']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+            [Parser::GRAPH => ['[]']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+            [Parser::GRAPH => ['[]']],
+        ], $actual);
+    }
+
+    public function test_trig_kw_graph_08()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-kw-graph-08.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+            [Parser::GRAPH => ['http://example/g']],
+        ], $actual);
+    }
+
+    public function test_trig_kw_graph_09()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-kw-graph-09.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+            [Parser::GRAPH => ['http://example/g']],
+        ], $actual);
+    }
+
+    public function test_trig_kw_graph_10()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-kw-graph-10.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::GRAPH => ['http://example/g']],
+        ], $actual);
+    }
+
+    public function test_trig_subm_01()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-subm-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', '#']],
+            [Parser::SUBJECT => ['[]']],
+            [Parser::PREDICATE => ['#x']],
+            [Parser::OBJECT_IRI => ['#y']],
+            [Parser::SUBJECT => ['[]']],
+            [Parser::PREDICATE => ['#x']],
+            [Parser::OBJECT_IRI => ['#y']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+
+    }
+
+    public function test_trig_subm_02()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-subm-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example.org/base1#']],
+            [Parser::PREFIX => ['a', 'http://example.org/base2#']],
+            [Parser::PREFIX => ['b', 'http://example.org/base3#']],
+            [Parser::SUBJECT => ['http://example.org/base1#a']],
+            [Parser::PREDICATE => ['http://example.org/base1#b']],
+            [Parser::OBJECT_IRI => ['http://example.org/base1#c']],
+            [Parser::SUBJECT => ['http://example.org/base2#a']],
+            [Parser::PREDICATE => ['http://example.org/base2#b']],
+            [Parser::OBJECT_IRI => ['http://example.org/base2#c']],
+            [Parser::SUBJECT => ['http://example.org/base1#a']],
+            [Parser::PREDICATE => ['http://example.org/base2#a']],
+            [Parser::OBJECT_IRI => ['http://example.org/base3#a']],
+            [Parser::SUBJECT => ['http://example.org/base1#a']],
+            [Parser::PREDICATE => ['http://example.org/base1#b']],
+            [Parser::OBJECT_IRI => ['http://example.org/base1#c']],
+            [Parser::SUBJECT => ['http://example.org/base2#a']],
+            [Parser::PREDICATE => ['http://example.org/base2#b']],
+            [Parser::OBJECT_IRI => ['http://example.org/base2#c']],
+            [Parser::SUBJECT => ['http://example.org/base1#a']],
+            [Parser::PREDICATE => ['http://example.org/base2#a']],
+            [Parser::OBJECT_IRI => ['http://example.org/base3#a']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+
+    }
+
+    public function test_trig_subm_03()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-subm-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example.org/base#']],
+            [Parser::SUBJECT => ['http://example.org/base#a']],
+            [Parser::PREDICATE => ['http://example.org/base#b']],
+            [Parser::OBJECT_IRI => ['http://example.org/base#c']],
+            [Parser::OBJECT_IRI => ['http://example.org/base#d']],
+            [Parser::OBJECT_IRI => ['http://example.org/base#e']],
+            [Parser::SUBJECT => ['http://example.org/base#a']],
+            [Parser::PREDICATE => ['http://example.org/base#b']],
+            [Parser::OBJECT_IRI => ['http://example.org/base#c']],
+            [Parser::OBJECT_IRI => ['http://example.org/base#d']],
+            [Parser::OBJECT_IRI => ['http://example.org/base#e']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+
+    }
+
+    public function test_trig_subm_04()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-subm-04.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example.org/base#']],
+            [Parser::SUBJECT => ['http://example.org/base#a']],
+            [Parser::PREDICATE => ['http://example.org/base#b']],
+            [Parser::OBJECT_IRI => ['http://example.org/base#c']],
+            [Parser::PREDICATE => ['http://example.org/base#d']],
+            [Parser::OBJECT_IRI => ['http://example.org/base#e']],
+            [Parser::PREDICATE => ['http://example.org/base#f']],
+            [Parser::OBJECT_IRI => ['http://example.org/base#g']],
+            [Parser::SUBJECT => ['http://example.org/base#a']],
+            [Parser::PREDICATE => ['http://example.org/base#b']],
+            [Parser::OBJECT_IRI => ['http://example.org/base#c']],
+            [Parser::PREDICATE => ['http://example.org/base#d']],
+            [Parser::OBJECT_IRI => ['http://example.org/base#e']],
+            [Parser::PREDICATE => ['http://example.org/base#f']],
+            [Parser::OBJECT_IRI => ['http://example.org/base#g']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
