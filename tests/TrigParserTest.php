@@ -224,32 +224,32 @@ class TrigParserTest extends TestCase
 
     public function test_blankNodePropertyList_as_object()
     {
-
+        $this->markTestIncomplete("Add proper support for blanks and collection");
     }
 
     public function test_blankNodePropertyList_as_subject()
     {
-
+        $this->markTestIncomplete("Add proper support for blanks and collection");
     }
 
     public function test_blankNodePropertyList_containing_collection()
     {
-
+        $this->markTestIncomplete("Add proper support for blanks and collection");
     }
 
     public function test_blankNodePropertyList_with_multiple_triples()
     {
-
+        $this->markTestIncomplete("Add proper support for blanks and collection");
     }
 
     public function test_collection_object()
     {
-
+        $this->markTestIncomplete("Add proper support for blanks and collection");
     }
 
     public function test_collection_subject()
     {
-
+        $this->markTestIncomplete("Add proper support for blanks and collection");
     }
 
     public function test_comment_following_localName()
@@ -340,12 +340,12 @@ class TrigParserTest extends TestCase
 
     public function test_empty_collection()
     {
-
+        $this->markTestIncomplete("Add proper support for blanks and collection");
     }
 
     public function test_first()
     {
-
+        $this->markTestIncomplete("Add proper support for blanks and collection");
     }
 
     public function test_HYPHEN_MINUS_in_localName()
@@ -479,37 +479,37 @@ class TrigParserTest extends TestCase
 
     public function test_labeled_blank_node_graph()
     {
-
+        $this->markTestIncomplete("Add proper support for blanks and collection");
     }
 
     public function test_labeled_blank_node_object()
     {
-
+        $this->markTestIncomplete("Add proper support for blanks and collection");
     }
 
     public function test_labeled_blank_node_subject()
     {
-
+        $this->markTestIncomplete("Add proper support for blanks and collection");
     }
 
     public function test_labeled_blank_node_with_leading_digit()
     {
-
+        $this->markTestIncomplete("Add proper support for blanks and collection");
     }
 
     public function test_labeled_blank_node_with_leading_underscore()
     {
-
+        $this->markTestIncomplete("Add proper support for blanks and collection");
     }
 
     public function test_labeled_blank_node_with_non_leading_extras()
     {
-
+        $this->markTestIncomplete("Add proper support for blanks and collection");
     }
 
     public function test_labeled_blank_node_with_PN_CHARS_BASE_character_boundaries()
     {
-
+        $this->markTestIncomplete("Add proper support for blanks and collection");
     }
 
     public function test_langtagged_LONG()
@@ -599,8 +599,31 @@ class TrigParserTest extends TestCase
 
     public function test_last()
     {
-
+        $this->markTestIncomplete("Add proper support for blanks and collection");
     }
+
+    public function test_latin1_iri()
+    {
+        $content = $this->loadFixture("w3c-test-suite/latin1_iri.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['ÀÁÂÃÄÅÆÇÈÉÊË', 'http://áâãäåæçèé.example/']],
+            [Parser::SUBJECT => ['http://áâãäåæçèé.example/ÐÑÒÓÔÕÖØÙÚ']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT_IRI => ['http://a.example/o']],
+            [Parser::SUBJECT => ['http://áâãäåæçèé.example/ÐÑÒÓÔÕÖØÙÚ']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT_IRI => ['http://a.example/o']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
 
     public function test_LITERAL1()
     {
@@ -1268,12 +1291,29 @@ class TrigParserTest extends TestCase
 
     public function test_localName_with_assigned_nfc_bmp_PN_CHARS_BASE_character_boundaries()
     {
+        $content = $this->loadFixture("w3c-test-suite/localName_with_assigned_nfc_bmp_PN_CHARS_BASE_character_boundaries.trig");
+        $p = new TrigParser();
 
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['p', 'http://a.example/']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT_IRI => ['http://a.example/AZazÀÖØöø˿Ͱͽ΄῾‌‍⁰↉Ⰰ⿕、ퟻ﨎ﷇﷰ￯']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT_IRI => ['http://a.example/AZazÀÖØöø˿Ͱͽ΄῾‌‍⁰↉Ⰰ⿕、ퟻ﨎ﷇﷰ￯']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
     }
 
     public function test_localName_with_assigned_nfc_PN_CHARS_BASE_character_boundaries()
     {
-
+        $this->markTestIncomplete("Need to debug unicode character that do not conform");
     }
 
     public function test_localname_with_COLON()
@@ -1344,17 +1384,17 @@ class TrigParserTest extends TestCase
 
     public function test_localName_with_nfc_PN_CHARS_BASE_character_boundaries()
     {
-
+        $this->markTestIncomplete("Need to debug unicode character that do not conform");
     }
 
     public function test_localName_with_non_leading_extras()
     {
-
+        $this->markTestIncomplete("Need to debug unicode character that do not conform");
     }
 
     public function test_localName_with_PN_CHARS_BASE_character_boundaries()
     {
-
+        $this->markTestIncomplete("Need to debug unicode character that do not conform");
     }
 
     public function test_negative_numeric()
@@ -1380,12 +1420,12 @@ class TrigParserTest extends TestCase
 
     public function test_nested_blankNodePropertyLists()
     {
-
+        $this->markTestIncomplete("Implement proper support for blanks and collection");
     }
 
     public function test_nested_collection()
     {
-
+        $this->markTestIncomplete("Implement proper support for blanks and collection");
     }
 
     public function test_number_sign_following_localName()
@@ -1605,12 +1645,12 @@ class TrigParserTest extends TestCase
 
     public function test_prefix_with_non_leading_extras()
     {
-
+        $this->markTestIncomplete("Need to debug unicode character that do not conform");
     }
 
     public function test_prefix_with_PN_CHARS_BASE_character_boundaries()
     {
-
+        $this->markTestIncomplete("Need to debug unicode character that do not conform");
     }
 
     public function test_prefixed_IRI_object()
@@ -1723,7 +1763,398 @@ class TrigParserTest extends TestCase
             [Parser::OBJECT_IRI => ['http://a.example/o1']],
             [Parser::GRAPH => ['http://example/graph']],
         ], $actual);
+    }
 
+    public function test_reserved_escaped_localName()
+    {
+        $content = $this->loadFixture("w3c-test-suite/reserved_escaped_localName.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['p','http://a.example/']],
+            [Parser::SUBJECT => ['http://a.example/\_\~\.\-\!\$\&\\\'\(\)\*\+\,\;\=\/\?\#\@\%00']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT_IRI => ['http://a.example/o']],
+            [Parser::SUBJECT => ['http://a.example/\_\~\.\-\!\$\&\\\'\(\)\*\+\,\;\=\/\?\#\@\%00']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT_IRI => ['http://a.example/o']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_sole_blankNodePropertyList()
+    {
+        $this->markTestIncomplete("Add proper support for blanks and collections.");
 
     }
+
+    public function test_SPARQL_style_prefix()
+    {
+        $this->markTestIncomplete("Need add proper support for sparql style prefixes.");
+    }
+
+    /**
+     * @expectedException  \RDF\Parser\ParserException
+     */
+    public function test_trig_bnodeplist_graph_bad_01()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-bnodeplist-graph-bad-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_collection_graph_bad_01()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-collection-graph-bad-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_collection_graph_bad_02()
+    {
+        $this->markTestSkipped("Add support to decode unicode escape characters.");
+
+        $content = $this->loadFixture("w3c-test-suite/trig-collection-graph-bad-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_eval_bad_01()
+    {
+        $this->markTestSkipped("Add support to decode unicode escape characters.");
+        $content = $this->loadFixture("w3c-test-suite/trig-eval-bad-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_eval_bad_02()
+    {
+        $this->markTestSkipped("Add support to decode unicode escape characters.");
+        $content = $this->loadFixture("w3c-test-suite/trig-eval-bad-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_eval_bad_03()
+    {
+        $this->markTestSkipped("Add support to decode unicode escape characters.");
+        $content = $this->loadFixture("w3c-test-suite/trig-eval-bad-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_eval_bad_04()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-eval-bad-04.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_trig_eval_struct_01()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-eval-struct-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_trig_eval_struct_02()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-eval-struct-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p1']],
+            [Parser::OBJECT_IRI => ['http://example/o1']],
+            [Parser::PREDICATE => ['http://example/p2']],
+            [Parser::OBJECT_IRI => ['http://example/o2']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p1']],
+            [Parser::OBJECT_IRI => ['http://example/o1']],
+            [Parser::PREDICATE => ['http://example/p2']],
+            [Parser::OBJECT_IRI => ['http://example/o2']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_graph_bad_01()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-graph-bad-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_graph_bad_02()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-graph-bad-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_graph_bad_03()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-graph-bad-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_graph_bad_04()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-graph-bad-04.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_graph_bad_05()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-graph-bad-05.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_graph_bad_06()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-graph-bad-06.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_graph_bad_07()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-graph-bad-07.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_graph_bad_08()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-graph-bad-08.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_graph_bad_09()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-graph-bad-09.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_graph_bad_10()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-graph-bad-10.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_graph_bad_11()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-graph-bad-11.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_trig_kw_graph_01()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-kw-graph-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+            [Parser::GRAPH => ['http://example/g']],
+        ], $actual);
+    }
+
+    public function test_trig_kw_graph_02()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-kw-graph-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+            [Parser::GRAPH => ['http://example/g']],
+        ], $actual);
+    }
+
+    public function test_trig_kw_graph_03()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-kw-graph-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::GRAPH => ['http://example/g']],
+        ], $actual);
+    }
+    
+
 }

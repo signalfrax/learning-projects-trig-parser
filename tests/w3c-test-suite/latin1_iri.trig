@@ -1,0 +1,4 @@
+@prefix ÀÁÂÃÄÅÆÇÈÉÊË: <http://áâãäåæçèé.example/> .
+
+{ÀÁÂÃÄÅÆÇÈÉÊË:ÐÑÒÓÔÕÖØÙÚ <http://a.example/p> <http://a.example/o> .}
+<http://example/graph> {ÀÁÂÃÄÅÆÇÈÉÊË:ÐÑÒÓÔÕÖØÙÚ <http://a.example/p> <http://a.example/o> .}
