@@ -2428,6 +2428,311 @@ class TrigParserTest extends TestCase
 
     }
 
+    public function test_trig_subm_05()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-subm-05.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example.org/base#']],
+
+            [Parser::SUBJECT => ['[]']],
+            [Parser::PREDICATE => ['http://example.org/base#a']],
+            [Parser::OBJECT_IRI => ['http://example.org/base#b']],
+
+            [Parser::SUBJECT => ['http://example.org/base#c']],
+            [Parser::PREDICATE => ['http://example.org/base#d']],
+            [Parser::OBJECT => ['[]']],
+
+            [Parser::SUBJECT => ['[]']],
+            [Parser::PREDICATE => ['http://example.org/base#a']],
+            [Parser::OBJECT_IRI => ['http://example.org/base#b']],
+            [Parser::SUBJECT => ['http://example.org/base#c']],
+            [Parser::PREDICATE => ['http://example.org/base#d']],
+            [Parser::OBJECT => ['[]']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+
+    }
+
+    public function test_trig_subm_06()
+    {
+        $this->markTestIncomplete("Add proper support for blanks and collections.");
+    }
+
+    public function test_trig_subm_07()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-subm-07.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example.org/base#']],
+
+            [Parser::SUBJECT => ['http://example.org/base#a']],
+            [Parser::PREDICATE => ['http://www.w3.org/1999/02/22-rdf-syntax-ns#type']],
+            [Parser::OBJECT_IRI => ['http://example.org/base#b']],
+
+            [Parser::SUBJECT => ['http://example.org/base#a']],
+            [Parser::PREDICATE => ['http://www.w3.org/1999/02/22-rdf-syntax-ns#type']],
+            [Parser::OBJECT_IRI => ['http://example.org/base#b']],
+
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_trig_subm_08()
+    {
+        $this->markTestIncomplete("Add proper support for blanks and collections.");
+    }
+
+    public function test_trig_subm_09()
+    {
+        $this->markTestIncomplete("Add proper support for blanks and collections.");
+    }
+
+    public function test_trig_subm_10()
+    {
+        $this->markTestIncomplete("Investigate more on 'datatyped literals using an OWL cardinality constraint'");
+    }
+
+    public function test_trig_subm_11()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-subm-11.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::SUBJECT => ['http://example.org/res1']],
+            [Parser::PREDICATE => ['http://example.org/prop1']],
+            [Parser::OBJECT => ['000000']],
+
+            [Parser::SUBJECT => ['http://example.org/res2']],
+            [Parser::PREDICATE => ['http://example.org/prop2']],
+            [Parser::OBJECT => ['0']],
+
+            [Parser::SUBJECT => ['http://example.org/res3']],
+            [Parser::PREDICATE => ['http://example.org/prop3']],
+            [Parser::OBJECT => ['000001']],
+
+            [Parser::SUBJECT => ['http://example.org/res4']],
+            [Parser::PREDICATE => ['http://example.org/prop4']],
+            [Parser::OBJECT => ['2']],
+
+            [Parser::SUBJECT => ['http://example.org/res5']],
+            [Parser::PREDICATE => ['http://example.org/prop5']],
+            [Parser::OBJECT => ['4']],
+
+            [Parser::SUBJECT => ['http://example.org/res1']],
+            [Parser::PREDICATE => ['http://example.org/prop1']],
+            [Parser::OBJECT => ['000000']],
+
+            [Parser::SUBJECT => ['http://example.org/res2']],
+            [Parser::PREDICATE => ['http://example.org/prop2']],
+            [Parser::OBJECT => ['0']],
+
+            [Parser::SUBJECT => ['http://example.org/res3']],
+            [Parser::PREDICATE => ['http://example.org/prop3']],
+            [Parser::OBJECT => ['000001']],
+
+            [Parser::SUBJECT => ['http://example.org/res4']],
+            [Parser::PREDICATE => ['http://example.org/prop4']],
+            [Parser::OBJECT => ['2']],
+
+            [Parser::SUBJECT => ['http://example.org/res5']],
+            [Parser::PREDICATE => ['http://example.org/prop5']],
+            [Parser::OBJECT => ['4']],
+
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_trig_subm_12()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-subm-12.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['ex1', 'http://example.org/ex1#']],
+            [Parser::PREFIX => ['ex-2', 'http://example.org/ex2#']],
+            [Parser::PREFIX => ['ex3_', 'http://example.org/ex3#']],
+            [Parser::PREFIX => ['ex4-', 'http://example.org/ex4#']],
+
+            [Parser::SUBJECT => ['http://example.org/ex1#foo-bar']],
+            [Parser::PREDICATE => ['http://example.org/ex1#foo_bar']],
+            [Parser::OBJECT => ['a']],
+
+            [Parser::SUBJECT => ['http://example.org/ex2#foo-bar']],
+            [Parser::PREDICATE => ['http://example.org/ex2#foo_bar']],
+            [Parser::OBJECT => ['b']],
+
+            [Parser::SUBJECT => ['http://example.org/ex3#foo-bar']],
+            [Parser::PREDICATE => ['http://example.org/ex3#foo_bar']],
+            [Parser::OBJECT => ['c']],
+
+            [Parser::SUBJECT => ['http://example.org/ex4#foo-bar']],
+            [Parser::PREDICATE => ['http://example.org/ex4#foo_bar']],
+            [Parser::OBJECT => ['d']],
+
+            [Parser::SUBJECT => ['http://example.org/ex1#foo-bar']],
+            [Parser::PREDICATE => ['http://example.org/ex1#foo_bar']],
+            [Parser::OBJECT => ['a']],
+
+            [Parser::SUBJECT => ['http://example.org/ex2#foo-bar']],
+            [Parser::PREDICATE => ['http://example.org/ex2#foo_bar']],
+            [Parser::OBJECT => ['b']],
+
+            [Parser::SUBJECT => ['http://example.org/ex3#foo-bar']],
+            [Parser::PREDICATE => ['http://example.org/ex3#foo_bar']],
+            [Parser::OBJECT => ['c']],
+
+            [Parser::SUBJECT => ['http://example.org/ex4#foo-bar']],
+            [Parser::PREDICATE => ['http://example.org/ex4#foo_bar']],
+            [Parser::OBJECT => ['d']],
+
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_trig_subm_13()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-subm-13.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#']],
+            [Parser::PREFIX => ['ex', 'http://example.org/ex#']],
+            [Parser::PREFIX => ['', 'http://example.org/myprop#']],
+
+            [Parser::SUBJECT => ['http://example.org/ex#foo']],
+            [Parser::PREDICATE => ['http://www.w3.org/1999/02/22-rdf-syntax-ns#_1']],
+            [Parser::OBJECT => ['1']],
+
+            [Parser::SUBJECT => ['http://example.org/ex#foo']],
+            [Parser::PREDICATE => ['http://www.w3.org/1999/02/22-rdf-syntax-ns#_2']],
+            [Parser::OBJECT => ['2']],
+
+            [Parser::SUBJECT => ['http://example.org/ex#foo']],
+            [Parser::PREDICATE => ['http://example.org/myprop#_abc']],
+            [Parser::OBJECT => ['def']],
+
+            [Parser::SUBJECT => ['http://example.org/ex#foo']],
+            [Parser::PREDICATE => ['http://example.org/myprop#_345']],
+            [Parser::OBJECT => ['678']],
+
+            [Parser::SUBJECT => ['http://example.org/ex#foo']],
+            [Parser::PREDICATE => ['http://www.w3.org/1999/02/22-rdf-syntax-ns#_1']],
+            [Parser::OBJECT => ['1']],
+
+            [Parser::SUBJECT => ['http://example.org/ex#foo']],
+            [Parser::PREDICATE => ['http://www.w3.org/1999/02/22-rdf-syntax-ns#_2']],
+            [Parser::OBJECT => ['2']],
+
+            [Parser::SUBJECT => ['http://example.org/ex#foo']],
+            [Parser::PREDICATE => ['http://example.org/myprop#_abc']],
+            [Parser::OBJECT => ['def']],
+
+            [Parser::SUBJECT => ['http://example.org/ex#foo']],
+            [Parser::PREDICATE => ['http://example.org/myprop#_345']],
+            [Parser::OBJECT => ['678']],
+
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_trig_subm_14()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-subm-14.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example.org/ron']],
+
+            [Parser::SUBJECT => ['[]']],
+            [Parser::PREDICATE => ['http://example.org/ron']],
+            [Parser::OBJECT => ['[]']],
+
+            [Parser::SUBJECT => ['http://example.org/ron']],
+            [Parser::PREDICATE => ['http://example.org/ron']],
+            [Parser::OBJECT_IRI => ['http://example.org/ron']],
+
+            [Parser::SUBJECT => ['[]']],
+            [Parser::PREDICATE => ['http://example.org/ron']],
+            [Parser::OBJECT => ['[]']],
+
+            [Parser::SUBJECT => ['http://example.org/ron']],
+            [Parser::PREDICATE => ['http://example.org/ron']],
+            [Parser::OBJECT_IRI => ['http://example.org/ron']],
+
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_trig_subm_15()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-subm-15.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example.org/ex#']],
+
+            [Parser::SUBJECT => ['http://example.org/ex#a']],
+            [Parser::PREDICATE => ['http://example.org/ex#b']],
+            [Parser::OBJECT => ["a long\n\tliteral\nwith\nnewlines"]],
+
+            [Parser::SUBJECT => ['http://example.org/ex#a']],
+            [Parser::PREDICATE => ['http://example.org/ex#b']],
+            [Parser::OBJECT => ["a long\n\tliteral\nwith\nnewlines"]],
+
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+    }
+
+    public function test_trig_subm_16()
+    {
+        $this->markTestIncomplete("Decode escaped unicode character and verify the validity of character.");
+    }
+
+
+
+
+
+
+
 
 
 
