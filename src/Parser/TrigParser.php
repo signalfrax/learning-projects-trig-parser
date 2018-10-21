@@ -247,18 +247,16 @@ class TrigParser implements Parser
     protected function buildRules()
     {
         $this->parser->push('START', 'trigDoc');
-        $this->parser->push('trigDoc', 'directives blocks');
-        $this->parser->push('trigDoc', 'directives');
-        $this->parser->push('trigDoc', 'blocks');
+
+        $this->parser->push('trigDoc', 'trigDoc directive');
+        $this->parser->push('trigDoc', 'trigDoc block');
+        $this->parser->push('trigDoc', 'directive');
+        $this->parser->push('trigDoc', 'block');
         $this->parser->push('trigDoc', '');
-        $this->parser->push('directives', 'directives directive');
-        $this->parser->push('directives', 'directive');
         $this->parser->push('directive', 'prefixID');
         $this->parser->push('directive', 'base');
         $this->parser->push('directive', 'sparqlPrefix');
         $this->parser->push('directive', 'sparqlBase');
-        $this->parser->push('blocks', 'blocks block');
-        $this->parser->push('blocks', 'block');
         $this->parser->push('block', 'triplesOrGraph');
         $this->parser->push('block', 'wrappedGraph');
         $this->parser->push('block', 'triples2');
@@ -347,9 +345,9 @@ class TrigParser implements Parser
         $this->lexer->push('\.', $this->parser->tokenId("'.'"));
         $this->lexer->push('@prefix', $this->parser->tokenId("'@prefix'"));
         $this->lexer->push('@base', $this->parser->tokenId("'@base'"));
-        $this->lexer->push('PREFIX', $this->parser->tokenId("'PREFIX'"));
-        $this->lexer->push('BASE', $this->parser->tokenId("'BASE'"));
-        $this->lexer->push('GRAPH', $this->parser->tokenId("'GRAPH'"));
+        $this->lexer->push('(?i:PREFIX)', $this->parser->tokenId("'PREFIX'"));
+        $this->lexer->push('(?i:BASE)', $this->parser->tokenId("'BASE'"));
+        $this->lexer->push('(?i:GRAPH)', $this->parser->tokenId("'GRAPH'"));
         $this->lexer->push(self::INTEGER, $this->parser->tokenId('INTEGER'));
         $this->lexer->push(self::DECIMAL, $this->parser->tokenId('DECIMAL'));
         $this->lexer->push(self::DOUBLE, $this->parser->tokenId('DOUBLE'));

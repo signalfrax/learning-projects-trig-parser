@@ -3566,21 +3566,2453 @@ class TrigParserTest extends TestCase
         }
     }
 
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_n3_extras_03()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-n3-extras-03.trig");
+        $p = new TrigParser();
 
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
 
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_n3_extras_04()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-n3-extras-04.trig");
+        $p = new TrigParser();
 
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
 
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_n3_extras_05()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-n3-extras-05.trig");
+        $p = new TrigParser();
 
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
 
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_n3_extras_06()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-n3-extras-06.trig");
+        $p = new TrigParser();
 
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
 
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_n3_extras_07()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-n3-extras-07.trig");
+        $p = new TrigParser();
 
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
 
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_n3_extras_08()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-n3-extras-08.trig");
+        $p = new TrigParser();
 
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
 
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_n3_extras_09()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-n3-extras-09.trig");
+        $p = new TrigParser();
 
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
 
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_n3_extras_10()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-n3-extras-10.trig");
+        $p = new TrigParser();
 
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
 
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_n3_extras_11()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-n3-extras-11.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_n3_extras_12()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-n3-extras-12.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_n3_extras_13()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-n3-extras-13.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_ns_dot_end()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-ns-dot-end.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_ns_dot_start()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-ns-dot-start.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_num_01()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-num-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_num_02()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-num-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_num_03()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-num-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_num_04()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-num-04.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_num_05()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-num-05.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_number_dot_in_anon()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-number-dot-in-anon.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_pname_01()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-pname-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_pname_02()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-pname-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_pname_03()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-pname-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_prefix_01()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-prefix-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_prefix_02()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-prefix-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_prefix_03()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-prefix-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_prefix_04()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-prefix-04.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_prefix_05()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-prefix-05.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_prefix_06()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-prefix-06.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_prefix_07()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-prefix-07.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_string_01()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-string-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_string_02()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-string-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_string_03()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-string-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_string_04()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-string-04.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_string_05()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-string-05.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_string_06()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-string-06.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_string_07()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-string-07.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_struct_02()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_struct_03()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_struct_04()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-04.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_struct_05()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-05.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_struct_06()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-06.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_struct_07()
+    {
+        $this->markTestSkipped("Add proper support for blank nodes.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-07.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_struct_09()
+    {
+        //$this->markTestSkipped("Add proper support for blank nodes.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-09.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_struct_10()
+    {
+        //$this->markTestSkipped("Add proper support for blank nodes.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-10.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_struct_12()
+    {
+        //$this->markTestSkipped("Add proper support for blank nodes.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-12.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_struct_13()
+    {
+        //$this->markTestSkipped("Add proper support for blank nodes.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-13.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_struct_14()
+    {
+        //$this->markTestSkipped("Add proper support for blank nodes.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-14.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_struct_15()
+    {
+        //$this->markTestSkipped("Add proper support for blank nodes.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-15.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_struct_16()
+    {
+        //$this->markTestSkipped("Add proper support for blank nodes.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-16.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_struct_17()
+    {
+        $this->markTestSkipped("Add proper support for blank nodes.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-17.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_uri_01()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-uri-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_uri_02()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-uri-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_uri_03()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-uri-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_uri_04()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-uri-04.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bad_uri_05()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-uri-05.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_trig_syntax_base_01()
+    {
+        $this->markTestIncomplete("Add support for base.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-base-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::BASE => ['http://example/']],
+        ], $actual);
+    }
+
+    public function test_trig_syntax_base_02()
+    {
+       $this->markTestSkipped("Add proper support for blank nodes.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-base-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_trig_syntax_base_03()
+    {
+        $this->markTestSkipped("Add proper support for base.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-base-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_base_04()
+    {
+        $this->markTestSkipped("Add proper support for base.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-base-04.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_blank_label()
+    {
+        $this->markTestSkipped("Add proper support for blank label.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-blank-label.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+    }
+
+    public function test_trig_syntax_bnode_02()
+    {
+        $this->markTestSkipped("Add proper support for blank label.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bnode-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bnode_01()
+    {
+        $this->markTestSkipped("Add proper support for blank label.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bnode-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_trig_syntax_bnode_03()
+    {
+        $this->markTestSkipped("Add proper support for blank label.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bnode-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_trig_syntax_bnode_04()
+    {
+        $this->markTestSkipped("Add proper support for blank label.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bnode-04.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_trig_syntax_bnode_05()
+    {
+        $this->markTestSkipped("Add proper support for blank label.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bnode-05.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_trig_syntax_bnode_06()
+    {
+        $this->markTestSkipped("Add proper support for blank label.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bnode-06.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_trig_syntax_bnode_07()
+    {
+        $this->markTestSkipped("Add proper support for blank label.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bnode-07.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_trig_syntax_bnode_08()
+    {
+        $this->markTestSkipped("Add proper support for blank label.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bnode-08.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_trig_syntax_bnode_09()
+    {
+        $this->markTestSkipped("Add proper support for blank label.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bnode-09.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_syntax_bnode_10()
+    {
+        $this->markTestSkipped("Add proper support for blank label.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-bnode-10.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_trig_syntax_datatypes_01()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-datatypes-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['xsd', 'http://www.w3.org/2001/XMLSchema#']],
+
+            [Parser::SUBJECT => ['s']],
+            [Parser::PREDICATE => ['p']],
+            [Parser::OBJECT_WITH_DATATYPE => ['123', 'http://www.w3.org/2001/XMLSchema#byte']],
+
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_datatypes_02()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-datatypes-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#']],
+            [Parser::PREFIX => ['xsd', 'http://www.w3.org/2001/XMLSchema#']],
+
+            [Parser::SUBJECT => ['s']],
+            [Parser::PREDICATE => ['p']],
+            [Parser::OBJECT_WITH_DATATYPE => ['123', 'http://www.w3.org/2001/XMLSchema#string']],
+
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_file_01()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-file-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEmpty($actual);
+    }
+
+    public function test_trig_syntax_file_02()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-file-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEmpty($actual);
+    }
+
+    public function test_trig_syntax_file_03()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-file-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEmpty($actual);
+    }
+
+    public function test_trig_syntax_kw_01()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-kw-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['s']],
+            [Parser::PREDICATE => ['p']],
+            [Parser::OBJECT => ['true']],
+
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_kw_02()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-kw-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['s']],
+            [Parser::PREDICATE => ['p']],
+            [Parser::OBJECT => ['false']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_kw_03()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-kw-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://www.w3.org/1999/02/22-rdf-syntax-ns#type']],
+            [Parser::OBJECT_IRI => ['http://example/C']],
+        ], $actual);
+    }
+
+    public function test_trig_syntax_lists_01()
+    {
+        $this->markTestSkipped("Add proper support for collections.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-lists-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_trig_syntax_lists_02()
+    {
+        $this->markTestSkipped("Add proper support for collections.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-lists-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_trig_syntax_lists_03()
+    {
+        $this->markTestSkipped("Add proper support for collections.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-lists-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_trig_syntax_lists_04()
+    {
+        $this->markTestSkipped("Add proper support for collections.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-lists-04.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_trig_syntax_lists_05()
+    {
+        $this->markTestSkipped("Add proper support for collections.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-lists-05.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_trig_syntax_ln_colons()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-ln-colons.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+
+            [Parser::SUBJECT => ['http://example/s:1']],
+            [Parser::PREDICATE => ['http://example/p:1']],
+            [Parser::OBJECT_IRI => ['http://example/o:1']],
+
+            [Parser::SUBJECT => ['http://example/s::2']],
+            [Parser::PREDICATE => ['http://example/p::2']],
+            [Parser::OBJECT_IRI => ['http://example/o::2']],
+
+            [Parser::SUBJECT => ['http://example/3:s']],
+            [Parser::PREDICATE => ['http://example/3:p']],
+            [Parser::OBJECT_IRI => ['http://example/3']],
+
+            [Parser::SUBJECT => ['http://example/:s']],
+            [Parser::PREDICATE => ['http://example/:p']],
+            [Parser::OBJECT_IRI => ['http://example/:o']],
+
+            [Parser::SUBJECT => ['http://example/:s:']],
+            [Parser::PREDICATE => ['http://example/:p:']],
+            [Parser::OBJECT_IRI => ['http://example/:o:']],
+
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_ln_dots()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-ln-dots.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+
+            [Parser::SUBJECT => ['http://example/s.1']],
+            [Parser::PREDICATE => ['http://example/p.1']],
+            [Parser::OBJECT_IRI => ['http://example/o.1']],
+
+            [Parser::SUBJECT => ['http://example/s..2']],
+            [Parser::PREDICATE => ['http://example/p..2']],
+            [Parser::OBJECT_IRI => ['http://example/o..2']],
+
+            [Parser::SUBJECT => ['http://example/3.s']],
+            [Parser::PREDICATE => ['http://example/3.p']],
+            [Parser::OBJECT_IRI => ['http://example/3']],
+
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_minimal_whitespace_01()
+    {
+        $this->markTestSkipped("Add proper support for blank nodes, collections and base");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-minimal-whitespace-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_trig_syntax_ns_dots()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-ns-dots.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['e.g', 'http://example/']],
+
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_number_01()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-number-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['s']],
+            [Parser::PREDICATE => ['p']],
+            [Parser::OBJECT => ['123']],
+
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_number_02()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-number-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['s']],
+            [Parser::PREDICATE => ['p']],
+            [Parser::OBJECT => ['-123']],
+
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_number_03()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-number-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['s']],
+            [Parser::PREDICATE => ['p']],
+            [Parser::OBJECT => ['+123']],
+
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_number_04()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-number-04.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['s']],
+            [Parser::PREDICATE => ['p']],
+            [Parser::OBJECT => ['123.0']],
+
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_number_05()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-number-05.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['s']],
+            [Parser::PREDICATE => ['p']],
+            [Parser::OBJECT => ['.1']],
+
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_number_06()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-number-06.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['s']],
+            [Parser::PREDICATE => ['p']],
+            [Parser::OBJECT => ['-123.0']],
+
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_number_07()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-number-07.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['s']],
+            [Parser::PREDICATE => ['p']],
+            [Parser::OBJECT => ['+123.0']],
+
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_number_08()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-number-08.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['s']],
+            [Parser::PREDICATE => ['p']],
+            [Parser::OBJECT => ['123']],
+
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_number_09()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-number-09.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['s']],
+            [Parser::PREDICATE => ['p']],
+            [Parser::OBJECT => ['123.0e1']],
+
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_number_10()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-number-10.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['s']],
+            [Parser::PREDICATE => ['p']],
+            [Parser::OBJECT => ['-123e-1']],
+
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_number_11()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-number-11.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['s']],
+            [Parser::PREDICATE => ['p']],
+            [Parser::OBJECT => ['123.E+1']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_pname_esc_01()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-pname-esc-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/\~\.\-\!\$\&\\\'\(\)\*\+\,\;\=\/\?\#\@\_\%AA']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_pname_esc_02()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-pname-esc-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/0123\~\.\-\!\$\&\\\'\(\)\*\+\,\;\=\/\?\#\@\_\%AA123']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_pname_esc_03()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-pname-esc-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::SUBJECT => ['http://example/xyz\~']],
+            [Parser::PREDICATE => ['http://example/abc\.:']],
+            [Parser::OBJECT_IRI => ['http://example/']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_prefix_01()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-prefix-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+        ], $actual);
+    }
+
+    public function test_trig_syntax_prefix_02()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-prefix-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+        ], $actual);
+    }
+
+    public function test_trig_syntax_prefix_03()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-prefix-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/123']],
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_prefix_04()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-prefix-04.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/%20']],
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_prefix_05()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-prefix-05.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::SUBJECT => ['http://example/']],
+            [Parser::PREDICATE => ['http://example/']],
+            [Parser::OBJECT_IRI => ['http://example/']],
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_prefix_06()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-prefix-06.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::PREFIX => ['x', 'http://example/']],
+
+            [Parser::SUBJECT => ['http://example/a:b:c']],
+            [Parser::PREDICATE => ['http://example/d:e:f']],
+            [Parser::OBJECT_IRI => ['http://example/:::']],
+
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_prefix_07()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-prefix-07.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['x', 'http://example/']],
+
+            [Parser::SUBJECT => ['http://example/a-b-c']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_prefix_08()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-prefix-08.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['x', 'http://example/']],
+
+            [Parser::SUBJECT => ['http://example/_']],
+            [Parser::PREDICATE => ['http://example/p_1']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_prefix_09()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-prefix-09.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::PREFIX => ['x', 'http://example/']],
+
+            [Parser::SUBJECT => ['http://example/a%3E']],
+            [Parser::PREDICATE => ['http://example/%25']],
+            [Parser::OBJECT_IRI => ['http://example/a%3Eb']],
+
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_str_esc_01()
+    {
+        $this->markTestIncomplete("Add support for escaping in string literals");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-str-esc-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT => ['a\n']],
+
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_str_esc_02()
+    {
+        $this->markTestIncomplete("Add support for escaping in string literals");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-str-esc-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT => ['a\u0020b']],
+
+        ], $actual);
+
+    }
+
+    public function test_trig_syntax_str_esc_03()
+    {
+        $this->markTestIncomplete("Add support for escaping in string literals");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-str-esc-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT => ['a\U00000020b']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_string_01()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-string-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT => ['string']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_string_02()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-string-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_WITH_LANG_TAG => ['string', '@en']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_string_03()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-string-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_WITH_LANG_TAG => ['string', '@en-uk']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_string_04()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-string-04.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT => ['string']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_string_05()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-string-05.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_WITH_LANG_TAG => ['string', '@en']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_string_06()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-string-06.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_WITH_LANG_TAG => ['string', '@en-uk']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_string_07()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-string-07.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT => ['abc""def\'\'ghi']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_string_08()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-string-08.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT => ["abc\ndef"]],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_string_09()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-string-09.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT => ["abc\ndef"]],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_string_10()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-string-10.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_WITH_LANG_TAG => ["abc\ndef", '@en']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_string_11()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-string-11.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_WITH_LANG_TAG => ["abc\ndef", '@en']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_struct_01()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-struct-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o1']],
+            [Parser::OBJECT_IRI => ['http://example/o2']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_struct_02()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-struct-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p1']],
+            [Parser::OBJECT_IRI => ['http://example/o1']],
+            [Parser::PREDICATE => ['http://example/p2']],
+            [Parser::OBJECT_IRI => ['http://example/o2']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_struct_03()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-struct-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p1']],
+            [Parser::OBJECT_IRI => ['http://example/o1']],
+            [Parser::PREDICATE => ['http://example/p2']],
+            [Parser::OBJECT_IRI => ['http://example/o2']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_struct_04()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-struct-04.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p1']],
+            [Parser::OBJECT_IRI => ['http://example/o1']],
+            [Parser::PREDICATE => ['http://example/p2']],
+            [Parser::OBJECT_IRI => ['http://example/o2']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_struct_05()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-struct-05.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::PREFIX => ['', 'http://example/']],
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p1']],
+            [Parser::OBJECT_IRI => ['http://example/o1']],
+            [Parser::PREDICATE => ['http://example/p2']],
+            [Parser::OBJECT_IRI => ['http://example/o2']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_struct_06()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-struct-06.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_struct_07()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-struct-07.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_uri_01()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-uri-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_uri_02()
+    {
+        $this->markTestIncomplete("Add support for decoding unicode encoded strings.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-uri-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::SUBJECT => ['http://example/\u0053']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_uri_03()
+    {
+        $this->markTestIncomplete("Add support for decoding unicode encoded strings.");
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-uri-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::SUBJECT => ['http://example/\U00000053']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+
+        ], $actual);
+    }
+
+    public function test_trig_syntax_uri_04()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-syntax-uri-04.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::SUBJECT => ['http://example/s']],
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['scheme:!$%25&\'()*+,-./0123456789:/@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~?#']],
+
+        ], $actual);
+    }
+
+    public function test_trig_turtle_01()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-turtle-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::PREFIX => ['', 'http://example/']],
+
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+
+            [Parser::PREDICATE => ['http://example/q']],
+            [Parser::OBJECT => ['123']],
+            [Parser::OBJECT => ['456']],
+
+            [Parser::SUBJECT => ['http://example/s']],
+
+            [Parser::PREDICATE => ['http://example/p1']],
+            [Parser::OBJECT => ['more']],
+            [Parser::SUBJECT => ['http://example/s1']],
+
+        ], $actual);
+    }
+
+    public function test_trig_turtle_02()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-turtle-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::PREFIX => ['', 'http://example/']],
+
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+
+            [Parser::PREDICATE => ['http://example/q']],
+            [Parser::OBJECT => ['123']],
+            [Parser::OBJECT => ['456']],
+
+            [Parser::SUBJECT => ['http://example/s']],
+
+            [Parser::PREFIX => ['', 'http://example/ns#']],
+
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+            [Parser::SUBJECT => ['http://example/s']],
+
+        ], $actual);
+    }
+
+    public function test_trig_turtle_03()
+    {
+        $this->markTestIncomplete("Add support for blank nodes");
+        $content = $this->loadFixture("w3c-test-suite/trig-turtle-03.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::PREFIX => ['', 'http://example/']],
+
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+
+            [Parser::PREDICATE => ['http://example/q']],
+            [Parser::OBJECT => ['123']],
+            [Parser::OBJECT => ['456']],
+
+            [Parser::SUBJECT => ['http://example/s']],
+
+            [Parser::PREFIX => ['', 'http://example/ns#']],
+
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+            [Parser::SUBJECT => ['http://example/s']],
+
+        ], $actual);
+    }
+
+    public function test_trig_turtle_05()
+    {
+        $this->markTestIncomplete("Add support for collections.");
+        $content = $this->loadFixture("w3c-test-suite/trig-turtle-05.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::PREFIX => ['', 'http://example/']],
+
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+
+            [Parser::PREDICATE => ['http://example/q']],
+            [Parser::OBJECT => ['123']],
+            [Parser::OBJECT => ['456']],
+
+            [Parser::SUBJECT => ['http://example/s']],
+
+            [Parser::PREFIX => ['', 'http://example/ns#']],
+
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+            [Parser::SUBJECT => ['http://example/s']],
+
+        ], $actual);
+    }
+
+    public function test_trig_turtle_06()
+    {
+        $this->markTestIncomplete("Add support for collections.");
+        $content = $this->loadFixture("w3c-test-suite/trig-turtle-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::PREFIX => ['', 'http://example/']],
+
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+
+            [Parser::PREDICATE => ['http://example/q']],
+            [Parser::OBJECT => ['123']],
+            [Parser::OBJECT => ['456']],
+
+            [Parser::SUBJECT => ['http://example/s']],
+
+            [Parser::PREFIX => ['', 'http://example/ns#']],
+
+            [Parser::PREDICATE => ['http://example/p']],
+            [Parser::OBJECT_IRI => ['http://example/o']],
+            [Parser::SUBJECT => ['http://example/s']],
+
+        ], $actual);
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_turtle_bad_01()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-turtle-bad-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    /**
+     * @expectedException \RDF\Parser\ParserException
+     */
+    public function test_trig_turtle_bad_02()
+    {
+        $content = $this->loadFixture("w3c-test-suite/trig-turtle-bad-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_two_LITERAL_LONG2s()
+    {
+        $content = $this->loadFixture("w3c-test-suite/two_LITERAL_LONG2s.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::PREFIX => ['', 'http://example.org/ex#']],
+
+            [Parser::SUBJECT => ['http://example.org/ex#a']],
+            [Parser::PREDICATE => ['http://example.org/ex#b']],
+            [Parser::OBJECT => ['first long literal']],
+
+            [Parser::SUBJECT => ['http://example.org/ex#c']],
+            [Parser::PREDICATE => ['http://example.org/ex#d']],
+            [Parser::OBJECT => ['second long literal']],
+
+        ], $actual);
+
+    }
+
+    public function test_underscore_in_localName()
+    {
+        $content = $this->loadFixture("w3c-test-suite/underscore_in_localName.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+
+            [Parser::PREFIX => ['p', 'http://a.example/']],
+
+            [Parser::SUBJECT => ['http://a.example/s_']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT_IRI => ['http://a.example/o']],
+
+        ], $actual);
+
+    }
 
 }
