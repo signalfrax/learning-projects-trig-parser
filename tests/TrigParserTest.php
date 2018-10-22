@@ -371,6 +371,66 @@ class TrigParserTest extends TestCase
 
     }
 
+    public function test_IRI_resolution()
+    {
+        $this->markTestIncomplete("Implement");
+        $content = $this->loadFixture("w3c-test-suite/IRI-resolution.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_IRI_resolution_01()
+    {
+        $this->markTestIncomplete("Implement");
+        $content = $this->loadFixture("w3c-test-suite/IRI-resolution-01.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_IRI_resolution_02()
+    {
+        $this->markTestIncomplete("Implement");
+        $content = $this->loadFixture("w3c-test-suite/IRI-resolution-02.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_IRI_resolution_07()
+    {
+        $this->markTestIncomplete("Implement");
+        $content = $this->loadFixture("w3c-test-suite/IRI-resolution-07.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
+    public function test_IRI_resolution_08()
+    {
+        $this->markTestIncomplete("Implement");
+        $content = $this->loadFixture("w3c-test-suite/IRI-resolution-08.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+    }
+
     public function test_IRI_subject()
     {
         $content = $this->loadFixture("w3c-test-suite/IRI_subject.trig");
@@ -1313,7 +1373,6 @@ class TrigParserTest extends TestCase
 
     public function test_localName_with_assigned_nfc_PN_CHARS_BASE_character_boundaries()
     {
-        //$this->markTestIncomplete("Need to debug unicode character that do not conform");
         $content = $this->loadFixture("w3c-test-suite/localName_with_assigned_nfc_PN_CHARS_BASE_character_boundaries.trig");
         $p = new TrigParser();
 
@@ -1321,7 +1380,17 @@ class TrigParserTest extends TestCase
         foreach ($p->parse($content) as $token => $values) {
             $actual[][$token] = $values;
         }
-dd($actual);
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['p', 'http://a.example/']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT_IRI => ['http://a.example/AZazÀÖØöø˿Ͱͽ΄῾‌‍⁰↉Ⰰ⿕、ퟻ﨎ﷇﷰ￯𐀀𪘀']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT_IRI => ['http://a.example/AZazÀÖØöø˿Ͱͽ΄῾‌‍⁰↉Ⰰ⿕、ퟻ﨎ﷇﷰ￯𐀀𪘀']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
     }
 
     public function test_localname_with_COLON()
@@ -1392,7 +1461,24 @@ dd($actual);
 
     public function test_localName_with_nfc_PN_CHARS_BASE_character_boundaries()
     {
-        $this->markTestIncomplete("Need to debug unicode character that do not conform");
+        $content = $this->loadFixture("w3c-test-suite/localName_with_nfc_PN_CHARS_BASE_character_boundaries.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['p', 'http://a.example/']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT_IRI => ['http://a.example/AZazÀÖØöø˿Ͱͽ΄῾‌‍⁰↉Ⰰ⿕、ퟻ﨎ﷇﷰ￯𐀀𪘀']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT_IRI => ['http://a.example/AZazÀÖØöø˿Ͱͽ΄῾‌‍⁰↉Ⰰ⿕、ퟻ﨎ﷇﷰ￯𐀀𪘀']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
     }
 
     public function test_localName_with_non_leading_extras()
