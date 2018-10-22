@@ -162,14 +162,34 @@ class TrigParser implements Parser
                             break;
                         case $this->rules['objectBlank']:
                         case $this->rules['objectBlankNode']:
-                        case $this->rules['objectBooleanFalse']:
-                        case $this->rules['objectBooleanTrue']:
-                        case $this->rules['objectInteger']:
-                        case $this->rules['objectDecimal']:
-                        case $this->rules['objectDouble']:
-                        case $this->rules['objectString']:
-                            yield Parser::OBJECT => [
+                        case $this->rules['objectBoolean']:
+                            yield Parser::OBJECT_WITH_DATATYPE => [
                                 trim($this->parser->sigil(0), '"\''),
+                                Namespaces::XSD_BOOLEAN,
+                            ];
+                            break;
+                        case $this->rules['objectInteger']:
+                            yield Parser::OBJECT_WITH_DATATYPE => [
+                                trim($this->parser->sigil(0), '"\''),
+                                Namespaces::XSD_INTEGER,
+                            ];
+                            break;
+                        case $this->rules['objectDecimal']:
+                            yield Parser::OBJECT_WITH_DATATYPE => [
+                                trim($this->parser->sigil(0), '"\''),
+                                Namespaces::XSD_DECIMAL,
+                            ];
+                            break;
+                        case $this->rules['objectDouble']:
+                            yield Parser::OBJECT_WITH_DATATYPE => [
+                                trim($this->parser->sigil(0), '"\''),
+                                Namespaces::XSD_DOUBLE,
+                            ];
+                            break;
+                        case $this->rules['objectString']:
+                            yield Parser::OBJECT_WITH_DATATYPE => [
+                                trim($this->parser->sigil(0), '"\''),
+                                Namespaces::XSD_STRING,
                             ];
                             break;
                         case $this->rules['objectIri']:
@@ -236,6 +256,7 @@ class TrigParser implements Parser
         $this->parser->token('INTEGER');
         $this->parser->token('DECIMAL');
         $this->parser->token('DOUBLE');
+        $this->parser->token('BOOLEAN');
     }
 
     protected function buildRules()
@@ -296,8 +317,7 @@ class TrigParser implements Parser
         $this->parser->push('objects', 'object');
         $this->parser->push('BlankNode', 'BLANK_NODE_LABEL');
         $this->parser->push('BlankNode', 'ANON');
-        $this->rules['objectBooleanTrue'] = $this->parser->push('BooleanLiteral', "'true'");
-        $this->rules['objectBooleanFalse'] = $this->parser->push('BooleanLiteral', "'false'");
+        $this->rules['objectBoolean'] = $this->parser->push('BooleanLiteral', 'BOOLEAN');
         $this->rules['objectInteger'] = $this->parser->push('NumericalLiteral', 'INTEGER');
         $this->rules['objectDecimal'] = $this->parser->push('NumericalLiteral', 'DECIMAL');
         $this->rules['objectDouble'] = $this->parser->push('NumericalLiteral', 'DOUBLE');
@@ -331,8 +351,7 @@ class TrigParser implements Parser
         $this->lexer->push('\(\s*\)', $this->parser->tokenId("'()'"));
         $this->lexer->push('\(', $this->parser->tokenId("'('"));
         $this->lexer->push('\)', $this->parser->tokenId("')'"));
-        $this->lexer->push('true', $this->parser->tokenId("'true'"));
-        $this->lexer->push('false', $this->parser->tokenId("'false'"));
+        $this->lexer->push('(true|false)', $this->parser->tokenId('BOOLEAN'));
         $this->lexer->push(',', $this->parser->tokenId("','"));
         $this->lexer->push(';', $this->parser->tokenId("';'"));
         $this->lexer->push('a', $this->parser->tokenId("'a'"));
