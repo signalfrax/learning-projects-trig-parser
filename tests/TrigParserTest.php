@@ -1313,7 +1313,15 @@ class TrigParserTest extends TestCase
 
     public function test_localName_with_assigned_nfc_PN_CHARS_BASE_character_boundaries()
     {
-        $this->markTestIncomplete("Need to debug unicode character that do not conform");
+        //$this->markTestIncomplete("Need to debug unicode character that do not conform");
+        $content = $this->loadFixture("w3c-test-suite/localName_with_assigned_nfc_PN_CHARS_BASE_character_boundaries.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+dd($actual);
     }
 
     public function test_localname_with_COLON()
