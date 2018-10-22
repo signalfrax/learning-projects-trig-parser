@@ -188,7 +188,7 @@ class TrigParser implements Parser
                             break;
                         case $this->rules['objectString']:
                             yield Parser::OBJECT_WITH_DATATYPE => [
-                                trim($this->parser->sigil(0), '"\''),
+                                $this->unescapeUnicode(trim($this->parser->sigil(0), '"\'')),
                                 Namespaces::XSD_STRING,
                             ];
                             break;
@@ -206,7 +206,7 @@ class TrigParser implements Parser
                             break;
                         case $this->rules['objectStringLang']:
                             yield Parser::OBJECT_WITH_LANG_TAG => [
-                                trim($this->parser->sigil(0), '"\''),
+                                $this->unescapeUnicode(trim($this->parser->sigil(0), '"\'')),
                                 Namespaces::RDF_LANG_STRING,
                                 $this->parser->sigil(1),
                             ];
@@ -216,6 +216,19 @@ class TrigParser implements Parser
             }
             $this->parser->advance();
         } while (ParleParser::ACTION_ACCEPT != $this->parser->action);
+    }
+
+    protected function unescapeUnicode(string $message): string
+    {
+        return preg_replace_callback([
+            '/\\\\u([0-9A-Fa-f]{4,4})/',
+            '/\\\\U([0-9A-Fa-f]{8,8})/',
+        ], function($matches) {
+            $code = <<<HEREDOC
+return sprintf("%s", "\\u{{$matches[1]}}");
+HEREDOC;
+            return eval($code);
+        } , $message);
     }
 
     protected function buildTokens()

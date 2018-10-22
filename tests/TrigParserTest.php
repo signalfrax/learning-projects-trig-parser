@@ -1300,10 +1300,10 @@ class TrigParserTest extends TestCase
         $this->assertEquals([
             [Parser::SUBJECT => ['http://a.example/s']],
             [Parser::PREDICATE => ['http://a.example/p']],
-            [Parser::OBJECT_WITH_DATATYPE => ['\u006F', Namespaces::XSD_STRING]],
+            [Parser::OBJECT_WITH_DATATYPE => ["\u{006F}", Namespaces::XSD_STRING]],
             [Parser::SUBJECT => ['http://a.example/s']],
             [Parser::PREDICATE => ['http://a.example/p']],
-            [Parser::OBJECT_WITH_DATATYPE => ['\u006F', Namespaces::XSD_STRING]],
+            [Parser::OBJECT_WITH_DATATYPE => ["\u{006F}", Namespaces::XSD_STRING]],
             [Parser::GRAPH => ['http://example/graph']],
         ], $actual);
     }
@@ -1321,10 +1321,10 @@ class TrigParserTest extends TestCase
         $this->assertEquals([
             [Parser::SUBJECT => ['http://a.example/s']],
             [Parser::PREDICATE => ['http://a.example/p']],
-            [Parser::OBJECT_WITH_DATATYPE => ['\U0000006F', Namespaces::XSD_STRING]],
+            [Parser::OBJECT_WITH_DATATYPE => ["\u{0000006F}", Namespaces::XSD_STRING]],
             [Parser::SUBJECT => ['http://a.example/s']],
             [Parser::PREDICATE => ['http://a.example/p']],
-            [Parser::OBJECT_WITH_DATATYPE => ['\U0000006F', Namespaces::XSD_STRING]],
+            [Parser::OBJECT_WITH_DATATYPE => ["\u{0000006F}", Namespaces::XSD_STRING]],
             [Parser::GRAPH => ['http://example/graph']],
         ], $actual);
     }
