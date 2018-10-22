@@ -586,10 +586,10 @@ class TrigParserTest extends TestCase
         $this->assertEquals([
             [Parser::SUBJECT => ['http://a.example/s']],
             [Parser::PREDICATE => ['http://a.example/p']],
-            [Parser::OBJECT_WITH_LANG_TAG => ['chat', '@en']],
+            [Parser::OBJECT_WITH_LANG_TAG => ['chat', Namespaces::RDF_LANG_STRING, '@en']],
             [Parser::SUBJECT => ['http://a.example/s']],
             [Parser::PREDICATE => ['http://a.example/p']],
-            [Parser::OBJECT_WITH_LANG_TAG => ['chat', '@en']],
+            [Parser::OBJECT_WITH_LANG_TAG => ['chat', Namespaces::RDF_LANG_STRING, '@en']],
             [Parser::GRAPH => ['http://example/graph']],
         ], $actual);
     }
@@ -608,10 +608,10 @@ class TrigParserTest extends TestCase
             [Parser::PREFIX => ['', 'http://example.org/ex#']],
             [Parser::SUBJECT => ['http://example.org/ex#a']],
             [Parser::PREDICATE => ['http://example.org/ex#b']],
-            [Parser::OBJECT_WITH_LANG_TAG => ['Cheers', '@en-UK']],
+            [Parser::OBJECT_WITH_LANG_TAG => ['Cheers', Namespaces::RDF_LANG_STRING, '@en-UK']],
             [Parser::SUBJECT => ['http://example.org/ex#a']],
             [Parser::PREDICATE => ['http://example.org/ex#b']],
-            [Parser::OBJECT_WITH_LANG_TAG => ['Cheers', '@en-UK']],
+            [Parser::OBJECT_WITH_LANG_TAG => ['Cheers', Namespaces::RDF_LANG_STRING, '@en-UK']],
             [Parser::GRAPH => ['http://example/graph']],
         ], $actual);
     }
@@ -629,10 +629,10 @@ class TrigParserTest extends TestCase
         $this->assertEquals([
             [Parser::SUBJECT => ['http://a.example/s']],
             [Parser::PREDICATE => ['http://a.example/p']],
-            [Parser::OBJECT_WITH_LANG_TAG => ['chat', '@en']],
+            [Parser::OBJECT_WITH_LANG_TAG => ['chat', Namespaces::RDF_LANG_STRING, '@en']],
             [Parser::SUBJECT => ['http://a.example/s']],
             [Parser::PREDICATE => ['http://a.example/p']],
-            [Parser::OBJECT_WITH_LANG_TAG => ['chat', '@en']],
+            [Parser::OBJECT_WITH_LANG_TAG => ['chat', Namespaces::RDF_LANG_STRING, '@en']],
             [Parser::GRAPH => ['http://example/graph']],
         ], $actual);
     }
@@ -650,10 +650,10 @@ class TrigParserTest extends TestCase
         $this->assertEquals([
             [Parser::SUBJECT => ['http://a.example/s']],
             [Parser::PREDICATE => ['http://a.example/p']],
-            [Parser::OBJECT_WITH_LANG_TAG => ['chat', '@en-us']],
+            [Parser::OBJECT_WITH_LANG_TAG => ['chat', Namespaces::RDF_LANG_STRING, '@en-us']],
             [Parser::SUBJECT => ['http://a.example/s']],
             [Parser::PREDICATE => ['http://a.example/p']],
-            [Parser::OBJECT_WITH_LANG_TAG => ['chat', '@en-us']],
+            [Parser::OBJECT_WITH_LANG_TAG => ['chat', Namespaces::RDF_LANG_STRING, '@en-us']],
             [Parser::GRAPH => ['http://example/graph']],
         ], $actual);
     }
@@ -5543,7 +5543,7 @@ class TrigParserTest extends TestCase
 
             [Parser::SUBJECT => ['http://example/s']],
             [Parser::PREDICATE => ['http://example/p']],
-            [Parser::OBJECT_WITH_LANG_TAG => ['string', '@en']],
+            [Parser::OBJECT_WITH_LANG_TAG => ['string', Namespaces::RDF_LANG_STRING, '@en']],
 
         ], $actual);
     }
@@ -5562,7 +5562,7 @@ class TrigParserTest extends TestCase
 
             [Parser::SUBJECT => ['http://example/s']],
             [Parser::PREDICATE => ['http://example/p']],
-            [Parser::OBJECT_WITH_LANG_TAG => ['string', '@en-uk']],
+            [Parser::OBJECT_WITH_LANG_TAG => ['string', Namespaces::RDF_LANG_STRING, '@en-uk']],
 
         ], $actual);
     }
@@ -5600,7 +5600,7 @@ class TrigParserTest extends TestCase
 
             [Parser::SUBJECT => ['http://example/s']],
             [Parser::PREDICATE => ['http://example/p']],
-            [Parser::OBJECT_WITH_LANG_TAG => ['string', '@en']],
+            [Parser::OBJECT_WITH_LANG_TAG => ['string', Namespaces::RDF_LANG_STRING, '@en']],
 
         ], $actual);
     }
@@ -5619,7 +5619,7 @@ class TrigParserTest extends TestCase
 
             [Parser::SUBJECT => ['http://example/s']],
             [Parser::PREDICATE => ['http://example/p']],
-            [Parser::OBJECT_WITH_LANG_TAG => ['string', '@en-uk']],
+            [Parser::OBJECT_WITH_LANG_TAG => ['string', Namespaces::RDF_LANG_STRING, '@en-uk']],
 
         ], $actual);
     }
@@ -5695,7 +5695,7 @@ class TrigParserTest extends TestCase
 
             [Parser::SUBJECT => ['http://example/s']],
             [Parser::PREDICATE => ['http://example/p']],
-            [Parser::OBJECT_WITH_LANG_TAG => ["abc\ndef", '@en']],
+            [Parser::OBJECT_WITH_LANG_TAG => ["abc\ndef", Namespaces::RDF_LANG_STRING, '@en']],
 
         ], $actual);
     }
@@ -5714,7 +5714,7 @@ class TrigParserTest extends TestCase
 
             [Parser::SUBJECT => ['http://example/s']],
             [Parser::PREDICATE => ['http://example/p']],
-            [Parser::OBJECT_WITH_LANG_TAG => ["abc\ndef", '@en']],
+            [Parser::OBJECT_WITH_LANG_TAG => ["abc\ndef", Namespaces::RDF_LANG_STRING, '@en']],
 
         ], $actual);
     }

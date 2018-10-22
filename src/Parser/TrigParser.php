@@ -207,6 +207,7 @@ class TrigParser implements Parser
                         case $this->rules['objectStringLang']:
                             yield Parser::OBJECT_WITH_LANG_TAG => [
                                 trim($this->parser->sigil(0), '"\''),
+                                Namespaces::RDF_LANG_STRING,
                                 $this->parser->sigil(1),
                             ];
                             break;
