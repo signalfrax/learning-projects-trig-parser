@@ -59,7 +59,7 @@ class TrigParser implements Parser
     .'|' . UR::RANGE_10800_1083F . '|' . UR::RANGE_1D000_1D0FF . '|' . UR::RANGE_1D100_1D1FF . '|' . UR::RANGE_1D300_1D35F
     .'|' . UR::RANGE_1D400_1D7FF . '|' . UR::RANGE_20000_2A6DF . '|' . UR::RANGE_2F800_2FA1F;
     const PN_CHARS_U = self::PN_CHARS_BASE . '|_';
-    const PN_CHARS = self::PN_CHARS_U . '|-|[0-9]|·' . '|' . UR::RANGE_0300_036F . '|' . UR::RANGE_203F_2040;
+    const PN_CHARS = self::PN_CHARS_U . '|' . '-' .'|'. '[0-9]' . '|' . UR::RANGE_00B7 . '|' . UR::RANGE_0300_036F . '|' . UR::RANGE_203F_2040;
     const PN_PREFIX = self::PN_CHARS_BASE . '|' . '((' . self::PN_CHARS . '|\.)*(' . self::PN_CHARS . '))?';
     const PLX = self::PERCENT . '|' . self::PN_LOCAL_ESC;
     const PN_LOCAL = '(' . self:: PN_CHARS_U . '|:|[0-9]|' . self::PLX. ')((' . self::PN_CHARS . '|\.|:|' . self::PLX . ')*(' . self::PN_CHARS . '|:|' . self::PLX . '))?';

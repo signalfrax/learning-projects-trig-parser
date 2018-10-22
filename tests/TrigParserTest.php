@@ -1483,12 +1483,47 @@ class TrigParserTest extends TestCase
 
     public function test_localName_with_non_leading_extras()
     {
-        $this->markTestIncomplete("Need to debug unicode character that do not conform");
+        $content = $this->loadFixture("w3c-test-suite/localName_with_non_leading_extras.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['p', 'http://a.example/']],
+            [Parser::SUBJECT => ['http://a.example/a·̀ͯ‿.⁀']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT_IRI => ['http://a.example/o']],
+            [Parser::SUBJECT => ['http://a.example/a·̀ͯ‿.⁀']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT_IRI => ['http://a.example/o']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
     }
 
     public function test_localName_with_PN_CHARS_BASE_character_boundaries()
     {
-        $this->markTestIncomplete("Need to debug unicode character that do not conform");
+        $content = $this->loadFixture("w3c-test-suite/localName_with_PN_CHARS_BASE_character_boundaries.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['p', 'http://a.example/']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT_IRI => ['http://a.example/AZazÀÖØöø˿Ͱͽ΄῾‌‍⁰↉Ⰰ⿕、ퟻ﨎ﷇﷰ￯𐀀𪘀']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT_IRI => ['http://a.example/AZazÀÖØöø˿Ͱͽ΄῾‌‍⁰↉Ⰰ⿕、ퟻ﨎ﷇﷰ￯𐀀𪘀']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+
     }
 
     public function test_negative_numeric()
@@ -1739,12 +1774,46 @@ class TrigParserTest extends TestCase
 
     public function test_prefix_with_non_leading_extras()
     {
-        $this->markTestIncomplete("Need to debug unicode character that do not conform");
+        $content = $this->loadFixture("w3c-test-suite/prefix_with_non_leading_extras.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['a·̀ͯ‿.⁀', 'http://a.example/']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT_IRI => ['http://a.example/o']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT_IRI => ['http://a.example/o']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
     }
 
     public function test_prefix_with_PN_CHARS_BASE_character_boundaries()
     {
-        $this->markTestIncomplete("Need to debug unicode character that do not conform");
+        $content = $this->loadFixture("w3c-test-suite/prefix_with_PN_CHARS_BASE_character_boundaries.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['AZazÀÖØöø˿Ͱͽ΄῾‌‍⁰↉Ⰰ⿕、ퟻ﨎ﷇﷰ￯𐀀𪘀', 'http://a.example/']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT_IRI => ['http://a.example/o']],
+            [Parser::SUBJECT => ['http://a.example/s']],
+            [Parser::PREDICATE => ['http://a.example/p']],
+            [Parser::OBJECT_IRI => ['http://a.example/o']],
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
     }
 
     public function test_prefixed_IRI_object()
