@@ -109,17 +109,12 @@ class TrigParser implements Parser
                             $prefix = trim($this->parser->sigil(1), ':');
                             $iri = $this->numericEscapes(trim($this->parser->sigil(2), '<>'));
                             $this->prefixes[$prefix] = $iri;
-                            yield Parser::PREFIX => [
-                                $prefix,
-                                $iri,
-                            ];
+                            yield Parser::PREFIX => [ $prefix, $iri ];
                             break;
                         case $this->rules['base']:
                         case $this->rules['sparqlBase']:
                             $this->base = $this->numericEscapes($this->parser->sigil(1));
-                            yield Parser::BASE => [
-                                $this->base
-                            ];
+                            yield Parser::BASE => [ $this->base ];
                             break;
                         case $this->rules['iriPrefixedName']:
                             $iri = $this->parser->sigil(0);
@@ -144,30 +139,20 @@ class TrigParser implements Parser
                             break;
                         case $this->rules['graph']:
                         case $this->rules['wrappedGraph']:
-                            yield Parser::GRAPH => [
-                                array_pop($this->iris),
-                            ];
+                            yield Parser::GRAPH => [ array_pop($this->iris) ];
                             break;
                         case $this->rules['subjectWithoutGraph']:
                         case $this->rules['subjectIri']:
-                            yield Parser::SUBJECT => [
-                                array_pop($this->iris),
-                            ];
+                            yield Parser::SUBJECT => [ array_pop($this->iris)];
                             break;
                         case $this->rules['subjectBlank']:
-                            yield Parser::SUBJECT => [
-                                $this->parser->sigil(0),
-                            ];
+                            yield Parser::SUBJECT => [ $this->parser->sigil(0) ];
                             break;
                         case $this->rules['predicateIri']:
-                            yield Parser::PREDICATE => [
-                                array_pop($this->iris),
-                            ];
+                            yield Parser::PREDICATE => [ array_pop($this->iris) ];
                             break;
                         case $this->rules['predicateA']:
-                            yield Parser::PREDICATE => [
-                                    Namespaces::RDF_TYPE,
-                            ];
+                            yield Parser::PREDICATE => [ Namespaces::RDF_TYPE ];
                             break;
                         case $this->rules['objectBlank']:
                         case $this->rules['objectBlankNode']:
