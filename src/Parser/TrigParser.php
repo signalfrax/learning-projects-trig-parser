@@ -32,6 +32,7 @@ class TrigParser implements Parser
     private $resolvedPrefixedIri = [];
     private $prefixes = [];
     private $base = null;
+    private $string = null;
 
     const WS = "\x20|\x9|\xD|\xA";
     const HEX = "[0-9]|[a-f]|[A-F]";
@@ -188,7 +189,7 @@ class TrigParser implements Parser
                             break;
                         case $this->rules['objectString']:
                             yield Parser::OBJECT_WITH_DATATYPE => [
-                                $this->unescapeUnicode(trim($this->parser->sigil(0), '"\'')),
+                                $this->string,
                                 Namespaces::XSD_STRING,
                             ];
                             break;
@@ -200,16 +201,26 @@ class TrigParser implements Parser
                             break;
                         case $this->rules['objectStringIri']:
                             yield Parser::OBJECT_WITH_DATATYPE => [
-                                trim($this->parser->sigil(0), '"\''),
+                                $this->string,
                                 (isset($this->resolvedPrefixedIri[$this->parser->sigil(2)])) ? $this->resolvedPrefixedIri[$this->parser->sigil(2)] : trim($this->parser->sigil(2), '<>'),
                             ];
                             break;
                         case $this->rules['objectStringLang']:
                             yield Parser::OBJECT_WITH_LANG_TAG => [
-                                $this->unescapeUnicode(trim($this->parser->sigil(0), '"\'')),
+                                $this->string,
                                 Namespaces::RDF_LANG_STRING,
                                 $this->parser->sigil(1),
                             ];
+                            break;
+                        case $this->rules['stringLiteralQuote']:
+                        case $this->rules['stringLiteralSingleQuote']:
+                            $result = $this->parser->sigil(0);
+                            $this->string = $this->stringEscapes($this->numericEscapes(substr($result, 1, strlen($result) - 2)));
+                            break;
+                        case $this->rules['stringLiteralLongQuote']:
+                        case $this->rules['stringLiteralLongSingleQuote']:
+                            $result = $this->parser->sigil(0);
+                            $this->string = $this->stringEscapes($this->numericEscapes(substr($result, 3, strlen($result) - 6)));
                             break;
                     }
                     break;
@@ -218,16 +229,32 @@ class TrigParser implements Parser
         } while (ParleParser::ACTION_ACCEPT != $this->parser->action);
     }
 
-    protected function unescapeUnicode(string $message): string
+    protected function numericEscapes(string $message): string
     {
         return preg_replace_callback([
             '/\\\\u([0-9A-Fa-f]{4,4})/',
             '/\\\\U([0-9A-Fa-f]{8,8})/',
         ], function($matches) {
             $code = <<<HEREDOC
-return sprintf("%s", "\\u{{$matches[1]}}");
+                return sprintf("%s", "\\u{{$matches[1]}}");
 HEREDOC;
             return eval($code);
+        } , $message);
+    }
+
+    protected function stringEscapes(string $message): string
+    {
+        return preg_replace_callback('/\\\\([tbnrf"\'\\\\])/', function($matches) {
+            if (in_array($matches[1], ['"', "'"])) {
+                return $matches[1];
+            } else if ('\\\\' == $matches[1]) {
+                return '\\';
+            } else {
+                $code = <<<HEREDOC
+                return sprintf("%s", "\\{$matches[1]}");
+HEREDOC;
+                return eval($code);
+            }
         } , $message);
     }
 
@@ -338,10 +365,10 @@ HEREDOC;
         $this->rules['objectString'] = $this->parser->push('RDFLiteral', 'String');
         $this->rules['objectStringLang'] = $this->parser->push('RDFLiteral', 'String LANGTAG');
         $this->rules['objectStringIri'] = $this->parser->push('RDFLiteral', "String '^^' iri");
-        $this->parser->push('String', 'STRING_LITERAL_QUOTE');
-        $this->parser->push('String', 'STRING_LITERAL_SINGLE_QUOTE');
-        $this->parser->push('String', 'STRING_LITERAL_LONG_QUOTE');
-        $this->parser->push('String', 'STRING_LITERAL_LONG_SINGLE_QUOTE');
+        $this->rules['stringLiteralQuote'] = $this->parser->push('String', 'STRING_LITERAL_QUOTE');
+        $this->rules['stringLiteralSingleQuote'] = $this->parser->push('String', 'STRING_LITERAL_SINGLE_QUOTE');
+        $this->rules['stringLiteralLongQuote'] = $this->parser->push('String', 'STRING_LITERAL_LONG_QUOTE');
+        $this->rules['stringLiteralLongSingleQuote'] = $this->parser->push('String', 'STRING_LITERAL_LONG_SINGLE_QUOTE');
         $this->rules['iriRef'] = $this->parser->push('iri', 'IRIREF');
         $this->rules['prefixedIri'] = $this->parser->push('iri', 'PrefixedName');
         $this->parser->push('PrefixedName', 'PNAME_LN');

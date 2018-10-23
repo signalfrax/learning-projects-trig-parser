@@ -1031,10 +1031,10 @@ class TrigParserTest extends TestCase
             [Parser::PREFIX => ['', 'http://example.org/ns#']],
             [Parser::SUBJECT => ['http://example.org/ns#s']],
             [Parser::PREDICATE => ['http://example.org/ns#p1']],
-            [Parser::OBJECT_WITH_DATATYPE => ['test-\\\\', Namespaces::XSD_STRING]],
+            [Parser::OBJECT_WITH_DATATYPE => ['test-\\', Namespaces::XSD_STRING]],
             [Parser::SUBJECT => ['http://example.org/ns#s']],
             [Parser::PREDICATE => ['http://example.org/ns#p1']],
-            [Parser::OBJECT_WITH_DATATYPE => ['test-\\\\', Namespaces::XSD_STRING]],
+            [Parser::OBJECT_WITH_DATATYPE => ['test-\\', Namespaces::XSD_STRING]],
             [Parser::GRAPH => ['http://example/graph']],
         ], $actual);
     }
@@ -1174,10 +1174,10 @@ class TrigParserTest extends TestCase
         $this->assertEquals([
             [Parser::SUBJECT => ['http://a.example/s']],
             [Parser::PREDICATE => ['http://a.example/p']],
-            [Parser::OBJECT_WITH_DATATYPE => ['\\r', Namespaces::XSD_STRING]],
+            [Parser::OBJECT_WITH_DATATYPE => ["\r", Namespaces::XSD_STRING]],
             [Parser::SUBJECT => ['http://a.example/s']],
             [Parser::PREDICATE => ['http://a.example/p']],
-            [Parser::OBJECT_WITH_DATATYPE => ['\\r', Namespaces::XSD_STRING]],
+            [Parser::OBJECT_WITH_DATATYPE => ["\r", Namespaces::XSD_STRING]],
             [Parser::GRAPH => ['http://example/graph']],
         ], $actual);
     }
@@ -1195,10 +1195,10 @@ class TrigParserTest extends TestCase
         $this->assertEquals([
             [Parser::SUBJECT => ['http://a.example/s']],
             [Parser::PREDICATE => ['http://a.example/p']],
-            [Parser::OBJECT_WITH_DATATYPE => ['\\t', Namespaces::XSD_STRING]],
+            [Parser::OBJECT_WITH_DATATYPE => ["\t", Namespaces::XSD_STRING]],
             [Parser::SUBJECT => ['http://a.example/s']],
             [Parser::PREDICATE => ['http://a.example/p']],
-            [Parser::OBJECT_WITH_DATATYPE => ['\\t', Namespaces::XSD_STRING]],
+            [Parser::OBJECT_WITH_DATATYPE => ["\t", Namespaces::XSD_STRING]],
             [Parser::GRAPH => ['http://example/graph']],
         ], $actual);
     }
@@ -1216,10 +1216,10 @@ class TrigParserTest extends TestCase
         $this->assertEquals([
             [Parser::SUBJECT => ['http://a.example/s']],
             [Parser::PREDICATE => ['http://a.example/p']],
-            [Parser::OBJECT_WITH_DATATYPE => ['\\f', Namespaces::XSD_STRING]],
+            [Parser::OBJECT_WITH_DATATYPE => ["\f", Namespaces::XSD_STRING]],
             [Parser::SUBJECT => ['http://a.example/s']],
             [Parser::PREDICATE => ['http://a.example/p']],
-            [Parser::OBJECT_WITH_DATATYPE => ['\\f', Namespaces::XSD_STRING]],
+            [Parser::OBJECT_WITH_DATATYPE => ["\f", Namespaces::XSD_STRING]],
             [Parser::GRAPH => ['http://example/graph']],
         ], $actual);
     }
@@ -1237,10 +1237,10 @@ class TrigParserTest extends TestCase
         $this->assertEquals([
             [Parser::SUBJECT => ['http://a.example/s']],
             [Parser::PREDICATE => ['http://a.example/p']],
-            [Parser::OBJECT_WITH_DATATYPE => ['\\n', Namespaces::XSD_STRING]],
+            [Parser::OBJECT_WITH_DATATYPE => ["\n", Namespaces::XSD_STRING]],
             [Parser::SUBJECT => ['http://a.example/s']],
             [Parser::PREDICATE => ['http://a.example/p']],
-            [Parser::OBJECT_WITH_DATATYPE => ['\\n', Namespaces::XSD_STRING]],
+            [Parser::OBJECT_WITH_DATATYPE => ["\n", Namespaces::XSD_STRING]],
             [Parser::GRAPH => ['http://example/graph']],
         ], $actual);
     }
@@ -1342,10 +1342,10 @@ class TrigParserTest extends TestCase
         $this->assertEquals([
             [Parser::SUBJECT => ['http://a.example/s']],
             [Parser::PREDICATE => ['http://a.example/p']],
-            [Parser::OBJECT_WITH_DATATYPE => ['\\\\', Namespaces::XSD_STRING]],
+            [Parser::OBJECT_WITH_DATATYPE => ['\\', Namespaces::XSD_STRING]],
             [Parser::SUBJECT => ['http://a.example/s']],
             [Parser::PREDICATE => ['http://a.example/p']],
-            [Parser::OBJECT_WITH_DATATYPE => ['\\\\', Namespaces::XSD_STRING]],
+            [Parser::OBJECT_WITH_DATATYPE => ['\\', Namespaces::XSD_STRING]],
             [Parser::GRAPH => ['http://example/graph']],
         ], $actual);
     }
@@ -2890,7 +2890,36 @@ class TrigParserTest extends TestCase
 
     public function test_trig_subm_16()
     {
-        $this->markTestIncomplete("Decode escaped unicode character and verify the validity of character.");
+        $content = $this->loadFixture("w3c-test-suite/trig-subm-16.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [Parser::PREFIX => ['', 'http://example.org/foo#']],
+
+            [Parser::SUBJECT => ['http://example.org/foo#a']],
+            [Parser::PREDICATE => ['http://example.org/foo#b']],
+            [Parser::OBJECT_WITH_DATATYPE => ["\nthis \ris a \u{00012451}long\t\nliteral\u{ABCD}\n", Namespaces::XSD_STRING]],
+
+            [Parser::SUBJECT => ['http://example.org/foo#d']],
+            [Parser::PREDICATE => ['http://example.org/foo#e']],
+            [Parser::OBJECT_WITH_DATATYPE => ["\tThis \u{ABCD}is\r \u{00012451}another\n\none\n", Namespaces::XSD_STRING]],
+
+            [Parser::SUBJECT => ['http://example.org/foo#a']],
+            [Parser::PREDICATE => ['http://example.org/foo#b']],
+            [Parser::OBJECT_WITH_DATATYPE => ["\nthis \ris a \u{00012451}long\t\nliteral\u{ABCD}\n", Namespaces::XSD_STRING]],
+
+            [Parser::SUBJECT => ['http://example.org/foo#d']],
+            [Parser::PREDICATE => ['http://example.org/foo#e']],
+            [Parser::OBJECT_WITH_DATATYPE => ["\tThis \u{ABCD}is\r \u{00012451}another\n\none\n", Namespaces::XSD_STRING]],
+
+            [Parser::GRAPH => ['http://example/graph']],
+        ], $actual);
+
     }
 
     public function test_trig_subm_17()
@@ -3039,8 +3068,6 @@ class TrigParserTest extends TestCase
 
     public function test_trig_subm_21()
     {
-        $this->markTestSkipped("Add support to decode unicode escape characters.");
-
         $content = $this->loadFixture("w3c-test-suite/trig-subm-21.trig");
         $p = new TrigParser();
 
@@ -3052,13 +3079,13 @@ class TrigParserTest extends TestCase
         $this->assertEquals([
             [Parser::PREFIX => ['', 'http://example.org/ex#']],
 
-            [Parser::SUBJECT => ['http://example.org#a']],
-            [Parser::PREDICATE => ['http://example.org#b']],
-            [Parser::OBJECT_WITH_DATATYPE => ['John said: "Hello World!\"', Namespaces::XSD_STRING]],
+            [Parser::SUBJECT => ['http://example.org/ex#a']],
+            [Parser::PREDICATE => ['http://example.org/ex#b']],
+            [Parser::OBJECT_WITH_DATATYPE => ['John said: \ "Hello World!"', Namespaces::XSD_STRING]],
 
-            [Parser::SUBJECT => ['http://example.org#a']],
-            [Parser::PREDICATE => ['http://example.org#b']],
-            [Parser::OBJECT_WITH_DATATYPE => ['John said: "Hello World!\"', Namespaces::XSD_STRING]],
+            [Parser::SUBJECT => ['http://example.org/ex#a']],
+            [Parser::PREDICATE => ['http://example.org/ex#b']],
+            [Parser::OBJECT_WITH_DATATYPE => ['John said: \ "Hello World!"', Namespaces::XSD_STRING]],
 
             [Parser::GRAPH => ['http://example/graph']],
         ], $actual);
