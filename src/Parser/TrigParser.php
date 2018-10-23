@@ -34,6 +34,9 @@ class TrigParser implements Parser
     private $base = null;
     private $string = null;
 
+    // Iris is a stack which hold the iri for the next RDF terms to be processed.
+    private $iris = [];
+
     const WS = "\x20|\x9|\xD|\xA";
     const HEX = "[0-9]|[a-f]|[A-F]";
     const PN_LOCAL_ESC = '\\\\(_|~|\.|-|!|\$|&|\\\'|\(|\)|\*|\+|,|;|=|\/|\?|#|@|%)';
@@ -104,14 +107,16 @@ class TrigParser implements Parser
                         case $this->rules['sparqlPrefix']:
                         case $this->rules['prefixID']:
                             $prefix = trim($this->parser->sigil(1), ':');
-                            $namespace = trim($this->parser->sigil(2), '<>');
-                            $this->prefixes[$prefix] = $namespace;
-                            yield Parser::PREFIX => [
-                                $prefix,
-                                $namespace
-                            ];
+                            $iri = $this->numericEscapes(trim($this->parser->sigil(2), '<>'));
+                            $this->prefixes[$prefix] = $iri;
+                            yield Parser::PREFIX => [ $prefix, $iri ];
                             break;
-                        case $this->rules['prefixedIri']:
+                        case $this->rules['base']:
+                        case $this->rules['sparqlBase']:
+                            $this->base = $this->numericEscapes($this->parser->sigil(1));
+                            yield Parser::BASE => [ $this->base ];
+                            break;
+                        case $this->rules['iriPrefixedName']:
                             $iri = $this->parser->sigil(0);
                             // TODO: Refactor once we implement proper support for blank nodes.
                             if ( ( FALSE === strpos($iri, '_:') || 0 != strpos($iri, '_:') ) && !isset($this->resolvedPrefixedIri[$iri])) {
@@ -121,45 +126,33 @@ class TrigParser implements Parser
                                     throw new ParserException("Invalid RDF document. Cannot find prefix [{$prefix}:]");
                                 }
                                 $this->resolvedPrefixedIri[$iri] = "{$this->prefixes[$prefix]}$localName";
+                                $this->iris[] = $this->resolvedPrefixedIri[$iri];
+                            } else if (isset($this->resolvedPrefixedIri[$iri])) {
+                                $this->iris[] = $this->resolvedPrefixedIri[$iri];
+                            } else {
+                                $this->iris[] = $iri;
                             }
                             break;
                         case $this->rules['iriRef']:
                             //TODO:Implement logic to resolve relative IRI.
+                            $this->iris[] = $this->numericEscapes(trim($this->parser->sigil(0), '<>'));
                             break;
                         case $this->rules['graph']:
-                            $graph = trim($this->parser->sigil(1), '<>');
-                            yield Parser::GRAPH => [
-                                (isset($this->resolvedPrefixedIri[$graph])) ? $this->resolvedPrefixedIri[$graph] : $graph,
-                            ];
-                            break;
                         case $this->rules['wrappedGraph']:
-                            $graph = trim($this->parser->sigil(0), '<>');
-                            yield Parser::GRAPH => [
-                                (isset($this->resolvedPrefixedIri[$graph])) ? $this->resolvedPrefixedIri[$graph] : $graph,
-                            ];
+                            yield Parser::GRAPH => [ array_pop($this->iris) ];
                             break;
                         case $this->rules['subjectWithoutGraph']:
                         case $this->rules['subjectIri']:
-                            $subject = trim($this->parser->sigil(0), '<>');
-                            yield Parser::SUBJECT => [
-                                (isset($this->resolvedPrefixedIri[$subject])) ? $this->resolvedPrefixedIri[$subject] : $subject,
-                            ];
+                            yield Parser::SUBJECT => [ array_pop($this->iris)];
                             break;
                         case $this->rules['subjectBlank']:
-                            yield Parser::SUBJECT => [
-                                $this->parser->sigil(0),
-                            ];
+                            yield Parser::SUBJECT => [ $this->parser->sigil(0) ];
                             break;
                         case $this->rules['predicateIri']:
-                            $predicate = trim($this->parser->sigil(0), '<>');
-                            yield Parser::PREDICATE => [
-                                (isset($this->resolvedPrefixedIri[$predicate])) ? $this->resolvedPrefixedIri[$predicate] : $predicate,
-                            ];
+                            yield Parser::PREDICATE => [ array_pop($this->iris) ];
                             break;
                         case $this->rules['predicateA']:
-                            yield Parser::PREDICATE => [
-                                    Namespaces::RDF_TYPE,
-                            ];
+                            yield Parser::PREDICATE => [ Namespaces::RDF_TYPE ];
                             break;
                         case $this->rules['objectBlank']:
                         case $this->rules['objectBlankNode']:
@@ -194,15 +187,14 @@ class TrigParser implements Parser
                             ];
                             break;
                         case $this->rules['objectIri']:
-                            $object = trim($this->parser->sigil(0), '<>');
                             yield Parser::OBJECT_IRI => [
-                                (isset($this->resolvedPrefixedIri[$object])) ? $this->resolvedPrefixedIri[$object] : $object,
+                                array_pop($this->iris),
                             ];
                             break;
                         case $this->rules['objectStringIri']:
                             yield Parser::OBJECT_WITH_DATATYPE => [
                                 $this->string,
-                                (isset($this->resolvedPrefixedIri[$this->parser->sigil(2)])) ? $this->resolvedPrefixedIri[$this->parser->sigil(2)] : trim($this->parser->sigil(2), '<>'),
+                                array_pop($this->iris),
                             ];
                             break;
                         case $this->rules['objectStringLang']:
@@ -249,6 +241,8 @@ HEREDOC;
                 return $matches[1];
             } else if ('\\\\' == $matches[1]) {
                 return '\\';
+            } else if ('b' == $matches[1]) {
+                return "\x8";
             } else {
                 $code = <<<HEREDOC
                 return sprintf("%s", "\\{$matches[1]}");
@@ -370,13 +364,13 @@ HEREDOC;
         $this->rules['stringLiteralLongQuote'] = $this->parser->push('String', 'STRING_LITERAL_LONG_QUOTE');
         $this->rules['stringLiteralLongSingleQuote'] = $this->parser->push('String', 'STRING_LITERAL_LONG_SINGLE_QUOTE');
         $this->rules['iriRef'] = $this->parser->push('iri', 'IRIREF');
-        $this->rules['prefixedIri'] = $this->parser->push('iri', 'PrefixedName');
+        $this->rules['iriPrefixedName'] = $this->parser->push('iri', 'PrefixedName');
         $this->parser->push('PrefixedName', 'PNAME_LN');
         $this->parser->push('PrefixedName', 'PNAME_NS');
         $this->rules['prefixID'] = $this->parser->push('prefixID', "'@prefix' PNAME_NS IRIREF '.'");
-        $this->rules['base'] = $this->parser->push('base', "'@base' IRIREF '.'");
         $this->rules['sparqlPrefix'] = $this->parser->push('sparqlPrefix', "'PREFIX' PNAME_NS IRIREF");
-        $this->parser->push('sparqlBase', "'BASE' IRIREF");
+        $this->rules['base'] = $this->parser->push('base', "'@base' IRIREF '.'");
+        $this->rules['sparqlBase'] = $this->parser->push('sparqlBase', "'BASE' IRIREF");
     }
 
     protected function buildLexer()
