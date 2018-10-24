@@ -1573,7 +1573,7 @@ class TrigParserTest extends TestCase
         $this->assertEquals([
             [Parser::PREFIX => ['p', 'http://a.example/']],
             [Parser::PREDICATE => ['http://a.example/p']],
-            [Parser::OBJECT_IRI => ['http://a.example/o\#numbersign']],
+            [Parser::OBJECT_IRI => ['http://a.example/o#numbersign']],
             [Parser::SUBJECT => ['http://a.example/s']],
         ], $actual);
     }
@@ -1591,7 +1591,7 @@ class TrigParserTest extends TestCase
         $this->assertEquals([
             [Parser::PREFIX => ['p', 'http://a.example/']],
             [Parser::PREDICATE => ['http://a.example/p']],
-            [Parser::OBJECT_IRI => ['http://a.example/\#numbersign']],
+            [Parser::OBJECT_IRI => ['http://a.example/#numbersign']],
             [Parser::SUBJECT => ['http://a.example/s']],
         ], $actual);
     }
@@ -1943,10 +1943,10 @@ class TrigParserTest extends TestCase
 
         $this->assertEquals([
             [Parser::PREFIX => ['p','http://a.example/']],
-            [Parser::SUBJECT => ['http://a.example/\_\~\.\-\!\$\&\\\'\(\)\*\+\,\;\=\/\?\#\@\%00']],
+            [Parser::SUBJECT => ['http://a.example/_~.-!$&\'()*+,;=/?#@%00']],
             [Parser::PREDICATE => ['http://a.example/p']],
             [Parser::OBJECT_IRI => ['http://a.example/o']],
-            [Parser::SUBJECT => ['http://a.example/\_\~\.\-\!\$\&\\\'\(\)\*\+\,\;\=\/\?\#\@\%00']],
+            [Parser::SUBJECT => ['http://a.example/_~.-!$&\'()*+,;=/?#@%00']],
             [Parser::PREDICATE => ['http://a.example/p']],
             [Parser::OBJECT_IRI => ['http://a.example/o']],
             [Parser::GRAPH => ['http://example/graph']],
@@ -5266,7 +5266,7 @@ class TrigParserTest extends TestCase
             [Parser::PREFIX => ['', 'http://example/']],
             [Parser::SUBJECT => ['http://example/s']],
             [Parser::PREDICATE => ['http://example/p']],
-            [Parser::OBJECT_IRI => ['http://example/\~\.\-\!\$\&\\\'\(\)\*\+\,\;\=\/\?\#\@\_\%AA']],
+            [Parser::OBJECT_IRI => ['http://example/~.-!$&\'()*+,;=/?#@_%AA']],
 
         ], $actual);
     }
@@ -5285,7 +5285,7 @@ class TrigParserTest extends TestCase
             [Parser::PREFIX => ['', 'http://example/']],
             [Parser::SUBJECT => ['http://example/s']],
             [Parser::PREDICATE => ['http://example/p']],
-            [Parser::OBJECT_IRI => ['http://example/0123\~\.\-\!\$\&\\\'\(\)\*\+\,\;\=\/\?\#\@\_\%AA123']],
+            [Parser::OBJECT_IRI => ['http://example/0123~.-!$&\'()*+,;=/?#@_%AA123']],
 
         ], $actual);
     }
@@ -5302,8 +5302,8 @@ class TrigParserTest extends TestCase
 
         $this->assertEquals([
             [Parser::PREFIX => ['', 'http://example/']],
-            [Parser::SUBJECT => ['http://example/xyz\~']],
-            [Parser::PREDICATE => ['http://example/abc\.:']],
+            [Parser::SUBJECT => ['http://example/xyz~']],
+            [Parser::PREDICATE => ['http://example/abc.:']],
             [Parser::OBJECT_IRI => ['http://example/']],
 
         ], $actual);

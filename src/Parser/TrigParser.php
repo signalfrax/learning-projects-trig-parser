@@ -107,13 +107,13 @@ class TrigParser implements Parser
                         case $this->rules['sparqlPrefix']:
                         case $this->rules['prefixID']:
                             $prefix = trim($this->parser->sigil(1), ':');
-                            $iri = $this->numericEscapes(trim($this->parser->sigil(2), '<>'));
+                            $iri = $this->unescapeNumeric(trim($this->parser->sigil(2), '<>'));
                             $this->prefixes[$prefix] = $iri;
                             yield Parser::PREFIX => [ $prefix, $iri ];
                             break;
                         case $this->rules['base']:
                         case $this->rules['sparqlBase']:
-                            $this->base = $this->numericEscapes($this->parser->sigil(1));
+                            $this->base = $this->unescapeNumeric($this->parser->sigil(1));
                             yield Parser::BASE => [ $this->base ];
                             break;
                         case $this->rules['iriPrefixedName']:
@@ -121,7 +121,7 @@ class TrigParser implements Parser
                             // TODO: Refactor once we implement proper support for blank nodes.
                             if ( ( FALSE === strpos($iri, '_:') || 0 != strpos($iri, '_:') ) && !isset($this->resolvedPrefixedIri[$iri])) {
                                 $prefix = substr($iri, 0, strpos($iri, ':'));
-                                $localName = substr($iri, strpos($iri, ':') + 1);
+                                $localName = $this->unescapeReservedCharacters(substr($iri, strpos($iri, ':') + 1));
                                 if (!isset($this->prefixes[$prefix])) {
                                     throw new ParserException("Invalid RDF document. Cannot find prefix [{$prefix}:]");
                                 }
@@ -135,7 +135,7 @@ class TrigParser implements Parser
                             break;
                         case $this->rules['iriRef']:
                             //TODO:Implement logic to resolve relative IRI.
-                            $this->iris[] = $this->numericEscapes(trim($this->parser->sigil(0), '<>'));
+                            $this->iris[] = $this->unescapeNumeric(trim($this->parser->sigil(0), '<>'));
                             break;
                         case $this->rules['graph']:
                         case $this->rules['wrappedGraph']:
@@ -207,12 +207,12 @@ class TrigParser implements Parser
                         case $this->rules['stringLiteralQuote']:
                         case $this->rules['stringLiteralSingleQuote']:
                             $result = $this->parser->sigil(0);
-                            $this->string = $this->stringEscapes($this->numericEscapes(substr($result, 1, strlen($result) - 2)));
+                            $this->string = $this->unescapeString($this->unescapeNumeric(substr($result, 1, strlen($result) - 2)));
                             break;
                         case $this->rules['stringLiteralLongQuote']:
                         case $this->rules['stringLiteralLongSingleQuote']:
                             $result = $this->parser->sigil(0);
-                            $this->string = $this->stringEscapes($this->numericEscapes(substr($result, 3, strlen($result) - 6)));
+                            $this->string = $this->unescapeString($this->unescapeNumeric(substr($result, 3, strlen($result) - 6)));
                             break;
                     }
                     break;
@@ -221,7 +221,7 @@ class TrigParser implements Parser
         } while (ParleParser::ACTION_ACCEPT != $this->parser->action);
     }
 
-    protected function numericEscapes(string $message): string
+    protected function unescapeNumeric(string $token): string
     {
         return preg_replace_callback([
             '/\\\\u([0-9A-Fa-f]{4,4})/',
@@ -231,10 +231,10 @@ class TrigParser implements Parser
                 return sprintf("%s", "\\u{{$matches[1]}}");
 HEREDOC;
             return eval($code);
-        } , $message);
+        } , $token);
     }
 
-    protected function stringEscapes(string $message): string
+    protected function unescapeString(string $token): string
     {
         return preg_replace_callback('/\\\\([tbnrf"\'\\\\])/', function($matches) {
             if (in_array($matches[1], ['"', "'"])) {
@@ -249,7 +249,12 @@ HEREDOC;
 HEREDOC;
                 return eval($code);
             }
-        } , $message);
+        } , $token);
+    }
+
+    protected function unescapeReservedCharacters(string $token)
+    {
+        return preg_replace("/\\\\([~\.\-\!\$&'\(\)\*\+,;\=\/\?#@%_])/", '$1', $token);
     }
 
     protected function buildTokens()
