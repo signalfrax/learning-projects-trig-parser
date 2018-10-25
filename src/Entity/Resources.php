@@ -1,7 +1,7 @@
 <?php
 
 
-namespace RDF\Entity;
+namespace RDFPhp\Entity;
 
 use ArrayAccess;
 use ArrayIterator;
@@ -10,7 +10,7 @@ use IteratorAggregate;
 use JsonSerializable;
 use Serializable;
 use Traversable;
-use RDF\Entity\Resource;
+use RDFPhp\Entity\Resource;
 
 /**
  * Class Resources

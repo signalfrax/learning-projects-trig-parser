@@ -1,10 +1,10 @@
 <?php
 
 
-namespace RDF\Entity;
+namespace RDFPhp\Entity;
 
-use RDF\Decoder\Namespaces;
-use RDF\Entity\Predicates;
+use RDFPhp\Namespaces;
+use RDFPhp\Entity\Predicates;
 use JsonSerializable;
 use Serializable;
 

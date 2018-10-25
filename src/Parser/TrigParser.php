@@ -1,15 +1,15 @@
 <?php
 
 
-namespace RDF\Parser;
+namespace RDFPhp\Parser;
 
 use Generator;
-use RDF\Parser\UnicodeRanges as UR;
+use RDFPhp\Parser\UnicodeRanges as UR;
 use Parle\Lexer;
 use Parle\LexerException;
 use Parle\Parser as ParleParser;
 use Parle\Token;
-use RDF\Namespaces;
+use RDFPhp\Namespaces;
 
 /**
  * Class TrigParser
@@ -31,7 +31,7 @@ class TrigParser implements Parser
 
     private $resolvedPrefixedIri = [];
     private $prefixes = [];
-    private $base = null;
+    private $base = [];
     private $string = null;
 
     // Iris is a stack which hold the iri for the next RDF terms to be processed.
@@ -73,6 +73,7 @@ class TrigParser implements Parser
 
     public function __construct()
     {
+        $this->base = parse_url('http://rdf-php');
         $this->parser = new ParleParser();
         $this->buildTokens();
         $this->buildRules();
@@ -113,8 +114,10 @@ class TrigParser implements Parser
                             break;
                         case $this->rules['base']:
                         case $this->rules['sparqlBase']:
-                            $this->base = $this->unescapeNumeric($this->parser->sigil(1));
-                            yield Parser::BASE => [ $this->base ];
+                            $trimmed = trim($this->parser->sigil(1), '<>');
+                            $result = $this->unescapeNumeric($trimmed);
+                            $this->base = parse_url($result);
+                            yield Parser::BASE => [ $trimmed ];
                             break;
                         case $this->rules['iriPrefixedName']:
                             $iri = $this->parser->sigil(0);
@@ -134,8 +137,8 @@ class TrigParser implements Parser
                             }
                             break;
                         case $this->rules['iriRef']:
-                            //TODO:Implement logic to resolve relative IRI.
-                            $this->iris[] = $this->unescapeNumeric(trim($this->parser->sigil(0), '<>'));
+                            $escaped = $this->unescapeNumeric(trim($this->parser->sigil(0), '<>'));
+                            $this->iris[] = $this->resolveIri($escaped);
                             break;
                         case $this->rules['graph']:
                         case $this->rules['wrappedGraph']:
@@ -252,9 +255,14 @@ HEREDOC;
         } , $token);
     }
 
-    protected function unescapeReservedCharacters(string $token)
+    protected function unescapeReservedCharacters(string $token): string
     {
         return preg_replace("/\\\\([~\.\-\!\$&'\(\)\*\+,;\=\/\?#@%_])/", '$1', $token);
+    }
+
+    protected function resolveIri(string $iri): string
+    {
+        return $iri;
     }
 
     protected function buildTokens()

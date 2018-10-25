@@ -1,7 +1,7 @@
 <?php
 
 
-namespace RDF\Parser;
+namespace RDFPhp\Parser;
 
 use Generator;
 

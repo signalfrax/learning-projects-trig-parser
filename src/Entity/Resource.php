@@ -1,9 +1,9 @@
 <?php
 
 
-namespace RDF\Entity;
+namespace RDFPhp\Entity;
 
-use RDF\Entity\Prefixes;
+use RDFPhp\Entity\Prefixes;
 use JsonSerializable;
 use Serializable;
 

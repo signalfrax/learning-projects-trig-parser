@@ -1,7 +1,7 @@
 <?php
 
 
-namespace RDF\Entity;
+namespace RDFPhp\Entity;
 
 use ArrayAccess;
 use ArrayIterator;

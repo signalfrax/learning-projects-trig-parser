@@ -1,10 +1,10 @@
 <?php
 
 
-namespace RDF\Entity;
+namespace RDFPhp\Entity;
 
-use RDF\Entity\EntityException;
-use RDF\Entity\Prefix;
+use RDFPhp\Entity\EntityException;
+use RDFPhp\Entity\Prefix;
 use ArrayAccess;
 use ArrayIterator;
 use Countable;

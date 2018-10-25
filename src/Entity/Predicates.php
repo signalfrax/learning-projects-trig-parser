@@ -1,12 +1,12 @@
 <?php
 
 
-namespace RDF\Entity;
+namespace RDFPhp\Entity;
 
 use ArrayAccess;
 use ArrayIterator;
 use Countable;
-use RDF\Entity\EntityException;
+use RDFPhp\Entity\EntityException;
 use IteratorAggregate;
 use JsonSerializable;
 use Serializable;

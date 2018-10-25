@@ -23,7 +23,7 @@
             "tests"
         ],
         "psr-4": {
-            "RDF\\": "src/"
+            "RDFPhp\\": "src/"
         }
     },
     "autoload-dev": {

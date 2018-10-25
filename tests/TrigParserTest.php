@@ -2,9 +2,9 @@
 
 
 use PHPUnit\Framework\TestCase;
-use RDF\Namespaces;
-use RDF\Parser\Parser;
-use RDF\Parser\TrigParser;
+use RDFPhp\Namespaces;
+use RDFPhp\Parser\Parser;
+use RDFPhp\Parser\TrigParser;
 use Tests\LoadFixture;
 
 /**
@@ -376,7 +376,6 @@ class TrigParserTest extends TestCase
 
     public function test_IRI_resolution()
     {
-        $this->markTestIncomplete("Implement");
         $content = $this->loadFixture("w3c-test-suite/IRI-resolution.trig");
         $p = new TrigParser();
 
@@ -384,6 +383,8 @@ class TrigParserTest extends TestCase
         foreach ($p->parse($content) as $token => $values) {
             $actual[][$token] = $values;
         }
+
+
     }
 
     public function test_IRI_resolution_01()
@@ -710,7 +711,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_LITERAL1_all_controls()
     {
@@ -745,7 +746,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_LITERAL1_ascii_boundaries()
     {
@@ -797,7 +798,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_LITERAL2_ascii_boundaries()
     {
@@ -870,7 +871,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_LITERAL_LONG1_ascii_boundaries()
     {
@@ -964,7 +965,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_LITERAL_LONG2_ascii_boundaries()
     {
@@ -1965,7 +1966,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException  \RDF\Parser\ParserException
+     * @expectedException  \RDFPhp\Parser\ParserException
      */
     public function test_trig_bnodeplist_graph_bad_01()
     {
@@ -1979,7 +1980,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_collection_graph_bad_01()
     {
@@ -1993,7 +1994,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_collection_graph_bad_02()
     {
@@ -2009,7 +2010,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_eval_bad_01()
     {
@@ -2024,7 +2025,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_eval_bad_02()
     {
@@ -2039,7 +2040,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_eval_bad_03()
     {
@@ -2054,7 +2055,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_eval_bad_04()
     {
@@ -2114,7 +2115,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_graph_bad_01()
     {
@@ -2129,7 +2130,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_graph_bad_02()
     {
@@ -2143,7 +2144,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_graph_bad_03()
     {
@@ -2157,7 +2158,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_graph_bad_04()
     {
@@ -2171,7 +2172,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_graph_bad_05()
     {
@@ -2185,7 +2186,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_graph_bad_06()
     {
@@ -2199,7 +2200,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_graph_bad_07()
     {
@@ -2213,7 +2214,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_graph_bad_08()
     {
@@ -2227,7 +2228,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_graph_bad_09()
     {
@@ -2241,7 +2242,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_graph_bad_10()
     {
@@ -2255,7 +2256,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_graph_bad_11()
     {
@@ -3371,7 +3372,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_base_01()
     {
@@ -3385,7 +3386,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_base_02()
     {
@@ -3399,7 +3400,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_base_03()
     {
@@ -3413,7 +3414,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_base_04()
     {
@@ -3427,7 +3428,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_base_05()
     {
@@ -3441,7 +3442,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_blank_label_dot_end()
     {
@@ -3455,7 +3456,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_esc_01()
     {
@@ -3469,7 +3470,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_esc_02()
     {
@@ -3483,7 +3484,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_esc_03()
     {
@@ -3497,7 +3498,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_esc_04()
     {
@@ -3511,7 +3512,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_kw_01()
     {
@@ -3525,7 +3526,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_kw_02()
     {
@@ -3539,7 +3540,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_kw_03()
     {
@@ -3553,7 +3554,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_kw_04()
     {
@@ -3567,7 +3568,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_kw_05()
     {
@@ -3581,7 +3582,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_lang_01()
     {
@@ -3595,7 +3596,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_list_01()
     {
@@ -3609,7 +3610,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_list_02()
     {
@@ -3623,7 +3624,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_list_03()
     {
@@ -3637,7 +3638,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_list_04()
     {
@@ -3651,7 +3652,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_LITERAL2_with_langtag_and_datatype()
     {
@@ -3665,7 +3666,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_ln_dash_start()
     {
@@ -3679,7 +3680,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_ln_escape()
     {
@@ -3693,7 +3694,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_ln_escape_start()
     {
@@ -3707,7 +3708,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_missing_ns_dot_end()
     {
@@ -3721,7 +3722,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_missing_ns_dot_start()
     {
@@ -3735,7 +3736,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_n3_extras_01()
     {
@@ -3749,7 +3750,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_n3_extras_02()
     {
@@ -3763,7 +3764,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_n3_extras_03()
     {
@@ -3777,7 +3778,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_n3_extras_04()
     {
@@ -3791,7 +3792,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_n3_extras_05()
     {
@@ -3805,7 +3806,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_n3_extras_06()
     {
@@ -3819,7 +3820,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_n3_extras_07()
     {
@@ -3833,7 +3834,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_n3_extras_08()
     {
@@ -3847,7 +3848,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_n3_extras_09()
     {
@@ -3861,7 +3862,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_n3_extras_10()
     {
@@ -3875,7 +3876,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_n3_extras_11()
     {
@@ -3889,7 +3890,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_n3_extras_12()
     {
@@ -3903,7 +3904,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_n3_extras_13()
     {
@@ -3917,7 +3918,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_ns_dot_end()
     {
@@ -3931,7 +3932,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_ns_dot_start()
     {
@@ -3945,7 +3946,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_num_01()
     {
@@ -3959,7 +3960,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_num_02()
     {
@@ -3973,7 +3974,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_num_03()
     {
@@ -3987,7 +3988,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_num_04()
     {
@@ -4001,7 +4002,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_num_05()
     {
@@ -4015,7 +4016,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_number_dot_in_anon()
     {
@@ -4029,7 +4030,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_pname_01()
     {
@@ -4043,7 +4044,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_pname_02()
     {
@@ -4057,7 +4058,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_pname_03()
     {
@@ -4071,7 +4072,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_prefix_01()
     {
@@ -4085,7 +4086,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_prefix_02()
     {
@@ -4099,7 +4100,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_prefix_03()
     {
@@ -4113,7 +4114,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_prefix_04()
     {
@@ -4127,7 +4128,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_prefix_05()
     {
@@ -4141,7 +4142,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_prefix_06()
     {
@@ -4155,7 +4156,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_prefix_07()
     {
@@ -4169,7 +4170,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_string_01()
     {
@@ -4183,7 +4184,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_string_02()
     {
@@ -4197,7 +4198,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_string_03()
     {
@@ -4211,7 +4212,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_string_04()
     {
@@ -4225,7 +4226,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_string_05()
     {
@@ -4239,7 +4240,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_string_06()
     {
@@ -4253,7 +4254,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_string_07()
     {
@@ -4267,7 +4268,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_struct_02()
     {
@@ -4281,7 +4282,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_struct_03()
     {
@@ -4295,7 +4296,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_struct_04()
     {
@@ -4309,7 +4310,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_struct_05()
     {
@@ -4323,7 +4324,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_struct_06()
     {
@@ -4337,7 +4338,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_struct_07()
     {
@@ -4352,7 +4353,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_struct_09()
     {
@@ -4367,7 +4368,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_struct_10()
     {
@@ -4382,7 +4383,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_struct_12()
     {
@@ -4397,7 +4398,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_struct_13()
     {
@@ -4412,7 +4413,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_struct_14()
     {
@@ -4427,7 +4428,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_struct_15()
     {
@@ -4442,7 +4443,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_struct_16()
     {
@@ -4457,7 +4458,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_struct_17()
     {
@@ -4472,7 +4473,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_uri_01()
     {
@@ -4486,7 +4487,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_uri_02()
     {
@@ -4500,7 +4501,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_uri_03()
     {
@@ -4514,7 +4515,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_uri_04()
     {
@@ -4528,7 +4529,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bad_uri_05()
     {
@@ -4635,7 +4636,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bnode_01()
     {
@@ -4734,7 +4735,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_syntax_bnode_10()
     {
@@ -6136,7 +6137,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_turtle_bad_01()
     {
@@ -6150,7 +6151,7 @@ class TrigParserTest extends TestCase
     }
 
     /**
-     * @expectedException \RDF\Parser\ParserException
+     * @expectedException \RDFPhp\Parser\ParserException
      */
     public function test_trig_turtle_bad_02()
     {

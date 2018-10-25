@@ -1,19 +1,19 @@
 <?php
 
 
-namespace RDF\Decoder;
+namespace RDFPhp\Decoder;
 
-use RDF\Entity\Graph;
-use RDF\Entity\Predicates;
-use RDF\Entity\Prefix;
-use RDF\Entity\RDFObject;
-use RDF\Entity\RDFObjects;
-use RDF\Entity\Resource;
-use RDF\Entity\Resources;
-use RDF\Entity\Subject;
-use RDF\Parser\Parser;
-use RDF\Entity\Predicate;
-use RDF\Entity\Prefixes;
+use RDFPhp\Entity\Graph;
+use RDFPhp\Entity\Predicates;
+use RDFPhp\Entity\Prefix;
+use RDFPhp\Entity\RDFObject;
+use RDFPhp\Entity\RDFObjects;
+use RDFPhp\Entity\Resource;
+use RDFPhp\Entity\Resources;
+use RDFPhp\Entity\Subject;
+use RDFPhp\Parser\Parser;
+use RDFPhp\Entity\Predicate;
+use RDFPhp\Entity\Prefixes;
 
 /**
  * Class Decoder
@@ -46,7 +46,7 @@ class Decoder
 
     /**
      * @return Resources
-     * @throws \RDF\Entity\EntityException
+     * @throws \RDFPhp\Entity\EntityException
      */
     public function decode(): Resources
     {
@@ -111,7 +111,7 @@ class Decoder
     }
 
     /**
-     * @throws \RDF\Entity\EntityException
+     * @throws \RDFPhp\Entity\EntityException
      */
     protected function createResource()
     {
@@ -158,7 +158,7 @@ class Decoder
      * @param string $subject
      * @param array $data
      * @return Subject
-     * @throws \RDF\Entity\EntityException
+     * @throws \RDFPhp\Entity\EntityException
      */
     protected function createSubject(string $subject, array $data): Subject
     {

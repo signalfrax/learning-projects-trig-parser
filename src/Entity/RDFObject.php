@@ -1,9 +1,9 @@
 <?php
 
 
-namespace RDF\Entity;
+namespace RDFPhp\Entity;
 
-use RDF\Entity\Iri;
+use RDFPhp\Entity\Iri;
 use JsonSerializable;
 use Serializable;
 
@@ -20,9 +20,6 @@ final class RDFObject implements JsonSerializable, Serializable
 
     public function __construct($value, string $langTag = null, string $dataType = null)
     {
-        if (!empty($langTag) && !empty($dataType)) {
-            throw new EntityException("You cannot set both language tag and data type fields.");
-        }
         $this->value = (!$value instanceof Iri) ? $value : $value->raw();
         $this->isResource = ($value instanceof Iri);
         $this->langTag = $langTag;

@@ -1,11 +1,11 @@
 <?php
 
 
-namespace RDF;
+namespace RDFPhp;
 
 /**
  * Class Namespaces
- * @package RDF
+ * @package RDFPhp
  *
  * This class contains the common
  */
