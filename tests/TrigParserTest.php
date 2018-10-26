@@ -2425,7 +2425,6 @@ class TrigParserTest extends TestCase
      */
     public function test_trig_eval_bad_01()
     {
-        $this->markTestSkipped("Add support to decode unicode escape characters.");
         $content = $this->loadFixture("w3c-test-suite/trig-eval-bad-01.trig");
         $p = new TrigParser();
 
@@ -2440,7 +2439,6 @@ class TrigParserTest extends TestCase
      */
     public function test_trig_eval_bad_02()
     {
-        $this->markTestSkipped("Add support to decode unicode escape characters.");
         $content = $this->loadFixture("w3c-test-suite/trig-eval-bad-02.trig");
         $p = new TrigParser();
 
@@ -2455,7 +2453,6 @@ class TrigParserTest extends TestCase
      */
     public function test_trig_eval_bad_03()
     {
-        $this->markTestSkipped("Add support to decode unicode escape characters.");
         $content = $this->loadFixture("w3c-test-suite/trig-eval-bad-03.trig");
         $p = new TrigParser();
 

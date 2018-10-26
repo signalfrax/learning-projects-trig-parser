@@ -138,6 +138,9 @@ class TrigParser implements Parser
                             break;
                         case $this->rules['iriRef']:
                             $escaped = $this->unescapeNumeric(trim($this->parser->sigil(0), '<>'));
+                            if (preg_match('/[<>\x00-\x20\{\}"\|\^`\\\\]+/', $escaped)) {
+                                throw new ParserException("Invalid IRIREF [{$this->parser->sigil(0)}]");
+                            }
                             $this->iris[] = resolve_relative_iri($this->base, $escaped);
                             break;
                         case $this->rules['graph']:
