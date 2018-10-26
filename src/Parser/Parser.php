@@ -20,6 +20,8 @@ interface Parser
     const OBJECT_WITH_DATATYPE = 6;
     const OBJECT_IRI = 7;
     const BASE = 8;
+    const SUBJECT_BLANK_NODE = 9;
+    const OBJECT_BLANK_NODE = 10;
 
     /**
      * This method must 'yield' and array of the following

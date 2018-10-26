@@ -5919,7 +5919,7 @@ class TrigParserTest extends TestCase
         $this->assertEquals([
             [Parser::SUBJECT => ['http://example/s']],
             [Parser::PREDICATE => ['http://example/p']],
-            [Parser::OBJECT_WITH_DATATYPE => ["a\u{0020}", Namespaces::XSD_STRING]],
+            [Parser::OBJECT_WITH_DATATYPE => ["a\u{0020}b", Namespaces::XSD_STRING]],
 
         ], $actual);
 
@@ -5938,7 +5938,7 @@ class TrigParserTest extends TestCase
         $this->assertEquals([
             [Parser::SUBJECT => ['http://example/s']],
             [Parser::PREDICATE => ['http://example/p']],
-            [Parser::OBJECT_WITH_DATATYPE => ["a\u{00000020}", Namespaces::XSD_STRING]],
+            [Parser::OBJECT_WITH_DATATYPE => ["a\u{00000020}b", Namespaces::XSD_STRING]],
 
         ], $actual);
     }
