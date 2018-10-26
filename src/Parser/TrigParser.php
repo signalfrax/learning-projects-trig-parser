@@ -116,7 +116,7 @@ class TrigParser implements Parser
                         case $this->rules['sparqlBase']:
                             $trimmed = trim($this->parser->sigil(1), '<>');
                             $result = $this->unescapeNumeric($trimmed);
-                            $this->base = parse_url($result);
+                            $this->base = parse_url(resolve_relative_iri($this->base, $result));
                             yield Parser::BASE => [ $trimmed ];
                             break;
                         case $this->rules['iriPrefixedName']:
@@ -138,7 +138,7 @@ class TrigParser implements Parser
                             break;
                         case $this->rules['iriRef']:
                             $escaped = $this->unescapeNumeric(trim($this->parser->sigil(0), '<>'));
-                            $this->iris[] = $this->resolveIri($escaped);
+                            $this->iris[] = resolve_relative_iri($this->base, $escaped);
                             break;
                         case $this->rules['graph']:
                         case $this->rules['wrappedGraph']:
@@ -258,11 +258,6 @@ HEREDOC;
     protected function unescapeReservedCharacters(string $token): string
     {
         return preg_replace("/\\\\([~\.\-\!\$&'\(\)\*\+,;\=\/\?#@%_])/", '$1', $token);
-    }
-
-    protected function resolveIri(string $iri): string
-    {
-        return $iri;
     }
 
     protected function buildTokens()

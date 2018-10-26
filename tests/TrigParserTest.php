@@ -374,22 +374,8 @@ class TrigParserTest extends TestCase
 
     }
 
-    public function test_IRI_resolution()
-    {
-        $content = $this->loadFixture("w3c-test-suite/IRI-resolution.trig");
-        $p = new TrigParser();
-
-        $actual = [];
-        foreach ($p->parse($content) as $token => $values) {
-            $actual[][$token] = $values;
-        }
-
-
-    }
-
     public function test_IRI_resolution_01()
     {
-        $this->markTestIncomplete("Implement");
         $content = $this->loadFixture("w3c-test-suite/IRI-resolution-01.trig");
         $p = new TrigParser();
 
@@ -397,11 +383,140 @@ class TrigParserTest extends TestCase
         foreach ($p->parse($content) as $token => $values) {
             $actual[][$token] = $values;
         }
+
+        $this->assertEquals([[ Parser::BASE => [ 'http://a/bb/ccc/d;p?q' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'g:h' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s001' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s002' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s003' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/g/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s004' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s005' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s006' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d;p?y' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s007' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/g?y' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s008' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d;p?q#s' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s009' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/g#s' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s010' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/g?y#s' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s011' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/;x' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s012' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/g;x' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s013' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/g;x?y#s' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s014' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d;p?q' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s015' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s016' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s017' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s018' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s019' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s020' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s021' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s022' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s023' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s024' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s025' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s026' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s027' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/g.' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s028' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/.g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s029' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/g..' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s030' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/..g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s031' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s032' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/g/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s033' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/g/h' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s034' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/h' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s035' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/g;x=1/y' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s036' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/y' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s037' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/g?y/./x' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s038' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/g?y/../x' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s039' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/g#s/./x' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s040' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/g#s/../x' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s041' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http:g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s042' ]],
+        ],$actual);
+
     }
 
     public function test_IRI_resolution_02()
     {
-        $this->markTestIncomplete("Implement");
         $content = $this->loadFixture("w3c-test-suite/IRI-resolution-02.trig");
         $p = new TrigParser();
 
@@ -409,11 +524,138 @@ class TrigParserTest extends TestCase
         foreach ($p->parse($content) as $token => $values) {
             $actual[][$token] = $values;
         }
+        $this->assertEquals([[ Parser::BASE => [ 'http://a/bb/ccc/d/' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'g:h' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s043' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s044' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s045' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/g/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s046' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s047' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s048' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/?y' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s049' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/g?y' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s050' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/#s' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s051' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/g#s' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s052' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/g?y#s' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s053' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/;x' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s054' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/g;x' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s055' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/g;x?y#s' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s056' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s057' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s058' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s059' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s060' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s061' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s062' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s063' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s064' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s065' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s066' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s067' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s068' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s069' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/g.' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s070' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/.g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s071' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/g..' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s072' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/..g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s073' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s074' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/g/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s075' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/g/h' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s076' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/h' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s077' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/g;x=1/y' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s078' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/y' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s079' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/g?y/./x' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s080' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/g?y/../x' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s081' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/g#s/./x' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s082' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a/bb/ccc/d/g#s/../x' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s083' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http:g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s084' ]],
+        ],$actual);
     }
 
     public function test_IRI_resolution_07()
     {
-        $this->markTestIncomplete("Implement");
         $content = $this->loadFixture("w3c-test-suite/IRI-resolution-07.trig");
         $p = new TrigParser();
 
@@ -421,11 +663,139 @@ class TrigParserTest extends TestCase
         foreach ($p->parse($content) as $token => $values) {
             $actual[][$token] = $values;
         }
+
+        $this->assertEquals([[ Parser::BASE => [ 'file:///a/bb/ccc/d;p?q' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'g:h' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s253' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s254' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s255' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/g/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s256' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s257' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file://g//' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s258' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/d;p?y' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s259' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/g?y' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s260' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/d;p?q#s' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s261' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/g#s' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s262' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/g?y#s' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s263' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/;x' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s264' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/g;x' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s265' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/g;x?y#s' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s266' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/d;p?q' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s267' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s268' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s269' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s270' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s271' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s272' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s273' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s274' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s275' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s276' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s277' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s278' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s279' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/g.' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s280' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/.g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s281' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/g..' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s282' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/..g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s283' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s284' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/g/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s285' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/g/h' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s286' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/h' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s287' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/g;x=1/y' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s288' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/y' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s289' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/g?y/./x' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s290' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/g?y/../x' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s291' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/g#s/./x' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s292' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'file:///a/bb/ccc/g#s/../x' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s293' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http:g' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s294' ]],
+        ],$actual);
     }
 
     public function test_IRI_resolution_08()
     {
-        $this->markTestIncomplete("Implement");
         $content = $this->loadFixture("w3c-test-suite/IRI-resolution-08.trig");
         $p = new TrigParser();
 
@@ -433,6 +803,47 @@ class TrigParserTest extends TestCase
         foreach ($p->parse($content) as $token => $values) {
             $actual[][$token] = $values;
         }
+
+        $this->assertEquals([[ Parser::BASE => [ 'http://abc/def/ghi' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://abc/def/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s295' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://abc/def/?a=b' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s296' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://abc/def/#a=b' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s297' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://abc/' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s298' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://abc/?a=b' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s299' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://abc/#a=b' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s300' ]],
+            [ Parser::BASE => [ 'http://ab//de//ghi' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://ab//de//xyz' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s301' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://ab//de//xyz' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s302' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://ab//de/xyz' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s303' ]],
+            [ Parser::BASE => [ 'http://abc/d:f/ghi' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://abc/d:f/xyz' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s304' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://abc/d:f/xyz' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s305' ]],
+            [ Parser::PREDICATE => [ 'urn:ex:p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://abc/xyz' ]],
+            [ Parser::SUBJECT => [ 'urn:ex:s306' ]],
+        ],$actual);
     }
 
     public function test_IRI_subject()
@@ -4762,8 +5173,8 @@ class TrigParserTest extends TestCase
         $this->assertEquals([
             [Parser::PREFIX => ['xsd', 'http://www.w3.org/2001/XMLSchema#']],
 
-            [Parser::SUBJECT => ['s']],
-            [Parser::PREDICATE => ['p']],
+            [Parser::SUBJECT => ['http://rdf-php/s']],
+            [Parser::PREDICATE => ['http://rdf-php/p']],
             [Parser::OBJECT_WITH_DATATYPE => ['123', 'http://www.w3.org/2001/XMLSchema#byte']],
 
         ], $actual);
@@ -4784,8 +5195,8 @@ class TrigParserTest extends TestCase
             [Parser::PREFIX => ['rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#']],
             [Parser::PREFIX => ['xsd', 'http://www.w3.org/2001/XMLSchema#']],
 
-            [Parser::SUBJECT => ['s']],
-            [Parser::PREDICATE => ['p']],
+            [Parser::SUBJECT => ['http://rdf-php/s']],
+            [Parser::PREDICATE => ['http://rdf-php/p']],
             [Parser::OBJECT_WITH_DATATYPE => ['123', 'http://www.w3.org/2001/XMLSchema#string']],
 
         ], $actual);
@@ -4842,8 +5253,8 @@ class TrigParserTest extends TestCase
         }
 
         $this->assertEquals([
-            [Parser::SUBJECT => ['s']],
-            [Parser::PREDICATE => ['p']],
+            [Parser::SUBJECT => ['http://rdf-php/s']],
+            [Parser::PREDICATE => ['http://rdf-php/p']],
             [Parser::OBJECT_WITH_DATATYPE => ['true', Namespaces::XSD_BOOLEAN]],
 
         ], $actual);
@@ -4861,8 +5272,8 @@ class TrigParserTest extends TestCase
         }
 
         $this->assertEquals([
-            [Parser::SUBJECT => ['s']],
-            [Parser::PREDICATE => ['p']],
+            [Parser::SUBJECT => ['http://rdf-php/s']],
+            [Parser::PREDICATE => ['http://rdf-php/p']],
             [Parser::OBJECT_WITH_DATATYPE => ['false', Namespaces::XSD_BOOLEAN]],
 
         ], $actual);
@@ -5056,8 +5467,8 @@ class TrigParserTest extends TestCase
         }
 
         $this->assertEquals([
-            [Parser::SUBJECT => ['s']],
-            [Parser::PREDICATE => ['p']],
+            [Parser::SUBJECT => ['http://rdf-php/s']],
+            [Parser::PREDICATE => ['http://rdf-php/p']],
             [Parser::OBJECT_WITH_DATATYPE => ['123', Namespaces::XSD_INTEGER]],
 
         ], $actual);
@@ -5075,8 +5486,8 @@ class TrigParserTest extends TestCase
         }
 
         $this->assertEquals([
-            [Parser::SUBJECT => ['s']],
-            [Parser::PREDICATE => ['p']],
+            [Parser::SUBJECT => ['http://rdf-php/s']],
+            [Parser::PREDICATE => ['http://rdf-php/p']],
             [Parser::OBJECT_WITH_DATATYPE => ['-123', Namespaces::XSD_INTEGER]],
 
         ], $actual);
@@ -5094,8 +5505,8 @@ class TrigParserTest extends TestCase
         }
 
         $this->assertEquals([
-            [Parser::SUBJECT => ['s']],
-            [Parser::PREDICATE => ['p']],
+            [Parser::SUBJECT => ['http://rdf-php/s']],
+            [Parser::PREDICATE => ['http://rdf-php/p']],
             [Parser::OBJECT_WITH_DATATYPE => ['+123', Namespaces::XSD_INTEGER]],
 
         ], $actual);
@@ -5113,8 +5524,8 @@ class TrigParserTest extends TestCase
         }
 
         $this->assertEquals([
-            [Parser::SUBJECT => ['s']],
-            [Parser::PREDICATE => ['p']],
+            [Parser::SUBJECT => ['http://rdf-php/s']],
+            [Parser::PREDICATE => ['http://rdf-php/p']],
             [Parser::OBJECT_WITH_DATATYPE => ['123.0', Namespaces::XSD_DECIMAL]],
 
         ], $actual);
@@ -5132,8 +5543,8 @@ class TrigParserTest extends TestCase
         }
 
         $this->assertEquals([
-            [Parser::SUBJECT => ['s']],
-            [Parser::PREDICATE => ['p']],
+            [Parser::SUBJECT => ['http://rdf-php/s']],
+            [Parser::PREDICATE => ['http://rdf-php/p']],
             [Parser::OBJECT_WITH_DATATYPE => ['.1', Namespaces::XSD_DECIMAL]],
 
         ], $actual);
@@ -5151,8 +5562,8 @@ class TrigParserTest extends TestCase
         }
 
         $this->assertEquals([
-            [Parser::SUBJECT => ['s']],
-            [Parser::PREDICATE => ['p']],
+            [Parser::SUBJECT => ['http://rdf-php/s']],
+            [Parser::PREDICATE => ['http://rdf-php/p']],
             [Parser::OBJECT_WITH_DATATYPE => ['-123.0', Namespaces::XSD_DECIMAL]],
 
         ], $actual);
@@ -5170,8 +5581,8 @@ class TrigParserTest extends TestCase
         }
 
         $this->assertEquals([
-            [Parser::SUBJECT => ['s']],
-            [Parser::PREDICATE => ['p']],
+            [Parser::SUBJECT => ['http://rdf-php/s']],
+            [Parser::PREDICATE => ['http://rdf-php/p']],
             [Parser::OBJECT_WITH_DATATYPE => ['+123.0', Namespaces::XSD_DECIMAL]],
 
         ], $actual);
@@ -5189,8 +5600,8 @@ class TrigParserTest extends TestCase
         }
 
         $this->assertEquals([
-            [Parser::SUBJECT => ['s']],
-            [Parser::PREDICATE => ['p']],
+            [Parser::SUBJECT => ['http://rdf-php/s']],
+            [Parser::PREDICATE => ['http://rdf-php/p']],
             [Parser::OBJECT_WITH_DATATYPE => ['123', Namespaces::XSD_INTEGER]],
 
         ], $actual);
@@ -5208,8 +5619,8 @@ class TrigParserTest extends TestCase
         }
 
         $this->assertEquals([
-            [Parser::SUBJECT => ['s']],
-            [Parser::PREDICATE => ['p']],
+            [Parser::SUBJECT => ['http://rdf-php/s']],
+            [Parser::PREDICATE => ['http://rdf-php/p']],
             [Parser::OBJECT_WITH_DATATYPE => ['123.0e1', Namespaces::XSD_DOUBLE]],
 
         ], $actual);
@@ -5227,8 +5638,8 @@ class TrigParserTest extends TestCase
         }
 
         $this->assertEquals([
-            [Parser::SUBJECT => ['s']],
-            [Parser::PREDICATE => ['p']],
+            [Parser::SUBJECT => ['http://rdf-php/s']],
+            [Parser::PREDICATE => ['http://rdf-php/p']],
             [Parser::OBJECT_WITH_DATATYPE => ['-123e-1', Namespaces::XSD_DOUBLE]],
 
         ], $actual);
@@ -5246,8 +5657,8 @@ class TrigParserTest extends TestCase
         }
 
         $this->assertEquals([
-            [Parser::SUBJECT => ['s']],
-            [Parser::PREDICATE => ['p']],
+            [Parser::SUBJECT => ['http://rdf-php/s']],
+            [Parser::PREDICATE => ['http://rdf-php/p']],
             [Parser::OBJECT_WITH_DATATYPE => ['123.E+1', Namespaces::XSD_DOUBLE]],
 
         ], $actual);

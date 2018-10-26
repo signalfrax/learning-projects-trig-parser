@@ -24,9 +24,15 @@
         ],
         "psr-4": {
             "RDFPhp\\": "src/"
-        }
+        },
+        "files": [
+            "src/functions.php"
+        ]
     },
     "autoload-dev": {
-        "Tests\\": "tests/"
+        "Tests\\": "tests/",
+        "files": [
+            "tests/test_write_helper_functions.php"
+        ]
     }
 }
