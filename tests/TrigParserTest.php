@@ -3754,8 +3754,6 @@ class TrigParserTest extends TestCase
 
     public function test_trig_subm_27()
     {
-        $this->markTestSkipped("Add proper support for base iri.");
-
         $content = $this->loadFixture("w3c-test-suite/trig-subm-27.trig");
         $p = new TrigParser();
 
@@ -3764,18 +3762,26 @@ class TrigParserTest extends TestCase
             $actual[][$token] = $values;
         }
 
-        $this->assertEquals([
-
-            [Parser::SUBJECT => ['a1']],
-            [Parser::PREDICATE => ['b1']],
-            [Parser::OBJECT_IRI => ['c1']],
-
-            [Parser::SUBJECT => ['http://example.org/bar#blah']],
-            [Parser::PREDICATE => ['http://example.org/bar#blah']],
-            [Parser::OBJECT_IRI => ['http://example.org/bar#blah']],
-
-            [Parser::GRAPH => ['http://example/graph']],
-        ], $actual);
+        $this->assertEquals([[ Parser::SUBJECT => [ 'http://rdf-php/a1' ]],
+            [ Parser::PREDICATE => [ 'http://rdf-php/b1' ]],
+            [ Parser::OBJECT_IRI => [ 'http://rdf-php/c1' ]],
+            [ Parser::BASE => [ 'http://example.org/ns/' ]],
+            [ Parser::SUBJECT => [ 'http://example.org/ns/a2' ]],
+            [ Parser::PREDICATE => [ 'http://example.org/ns/b2' ]],
+            [ Parser::OBJECT_IRI => [ 'http://example.org/ns/c2' ]],
+            [ Parser::BASE => [ 'foo/' ]],
+            [ Parser::SUBJECT => [ 'http://example.org/ns/foo/a3' ]],
+            [ Parser::PREDICATE => [ 'http://example.org/ns/foo/b3' ]],
+            [ Parser::OBJECT_IRI => [ 'http://example.org/ns/foo/c3' ]],
+            [ Parser::PREFIX => [ '', 'bar#' ]],
+            [ Parser::SUBJECT => [ 'bar#a4' ]],
+            [ Parser::PREDICATE => [ 'bar#b4' ]],
+            [ Parser::OBJECT_IRI => [ 'bar#c4' ]],
+            [ Parser::PREFIX => [ '', 'http://example.org/ns2#' ]],
+            [ Parser::SUBJECT => [ 'http://example.org/ns2#a5' ]],
+            [ Parser::PREDICATE => [ 'http://example.org/ns2#b5' ]],
+            [ Parser::OBJECT_IRI => [ 'http://example.org/ns2#c5' ]],
+        ],$actual);
 
     }
 
@@ -4765,7 +4771,6 @@ class TrigParserTest extends TestCase
      */
     public function test_trig_syntax_bad_struct_09()
     {
-        //$this->markTestSkipped("Add proper support for blank nodes.");
         $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-09.trig");
         $p = new TrigParser();
 
@@ -4780,7 +4785,6 @@ class TrigParserTest extends TestCase
      */
     public function test_trig_syntax_bad_struct_10()
     {
-        //$this->markTestSkipped("Add proper support for blank nodes.");
         $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-10.trig");
         $p = new TrigParser();
 
@@ -4795,7 +4799,6 @@ class TrigParserTest extends TestCase
      */
     public function test_trig_syntax_bad_struct_12()
     {
-        //$this->markTestSkipped("Add proper support for blank nodes.");
         $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-12.trig");
         $p = new TrigParser();
 
@@ -4810,7 +4813,6 @@ class TrigParserTest extends TestCase
      */
     public function test_trig_syntax_bad_struct_13()
     {
-        //$this->markTestSkipped("Add proper support for blank nodes.");
         $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-13.trig");
         $p = new TrigParser();
 
@@ -4825,7 +4827,6 @@ class TrigParserTest extends TestCase
      */
     public function test_trig_syntax_bad_struct_14()
     {
-        //$this->markTestSkipped("Add proper support for blank nodes.");
         $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-14.trig");
         $p = new TrigParser();
 
@@ -4840,7 +4841,6 @@ class TrigParserTest extends TestCase
      */
     public function test_trig_syntax_bad_struct_15()
     {
-        //$this->markTestSkipped("Add proper support for blank nodes.");
         $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-15.trig");
         $p = new TrigParser();
 
@@ -4855,7 +4855,6 @@ class TrigParserTest extends TestCase
      */
     public function test_trig_syntax_bad_struct_16()
     {
-        //$this->markTestSkipped("Add proper support for blank nodes.");
         $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-16.trig");
         $p = new TrigParser();
 
@@ -4952,7 +4951,6 @@ class TrigParserTest extends TestCase
 
     public function test_trig_syntax_base_01()
     {
-        $this->markTestIncomplete("Add support for base.");
         $content = $this->loadFixture("w3c-test-suite/trig-syntax-base-01.trig");
         $p = new TrigParser();
 
@@ -4980,7 +4978,6 @@ class TrigParserTest extends TestCase
 
     public function test_trig_syntax_base_03()
     {
-        $this->markTestSkipped("Add proper support for base.");
         $content = $this->loadFixture("w3c-test-suite/trig-syntax-base-03.trig");
         $p = new TrigParser();
 
@@ -4990,7 +4987,7 @@ class TrigParserTest extends TestCase
         }
 
         $this->assertEquals([
-
+            [Parser::BASE => ['http://example/']],
             [Parser::SUBJECT => ['http://example/s']],
             [Parser::PREDICATE => ['http://example/p']],
             [Parser::OBJECT_IRI => ['http://example/o']],
@@ -5000,7 +4997,6 @@ class TrigParserTest extends TestCase
 
     public function test_trig_syntax_base_04()
     {
-        $this->markTestSkipped("Add proper support for base.");
         $content = $this->loadFixture("w3c-test-suite/trig-syntax-base-04.trig");
         $p = new TrigParser();
 
@@ -5010,7 +5006,7 @@ class TrigParserTest extends TestCase
         }
 
         $this->assertEquals([
-
+            [Parser::BASE => ['http://example/']],
             [Parser::SUBJECT => ['http://example/s']],
             [Parser::PREDICATE => ['http://example/p']],
             [Parser::OBJECT_IRI => ['http://example/o']],
@@ -5893,7 +5889,6 @@ class TrigParserTest extends TestCase
 
     public function test_trig_syntax_str_esc_01()
     {
-        $this->markTestIncomplete("Add support for escaping in string literals");
         $content = $this->loadFixture("w3c-test-suite/trig-syntax-str-esc-01.trig");
         $p = new TrigParser();
 
@@ -5905,7 +5900,7 @@ class TrigParserTest extends TestCase
         $this->assertEquals([
             [Parser::SUBJECT => ['http://example/s']],
             [Parser::PREDICATE => ['http://example/p']],
-            [Parser::OBJECT_WITH_DATATYPE => ['a\n', Namespaces::XSD_STRING]],
+            [Parser::OBJECT_WITH_DATATYPE => ["a\n", Namespaces::XSD_STRING]],
 
         ], $actual);
 
@@ -5913,7 +5908,6 @@ class TrigParserTest extends TestCase
 
     public function test_trig_syntax_str_esc_02()
     {
-        $this->markTestIncomplete("Add support for escaping in string literals");
         $content = $this->loadFixture("w3c-test-suite/trig-syntax-str-esc-02.trig");
         $p = new TrigParser();
 
@@ -5925,7 +5919,7 @@ class TrigParserTest extends TestCase
         $this->assertEquals([
             [Parser::SUBJECT => ['http://example/s']],
             [Parser::PREDICATE => ['http://example/p']],
-            [Parser::OBJECT_WITH_DATATYPE => ['a\u0020b', Namespaces::XSD_STRING]],
+            [Parser::OBJECT_WITH_DATATYPE => ["a\u{0020}", Namespaces::XSD_STRING]],
 
         ], $actual);
 
@@ -5933,7 +5927,6 @@ class TrigParserTest extends TestCase
 
     public function test_trig_syntax_str_esc_03()
     {
-        $this->markTestIncomplete("Add support for escaping in string literals");
         $content = $this->loadFixture("w3c-test-suite/trig-syntax-str-esc-03.trig");
         $p = new TrigParser();
 
@@ -5945,7 +5938,7 @@ class TrigParserTest extends TestCase
         $this->assertEquals([
             [Parser::SUBJECT => ['http://example/s']],
             [Parser::PREDICATE => ['http://example/p']],
-            [Parser::OBJECT_WITH_DATATYPE => ['a\U00000020b', Namespaces::XSD_STRING]],
+            [Parser::OBJECT_WITH_DATATYPE => ["a\u{00000020}", Namespaces::XSD_STRING]],
 
         ], $actual);
     }
@@ -6326,7 +6319,6 @@ class TrigParserTest extends TestCase
 
     public function test_trig_syntax_uri_02()
     {
-        $this->markTestIncomplete("Add support for decoding unicode encoded strings.");
         $content = $this->loadFixture("w3c-test-suite/trig-syntax-uri-02.trig");
         $p = new TrigParser();
 
@@ -6337,7 +6329,7 @@ class TrigParserTest extends TestCase
 
         $this->assertEquals([
 
-            [Parser::SUBJECT => ['http://example/\u0053']],
+            [Parser::SUBJECT => ["http://example/\u{0053}"]],
             [Parser::PREDICATE => ['http://example/p']],
             [Parser::OBJECT_IRI => ['http://example/o']],
 
@@ -6346,7 +6338,6 @@ class TrigParserTest extends TestCase
 
     public function test_trig_syntax_uri_03()
     {
-        $this->markTestIncomplete("Add support for decoding unicode encoded strings.");
         $content = $this->loadFixture("w3c-test-suite/trig-syntax-uri-03.trig");
         $p = new TrigParser();
 
@@ -6357,7 +6348,7 @@ class TrigParserTest extends TestCase
 
         $this->assertEquals([
 
-            [Parser::SUBJECT => ['http://example/\U00000053']],
+            [Parser::SUBJECT => ["http://example/\u{00000053}"]],
             [Parser::PREDICATE => ['http://example/p']],
             [Parser::OBJECT_IRI => ['http://example/o']],
 
