@@ -40,6 +40,7 @@ class TrigParser implements Parser
     // Nodes is a stack which hold the iri /blanks for the next RDF terms to be processed.
     protected $nodes = [];
     protected $blankNodeCounter = 0;
+    protected $blankNodeMap = [];
 
     const WS = "\x20|\x9|\xD|\xA";
     const HEX = "[0-9]|[a-f]|[A-F]";
@@ -125,20 +126,15 @@ class TrigParser implements Parser
                             break;
                         case $this->actions['iriPrefixedName']:
                             $iri = $this->parser->sigil(0);
-                            // TODO: Refactor once we implement proper support for blank nodes.
-                            if ( ( FALSE === strpos($iri, '_:') || 0 != strpos($iri, '_:') ) && !isset($this->resolvedPrefixedIri[$iri])) {
+                            if (!isset($this->resolvedPrefixedIri[$iri])) {
                                 $prefix = substr($iri, 0, strpos($iri, ':'));
                                 $localName = $this->unescapeReservedCharacters(substr($iri, strpos($iri, ':') + 1));
                                 if (!isset($this->prefixes[$prefix])) {
                                     throw new ParserException("Invalid RDF document. Cannot find prefix [{$prefix}:]");
                                 }
                                 $this->resolvedPrefixedIri[$iri] = "{$this->prefixes[$prefix]}$localName";
-                                $this->nodes[] = [ self::IRI_NODE => $this->resolvedPrefixedIri[$iri] ];
-                            } else if (isset($this->resolvedPrefixedIri[$iri])) {
-                                $this->nodes[] = [ self::IRI_NODE => $this->resolvedPrefixedIri[$iri] ];
-                            } else {
-                                $this->nodes[] = [ self::IRI_NODE => $iri ];
                             }
+                            $this->nodes[] = [ self::IRI_NODE => $this->resolvedPrefixedIri[$iri] ];
                             break;
                         case $this->actions['iriRef']:
                             $escaped = $this->unescapeNumeric(trim($this->parser->sigil(0), '<>'));
@@ -149,6 +145,13 @@ class TrigParser implements Parser
                             break;
                         case $this->actions['BlankNodeAnon']:
                             $this->nodes[] = [ self::BLANK_NODE => $this->generateBlankNode($this->blankNodeCounter++) ];
+                            break;
+                        case $this->actions['BlankNodeLabel']:
+                            $blankLabel = $this->parser->sigil(0);
+                            if (!isset($this->blankNodeMap[$blankLabel])) {
+                                $this->blankNodeMap[$blankLabel] = $this->generateBlankNode($this->blankNodeCounter++);
+                            }
+                            $this->nodes[] = [ self::BLANK_NODE => $this->blankNodeMap[$blankLabel] ];
                             break;
                         case $this->actions['graph']:
                         case $this->actions['wrappedGraph']:
@@ -372,7 +375,7 @@ HEREDOC;
         $this->parser->push('collection', "'(' objects ')'");
         $this->parser->push('objects', 'objects object');
         $this->parser->push('objects', 'object');
-        $this->parser->push('BlankNode', 'BLANK_NODE_LABEL');
+        $this->actions['BlankNodeLabel'] = $this->parser->push('BlankNode', 'BLANK_NODE_LABEL');
         $this->actions['BlankNodeAnon'] = $this->parser->push('BlankNode', 'ANON');
         $this->actions['objectBoolean'] = $this->parser->push('BooleanLiteral', 'BOOLEAN');
         $this->actions['objectInteger'] = $this->parser->push('NumericalLiteral', 'INTEGER');
@@ -421,6 +424,7 @@ HEREDOC;
         $this->lexer->push(self::INTEGER, $this->parser->tokenId('INTEGER'));
         $this->lexer->push(self::DECIMAL, $this->parser->tokenId('DECIMAL'));
         $this->lexer->push(self::DOUBLE, $this->parser->tokenId('DOUBLE'));
+        $this->lexer->push(self::BLANK_NODE_LABEL, $this->parser->tokenId('BLANK_NODE_LABEL'));
         $this->lexer->push(self::IRIREF, $this->parser->tokenId('IRIREF'));
         $this->lexer->push(self::PNAME_LN, $this->parser->tokenId('PNAME_LN'));
         $this->lexer->push(self::PNAME_NS, $this->parser->tokenId('PNAME_NS'));
@@ -428,7 +432,6 @@ HEREDOC;
         $this->lexer->push(self::STRING_LITERAL_LONG_SINGLE_QUOTE, $this->parser->tokenId('STRING_LITERAL_LONG_SINGLE_QUOTE'));
         $this->lexer->push(self::STRING_LITERAL_QUOTE, $this->parser->tokenId('STRING_LITERAL_QUOTE'));
         $this->lexer->push(self::STRING_LITERAL_SINGLE_QUOTE, $this->parser->tokenId('STRING_LITERAL_SINGLE_QUOTE'));
-        $this->lexer->push(self::BLANK_NODE_LABEL, $this->parser->tokenId('BLANK_NODE_LABEL'));
         $this->lexer->push(self::LANGTAG, $this->parser->tokenId('LANGTAG'));
         $this->lexer->push(self::HEX, $this->parser->tokenId('HEX'));
         $this->lexer->push(self::PERCENT, $this->parser->tokenId('PERCENT'));

@@ -32,14 +32,14 @@ class TrigParserTest extends TestCase
             [Parser::SUBJECT => ['http://example/a']],
             [Parser::PREDICATE => ['http://example/b']],
             [Parser::OBJECT_IRI => ['http://example/d']],
-            [Parser::GRAPH => ['_:G']],
+            [Parser::GRAPH_BLANK_NODE => ['_:b0']],
             [Parser::SUBJECT => ['http://example/a']],
             [Parser::PREDICATE => ['http://example/b']],
             [Parser::OBJECT_IRI => ['http://example/e']],
             [Parser::SUBJECT => ['http://example/a']],
             [Parser::PREDICATE => ['http://example/b']],
             [Parser::OBJECT_IRI => ['http://example/f']],
-            [Parser::GRAPH => ['_:G']],
+            [Parser::GRAPH_BLANK_NODE => ['_:b0']],
         ], $actual);
 
     }
@@ -951,37 +951,153 @@ class TrigParserTest extends TestCase
 
     public function test_labeled_blank_node_graph()
     {
-        $this->markTestIncomplete("Add proper support for blanks and collection");
+        $content = $this->loadFixture("w3c-test-suite/labeled_blank_node_graph.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [ Parser::SUBJECT => [ 'http://a.example/s' ]],
+            [ Parser::PREDICATE => [ 'http://a.example/p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a.example/o' ]],
+            [ Parser::GRAPH_BLANK_NODE => [ '_:b0' ]],
+        ],$actual);
+
     }
 
     public function test_labeled_blank_node_object()
     {
-        $this->markTestIncomplete("Add proper support for blanks and collection");
+        $content = $this->loadFixture("w3c-test-suite/labeled_blank_node_object.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [ Parser::SUBJECT => [ 'http://a.example/s' ]],
+            [ Parser::PREDICATE => [ 'http://a.example/p' ]],
+            [ Parser::OBJECT_BLANK_NODE => [ '_:b0' ]],
+            [ Parser::SUBJECT => [ 'http://a.example/s' ]],
+            [ Parser::PREDICATE => [ 'http://a.example/p' ]],
+            [ Parser::OBJECT_BLANK_NODE => [ '_:b0' ]],
+            [ Parser::GRAPH => [ 'http://example/graph' ]],
+        ],$actual);
+
     }
 
     public function test_labeled_blank_node_subject()
     {
-        $this->markTestIncomplete("Add proper support for blanks and collection");
+        $content = $this->loadFixture("w3c-test-suite/labeled_blank_node_subject.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [ Parser::SUBJECT_BLANK_NODE => [ '_:b0' ]],
+            [ Parser::PREDICATE => [ 'http://a.example/p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a.example/o' ]],
+            [ Parser::SUBJECT_BLANK_NODE => [ '_:b0' ]],
+            [ Parser::PREDICATE => [ 'http://a.example/p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://a.example/o' ]],
+            [ Parser::GRAPH => [ 'http://example/graph' ]],
+        ],$actual);
+
     }
+
 
     public function test_labeled_blank_node_with_leading_digit()
     {
-        $this->markTestIncomplete("Add proper support for blanks and collection");
+        $content = $this->loadFixture("w3c-test-suite/labeled_blank_node_with_leading_digit.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [ Parser::SUBJECT => [ 'http://a.example/s' ]],
+            [ Parser::PREDICATE => [ 'http://a.example/p' ]],
+            [ Parser::OBJECT_BLANK_NODE => [ '_:b0' ]],
+            [ Parser::SUBJECT => [ 'http://a.example/s' ]],
+            [ Parser::PREDICATE => [ 'http://a.example/p' ]],
+            [ Parser::OBJECT_BLANK_NODE => [ '_:b0' ]],
+            [ Parser::GRAPH => [ 'http://example/graph' ]],
+        ],$actual);
+
     }
 
     public function test_labeled_blank_node_with_leading_underscore()
     {
-        $this->markTestIncomplete("Add proper support for blanks and collection");
+        $content = $this->loadFixture("w3c-test-suite/labeled_blank_node_with_leading_underscore.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [ Parser::SUBJECT => [ 'http://a.example/s' ]],
+            [ Parser::PREDICATE => [ 'http://a.example/p' ]],
+            [ Parser::OBJECT_BLANK_NODE => [ '_:b0' ]],
+            [ Parser::SUBJECT => [ 'http://a.example/s' ]],
+            [ Parser::PREDICATE => [ 'http://a.example/p' ]],
+            [ Parser::OBJECT_BLANK_NODE => [ '_:b0' ]],
+            [ Parser::GRAPH => [ 'http://example/graph' ]],
+        ],$actual);
     }
 
     public function test_labeled_blank_node_with_non_leading_extras()
     {
-        $this->markTestIncomplete("Add proper support for blanks and collection");
+        $content = $this->loadFixture("w3c-test-suite/labeled_blank_node_with_non_leading_extras.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [ Parser::SUBJECT => [ 'http://a.example/s' ]],
+            [ Parser::PREDICATE => [ 'http://a.example/p' ]],
+            [ Parser::OBJECT_BLANK_NODE => [ '_:b0' ]],
+            [ Parser::SUBJECT => [ 'http://a.example/s' ]],
+            [ Parser::PREDICATE => [ 'http://a.example/p' ]],
+            [ Parser::OBJECT_BLANK_NODE => [ '_:b0' ]],
+            [ Parser::GRAPH => [ 'http://example/graph' ]],
+        ],$actual);
+
     }
 
     public function test_labeled_blank_node_with_PN_CHARS_BASE_character_boundaries()
     {
-        $this->markTestIncomplete("Add proper support for blanks and collection");
+        $content = $this->loadFixture("w3c-test-suite/labeled_blank_node_with_PN_CHARS_BASE_character_boundaries.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [ Parser::SUBJECT => [ 'http://a.example/s' ]],
+            [ Parser::PREDICATE => [ 'http://a.example/p' ]],
+            [ Parser::OBJECT_BLANK_NODE => [ '_:b0' ]],
+            [ Parser::SUBJECT => [ 'http://a.example/s' ]],
+            [ Parser::PREDICATE => [ 'http://a.example/p' ]],
+            [ Parser::OBJECT_BLANK_NODE => [ '_:b0' ]],
+            [ Parser::GRAPH => [ 'http://example/graph' ]],
+        ],$actual);
+
     }
 
     public function test_langtagged_LONG()
@@ -2797,7 +2913,7 @@ class TrigParserTest extends TestCase
             [Parser::SUBJECT => ['http://example/s']],
             [Parser::PREDICATE => ['http://example/p']],
             [Parser::OBJECT_IRI => ['http://example/o']],
-            [Parser::GRAPH => ['_:a']],
+            [Parser::GRAPH_BLANK_NODE => ['_:b0']],
         ], $actual);
     }
 
@@ -4747,7 +4863,6 @@ class TrigParserTest extends TestCase
      */
     public function test_trig_syntax_bad_struct_07()
     {
-        $this->markTestSkipped("Add proper support for blank nodes.");
         $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-07.trig");
         $p = new TrigParser();
 
@@ -4860,7 +4975,6 @@ class TrigParserTest extends TestCase
      */
     public function test_trig_syntax_bad_struct_17()
     {
-        $this->markTestSkipped("Add proper support for blank nodes.");
         $content = $this->loadFixture("w3c-test-suite/trig-syntax-bad-struct-17.trig");
         $p = new TrigParser();
 
@@ -5011,7 +5125,6 @@ class TrigParserTest extends TestCase
 
     public function test_trig_syntax_blank_label()
     {
-        $this->markTestSkipped("Add proper support for blank label.");
         $content = $this->loadFixture("w3c-test-suite/trig-syntax-blank-label.trig");
         $p = new TrigParser();
 
@@ -5019,6 +5132,19 @@ class TrigParserTest extends TestCase
         foreach ($p->parse($content) as $token => $values) {
             $actual[][$token] = $values;
         }
+
+        $this->assertEquals([
+            [ Parser::PREFIX => [ '', 'http://example/' ]],
+            [ Parser::SUBJECT_BLANK_NODE => [ '_:b0' ]],
+            [ Parser::PREDICATE => [ 'http://example/p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://example/o' ]],
+            [ Parser::SUBJECT_BLANK_NODE => [ '_:b1' ]],
+            [ Parser::PREDICATE => [ 'http://example/p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://example/o' ]],
+            [ Parser::SUBJECT_BLANK_NODE => [ '_:b2' ]],
+            [ Parser::PREDICATE => [ 'http://example/p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://example/o' ]],
+        ],$actual);
 
     }
 
@@ -5099,7 +5225,6 @@ class TrigParserTest extends TestCase
 
     public function test_trig_syntax_bnode_06()
     {
-        $this->markTestSkipped("Add proper support for blank label.");
         $content = $this->loadFixture("w3c-test-suite/trig-syntax-bnode-06.trig");
         $p = new TrigParser();
 
@@ -5107,11 +5232,17 @@ class TrigParserTest extends TestCase
         foreach ($p->parse($content) as $token => $values) {
             $actual[][$token] = $values;
         }
+
+        $this->assertEquals([
+            [ Parser::PREFIX => [ '', 'http://example/' ]],
+            [ Parser::SUBJECT_BLANK_NODE => [ '_:b0' ]],
+            [ Parser::PREDICATE => [ 'http://example/p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://example/o' ]],
+        ],$actual);
     }
 
     public function test_trig_syntax_bnode_07()
     {
-        $this->markTestSkipped("Add proper support for blank label.");
         $content = $this->loadFixture("w3c-test-suite/trig-syntax-bnode-07.trig");
         $p = new TrigParser();
 
@@ -5119,6 +5250,17 @@ class TrigParserTest extends TestCase
         foreach ($p->parse($content) as $token => $values) {
             $actual[][$token] = $values;
         }
+
+        $this->assertEquals([
+            [ Parser::PREFIX => [ '', 'http://example/' ]],
+            [ Parser::SUBJECT => [ 'http://example/s' ]],
+            [ Parser::PREDICATE => [ 'http://example/p' ]],
+            [ Parser::OBJECT_BLANK_NODE => [ '_:b0' ]],
+            [ Parser::SUBJECT_BLANK_NODE => [ '_:b0' ]],
+            [ Parser::PREDICATE => [ 'http://example/p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://example/o' ]],
+        ],$actual);
+
     }
 
     public function test_trig_syntax_bnode_08()
