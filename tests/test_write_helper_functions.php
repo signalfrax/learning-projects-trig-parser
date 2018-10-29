@@ -11,6 +11,9 @@ function write_asserts(array $actual): string {
         "Parser::OBJECT_WITH_DATATYPE",
         "Parser::OBJECT_IRI",
         "Parser::BASE",
+        "Parser::SUBJECT_BLANK_NODE",
+        "Parser::OBJECT_BLANK_NODE",
+        "Parser::GRAPH_BLANK_NODE",
     ];
 
     $string = array_reduce($actual, function($carry, $element) use ($codes) {

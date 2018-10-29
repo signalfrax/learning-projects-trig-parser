@@ -22,6 +22,7 @@ interface Parser
     const BASE = 8;
     const SUBJECT_BLANK_NODE = 9;
     const OBJECT_BLANK_NODE = 10;
+    const GRAPH_BLANK_NODE = 11;
 
     /**
      * This method must 'yield' and array of the following

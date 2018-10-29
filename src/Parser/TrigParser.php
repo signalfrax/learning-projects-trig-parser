@@ -18,24 +18,28 @@ use RDFPhp\Namespaces;
  */
 class TrigParser implements Parser
 {
+    const IRI_NODE = 0;
+    const BLANK_NODE = 1;
+
     /** @var string */
-    private $message;
+    protected $message;
 
     /** @var Lexer */
-    private $lexer;
+    protected $lexer;
 
     /** @var Parser */
-    private $parser;
+    protected $parser;
 
-    private $rules = [];
+    protected $actions = [];
 
-    private $resolvedPrefixedIri = [];
-    private $prefixes = [];
-    private $base = [];
-    private $string = null;
+    protected $resolvedPrefixedIri = [];
+    protected $prefixes = [];
+    protected $base = [];
+    protected $string = null;
 
-    // Iris is a stack which hold the iri for the next RDF terms to be processed.
-    private $iris = [];
+    // Nodes is a stack which hold the iri /blanks for the next RDF terms to be processed.
+    protected $nodes = [];
+    protected $blankNodeCounter = 0;
 
     const WS = "\x20|\x9|\xD|\xA";
     const HEX = "[0-9]|[a-f]|[A-F]";
@@ -105,21 +109,21 @@ class TrigParser implements Parser
                     break;
                 case ParleParser::ACTION_REDUCE:
                     switch ($this->parser->reduceId) {
-                        case $this->rules['sparqlPrefix']:
-                        case $this->rules['prefixID']:
+                        case $this->actions['sparqlPrefix']:
+                        case $this->actions['prefixID']:
                             $prefix = trim($this->parser->sigil(1), ':');
                             $iri = $this->unescapeNumeric(trim($this->parser->sigil(2), '<>'));
                             $this->prefixes[$prefix] = $iri;
                             yield Parser::PREFIX => [ $prefix, $iri ];
                             break;
-                        case $this->rules['base']:
-                        case $this->rules['sparqlBase']:
+                        case $this->actions['base']:
+                        case $this->actions['sparqlBase']:
                             $trimmed = trim($this->parser->sigil(1), '<>');
                             $result = $this->unescapeNumeric($trimmed);
                             $this->base = parse_url(resolve_relative_iri($this->base, $result));
                             yield Parser::BASE => [ $trimmed ];
                             break;
-                        case $this->rules['iriPrefixedName']:
+                        case $this->actions['iriPrefixedName']:
                             $iri = $this->parser->sigil(0);
                             // TODO: Refactor once we implement proper support for blank nodes.
                             if ( ( FALSE === strpos($iri, '_:') || 0 != strpos($iri, '_:') ) && !isset($this->resolvedPrefixedIri[$iri])) {
@@ -129,94 +133,96 @@ class TrigParser implements Parser
                                     throw new ParserException("Invalid RDF document. Cannot find prefix [{$prefix}:]");
                                 }
                                 $this->resolvedPrefixedIri[$iri] = "{$this->prefixes[$prefix]}$localName";
-                                $this->iris[] = $this->resolvedPrefixedIri[$iri];
+                                $this->nodes[] = [ self::IRI_NODE => $this->resolvedPrefixedIri[$iri] ];
                             } else if (isset($this->resolvedPrefixedIri[$iri])) {
-                                $this->iris[] = $this->resolvedPrefixedIri[$iri];
+                                $this->nodes[] = [ self::IRI_NODE => $this->resolvedPrefixedIri[$iri] ];
                             } else {
-                                $this->iris[] = $iri;
+                                $this->nodes[] = [ self::IRI_NODE => $iri ];
                             }
                             break;
-                        case $this->rules['iriRef']:
+                        case $this->actions['iriRef']:
                             $escaped = $this->unescapeNumeric(trim($this->parser->sigil(0), '<>'));
                             if (preg_match('/[<>\x00-\x20\{\}"\|\^`\\\\]+/', $escaped)) {
                                 throw new ParserException("Invalid IRIREF [{$this->parser->sigil(0)}]");
                             }
-                            $this->iris[] = resolve_relative_iri($this->base, $escaped);
+                            $this->nodes[] = [ self::IRI_NODE => resolve_relative_iri($this->base, $escaped) ];
                             break;
-                        case $this->rules['graph']:
-                        case $this->rules['wrappedGraph']:
-                            yield Parser::GRAPH => [ array_pop($this->iris) ];
+                        case $this->actions['BlankNodeAnon']:
+                            $this->nodes[] = [ self::BLANK_NODE => $this->generateBlankNode($this->blankNodeCounter++) ];
                             break;
-                        case $this->rules['subjectWithoutGraph']:
-                        case $this->rules['subjectIri']:
-                            yield Parser::SUBJECT => [ array_pop($this->iris)];
+                        case $this->actions['graph']:
+                        case $this->actions['wrappedGraph']:
+                            $node = array_pop($this->nodes);
+                            (self::IRI_NODE == key($node)) ? yield Parser::GRAPH => [  current($node) ] : yield Parser::GRAPH_BLANK_NODE => [ current($node) ];
                             break;
-                        case $this->rules['subjectBlank']:
-                            yield Parser::SUBJECT => [ $this->parser->sigil(0) ];
+                        case $this->actions['subjectWithoutGraph']:
+                        case $this->actions['subjectBlank']:
+                        case $this->actions['subjectIri']:
+                            $node = array_pop($this->nodes);
+                            (self::IRI_NODE == key($node)) ? yield Parser::SUBJECT => [ current($node) ] : yield Parser::SUBJECT_BLANK_NODE => [ current($node) ];
                             break;
-                        case $this->rules['predicateIri']:
-                            yield Parser::PREDICATE => [ array_pop($this->iris) ];
+                        case $this->actions['predicateIri']:
+                            yield Parser::PREDICATE => [ current(array_pop($this->nodes)) ];
                             break;
-                        case $this->rules['predicateA']:
+                        case $this->actions['predicateA']:
                             yield Parser::PREDICATE => [ Namespaces::RDF_TYPE ];
                             break;
-                        case $this->rules['objectBlank']:
-                        case $this->rules['objectBlankNode']:
-                        case $this->rules['objectBoolean']:
+                        case $this->actions['objectBlank']:
+                        case $this->actions['objectBlankNode']:
+                        case $this->actions['objectIri']:
+                            $node = array_pop($this->nodes);
+                            (self::IRI_NODE == key($node)) ? yield Parser::OBJECT_IRI => [ current($node) ] : yield Parser::OBJECT_BLANK_NODE => [ current($node) ];
+                            break;
+                        case $this->actions['objectBoolean']:
                             yield Parser::OBJECT_WITH_DATATYPE => [
                                 trim($this->parser->sigil(0), '"\''),
                                 Namespaces::XSD_BOOLEAN,
                             ];
                             break;
-                        case $this->rules['objectInteger']:
+                        case $this->actions['objectInteger']:
                             yield Parser::OBJECT_WITH_DATATYPE => [
                                 trim($this->parser->sigil(0), '"\''),
                                 Namespaces::XSD_INTEGER,
                             ];
                             break;
-                        case $this->rules['objectDecimal']:
+                        case $this->actions['objectDecimal']:
                             yield Parser::OBJECT_WITH_DATATYPE => [
                                 trim($this->parser->sigil(0), '"\''),
                                 Namespaces::XSD_DECIMAL,
                             ];
                             break;
-                        case $this->rules['objectDouble']:
+                        case $this->actions['objectDouble']:
                             yield Parser::OBJECT_WITH_DATATYPE => [
                                 trim($this->parser->sigil(0), '"\''),
                                 Namespaces::XSD_DOUBLE,
                             ];
                             break;
-                        case $this->rules['objectString']:
+                        case $this->actions['objectString']:
                             yield Parser::OBJECT_WITH_DATATYPE => [
                                 $this->string,
                                 Namespaces::XSD_STRING,
                             ];
                             break;
-                        case $this->rules['objectIri']:
-                            yield Parser::OBJECT_IRI => [
-                                array_pop($this->iris),
-                            ];
-                            break;
-                        case $this->rules['objectStringIri']:
+                        case $this->actions['objectStringIri']:
                             yield Parser::OBJECT_WITH_DATATYPE => [
                                 $this->string,
-                                array_pop($this->iris),
+                                current(array_pop($this->nodes)),
                             ];
                             break;
-                        case $this->rules['objectStringLang']:
+                        case $this->actions['objectStringLang']:
                             yield Parser::OBJECT_WITH_LANG_TAG => [
                                 $this->string,
                                 Namespaces::RDF_LANG_STRING,
                                 $this->parser->sigil(1),
                             ];
                             break;
-                        case $this->rules['stringLiteralQuote']:
-                        case $this->rules['stringLiteralSingleQuote']:
+                        case $this->actions['stringLiteralQuote']:
+                        case $this->actions['stringLiteralSingleQuote']:
                             $result = $this->parser->sigil(0);
                             $this->string = $this->unescapeString($this->unescapeNumeric(substr($result, 1, strlen($result) - 2)));
                             break;
-                        case $this->rules['stringLiteralLongQuote']:
-                        case $this->rules['stringLiteralLongSingleQuote']:
+                        case $this->actions['stringLiteralLongQuote']:
+                        case $this->actions['stringLiteralLongSingleQuote']:
                             $result = $this->parser->sigil(0);
                             $this->string = $this->unescapeString($this->unescapeNumeric(substr($result, 3, strlen($result) - 6)));
                             break;
@@ -261,6 +267,11 @@ HEREDOC;
     protected function unescapeReservedCharacters(string $token): string
     {
         return preg_replace("/\\\\([~\.\-\!\$&'\(\)\*\+,;\=\/\?#@%_])/", '$1', $token);
+    }
+
+    protected function generateBlankNode(int $counter): string
+    {
+        return "_:b$counter";
     }
 
     protected function buildTokens()
@@ -321,9 +332,9 @@ HEREDOC;
         $this->parser->push('block', 'triplesOrGraph');
         $this->parser->push('block', 'wrappedGraph');
         $this->parser->push('block', 'triples2');
-        $this->rules['graph'] = $this->parser->push('block', "'GRAPH' labelOrSubject wrappedGraph");
-        $this->rules['subjectWithoutGraph'] = $this->parser->push('triplesOrGraph', "labelOrSubject predicateObjectList '.'");
-        $this->rules['wrappedGraph'] = $this->parser->push('triplesOrGraph', 'labelOrSubject wrappedGraph');
+        $this->actions['graph'] = $this->parser->push('block', "'GRAPH' labelOrSubject wrappedGraph");
+        $this->actions['subjectWithoutGraph'] = $this->parser->push('triplesOrGraph', "labelOrSubject predicateObjectList '.'");
+        $this->actions['wrappedGraph'] = $this->parser->push('triplesOrGraph', 'labelOrSubject wrappedGraph');
         $this->parser->push('wrappedGraph', " '{' '}' ");
         $this->parser->push('wrappedGraph', " '{' triplesBlock '}' ");
         $this->parser->push('triplesBlock', "triples");
@@ -335,8 +346,8 @@ HEREDOC;
         $this->parser->push('triples2', "blankNodePropertyList '.'");
         $this->parser->push('triples2', "blankNodePropertyList predicateObjectList '.'");
         $this->parser->push('triples2', "collection predicateObjectList '.'");
-        $this->rules['subjectIri'] = $this->parser->push('subject', 'iri');
-        $this->rules['subjectBlank'] = $this->parser->push('subject', 'blank');
+        $this->actions['subjectIri'] = $this->parser->push('subject', 'iri');
+        $this->actions['subjectBlank'] = $this->parser->push('subject', 'blank');
         $this->parser->push('labelOrSubject', 'iri');
         $this->parser->push('labelOrSubject', 'BlankNode');
         $this->parser->push('predicateObjectList', "predicateObjectList ';' predicateObjectList");
@@ -344,14 +355,14 @@ HEREDOC;
         $this->parser->push('predicateObjectList', 'verb objectList');
         $this->parser->push('objectList', "objectList ',' objectList");
         $this->parser->push('objectList', 'object');
-        $this->rules['objectIri'] = $this->parser->push('object', 'iri');
+        $this->actions['objectIri'] = $this->parser->push('object', 'iri');
         $this->parser->push('object', 'literal');
-        $this->rules['objectBlank'] = $this->parser->push('object', 'blank');
-        $this->rules['objectBlankNode'] = $this->parser->push('object', 'blankNodePropertyList');
+        $this->actions['objectBlank'] = $this->parser->push('object', 'blank');
+        $this->actions['objectBlankNode'] = $this->parser->push('object', 'blankNodePropertyList');
         $this->parser->push('blankNodePropertyList', " '[' predicateObjectList ']' ");
         $this->parser->push('verb', 'predicate');
-        $this->rules['predicateA'] = $this->parser->push('verb', "'a'");
-        $this->rules['predicateIri'] = $this->parser->push('predicate', 'iri');
+        $this->actions['predicateA'] = $this->parser->push('verb', "'a'");
+        $this->actions['predicateIri'] = $this->parser->push('predicate', 'iri');
         $this->parser->push('literal', 'BooleanLiteral');
         $this->parser->push('literal', 'NumericalLiteral');
         $this->parser->push('literal', 'RDFLiteral');
@@ -362,26 +373,26 @@ HEREDOC;
         $this->parser->push('objects', 'objects object');
         $this->parser->push('objects', 'object');
         $this->parser->push('BlankNode', 'BLANK_NODE_LABEL');
-        $this->parser->push('BlankNode', 'ANON');
-        $this->rules['objectBoolean'] = $this->parser->push('BooleanLiteral', 'BOOLEAN');
-        $this->rules['objectInteger'] = $this->parser->push('NumericalLiteral', 'INTEGER');
-        $this->rules['objectDecimal'] = $this->parser->push('NumericalLiteral', 'DECIMAL');
-        $this->rules['objectDouble'] = $this->parser->push('NumericalLiteral', 'DOUBLE');
-        $this->rules['objectString'] = $this->parser->push('RDFLiteral', 'String');
-        $this->rules['objectStringLang'] = $this->parser->push('RDFLiteral', 'String LANGTAG');
-        $this->rules['objectStringIri'] = $this->parser->push('RDFLiteral', "String '^^' iri");
-        $this->rules['stringLiteralQuote'] = $this->parser->push('String', 'STRING_LITERAL_QUOTE');
-        $this->rules['stringLiteralSingleQuote'] = $this->parser->push('String', 'STRING_LITERAL_SINGLE_QUOTE');
-        $this->rules['stringLiteralLongQuote'] = $this->parser->push('String', 'STRING_LITERAL_LONG_QUOTE');
-        $this->rules['stringLiteralLongSingleQuote'] = $this->parser->push('String', 'STRING_LITERAL_LONG_SINGLE_QUOTE');
-        $this->rules['iriRef'] = $this->parser->push('iri', 'IRIREF');
-        $this->rules['iriPrefixedName'] = $this->parser->push('iri', 'PrefixedName');
+        $this->actions['BlankNodeAnon'] = $this->parser->push('BlankNode', 'ANON');
+        $this->actions['objectBoolean'] = $this->parser->push('BooleanLiteral', 'BOOLEAN');
+        $this->actions['objectInteger'] = $this->parser->push('NumericalLiteral', 'INTEGER');
+        $this->actions['objectDecimal'] = $this->parser->push('NumericalLiteral', 'DECIMAL');
+        $this->actions['objectDouble'] = $this->parser->push('NumericalLiteral', 'DOUBLE');
+        $this->actions['objectString'] = $this->parser->push('RDFLiteral', 'String');
+        $this->actions['objectStringLang'] = $this->parser->push('RDFLiteral', 'String LANGTAG');
+        $this->actions['objectStringIri'] = $this->parser->push('RDFLiteral', "String '^^' iri");
+        $this->actions['stringLiteralQuote'] = $this->parser->push('String', 'STRING_LITERAL_QUOTE');
+        $this->actions['stringLiteralSingleQuote'] = $this->parser->push('String', 'STRING_LITERAL_SINGLE_QUOTE');
+        $this->actions['stringLiteralLongQuote'] = $this->parser->push('String', 'STRING_LITERAL_LONG_QUOTE');
+        $this->actions['stringLiteralLongSingleQuote'] = $this->parser->push('String', 'STRING_LITERAL_LONG_SINGLE_QUOTE');
+        $this->actions['iriRef'] = $this->parser->push('iri', 'IRIREF');
+        $this->actions['iriPrefixedName'] = $this->parser->push('iri', 'PrefixedName');
         $this->parser->push('PrefixedName', 'PNAME_LN');
         $this->parser->push('PrefixedName', 'PNAME_NS');
-        $this->rules['prefixID'] = $this->parser->push('prefixID', "'@prefix' PNAME_NS IRIREF '.'");
-        $this->rules['sparqlPrefix'] = $this->parser->push('sparqlPrefix', "'PREFIX' PNAME_NS IRIREF");
-        $this->rules['base'] = $this->parser->push('base', "'@base' IRIREF '.'");
-        $this->rules['sparqlBase'] = $this->parser->push('sparqlBase', "'BASE' IRIREF");
+        $this->actions['prefixID'] = $this->parser->push('prefixID', "'@prefix' PNAME_NS IRIREF '.'");
+        $this->actions['sparqlPrefix'] = $this->parser->push('sparqlPrefix', "'PREFIX' PNAME_NS IRIREF");
+        $this->actions['base'] = $this->parser->push('base', "'@base' IRIREF '.'");
+        $this->actions['sparqlBase'] = $this->parser->push('sparqlBase', "'BASE' IRIREF");
     }
 
     protected function buildLexer()
