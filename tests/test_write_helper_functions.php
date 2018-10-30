@@ -14,10 +14,16 @@ function write_asserts(array $actual): string {
         "Parser::SUBJECT_BLANK_NODE",
         "Parser::OBJECT_BLANK_NODE",
         "Parser::GRAPH_BLANK_NODE",
+        "Parser::BLANK_NODE_PROPERTY_LIST_OPEN",
+        "Parser::BLANK_NODE_PROPERTY_LIST_CLOSE",
     ];
 
     $string = array_reduce($actual, function($carry, $element) use ($codes) {
-        $carry .= sprintf("[ %s => [ '%s' ]],\n", $codes[key($element)], implode(',', current($element)));
+        if (!empty(current($element))) {
+            $carry .= sprintf("[ %s => [ '%s' ]],\n", $codes[key($element)], implode(',', current($element)));
+        } else {
+            $carry .= sprintf("[ %s => null ],\n", $codes[key($element)]);
+        }
         return $carry;
     }, "");
     return sprintf("\$this->assertEquals([%s],\$actual);", $string);

@@ -42,6 +42,10 @@ class TrigParser implements Parser
     protected $blankNodeCounter = 0;
     protected $blankNodeMap = [];
 
+    protected $previousAction = null;
+    protected $blankNodePropListStartActions = [];
+    protected $openBrackets = [];
+
     const WS = "\x20|\x9|\xD|\xA";
     const HEX = "[0-9]|[a-f]|[A-F]";
     const PN_LOCAL_ESC = '\\\\(_|~|\.|-|!|\$|&|\\\'|\(|\)|\*|\+|,|;|=|\/|\?|#|@|%)';
@@ -84,6 +88,12 @@ class TrigParser implements Parser
         $this->buildRules();
         $this->parser->build();
         $this->buildLexer();
+
+        $this->blankNodePropListStartActions = [
+            $this->actions['predicateA'],
+            $this->actions['predicateIri'],
+        ];
+
     }
 
     /**
@@ -100,31 +110,40 @@ class TrigParser implements Parser
         do {
             switch ($this->parser->action) {
                 case ParleParser::ACTION_ERROR:
+
                     $error = $this->parser->errorInfo();
                     $token = !is_null($error->token) ? json_encode($error->token) : null;
                     throw new ParserException("Invalid RDF Trig format. [{$error->id}] [{$error->position}]\n$token\n. \n>>>>\n$message\n<<<<<\n");
                     break;
+
                 case ParleParser::ACTION_SHIFT:
                 case ParleParser::ACTION_GOTO:
                 case ParleParser::ACTION_ACCEPT:
                     break;
                 case ParleParser::ACTION_REDUCE:
+
                     switch ($this->parser->reduceId) {
+
                         case $this->actions['sparqlPrefix']:
                         case $this->actions['prefixID']:
+
                             $prefix = trim($this->parser->sigil(1), ':');
                             $iri = $this->unescapeNumeric(trim($this->parser->sigil(2), '<>'));
                             $this->prefixes[$prefix] = $iri;
                             yield Parser::PREFIX => [ $prefix, $iri ];
                             break;
+
                         case $this->actions['base']:
                         case $this->actions['sparqlBase']:
+
                             $trimmed = trim($this->parser->sigil(1), '<>');
                             $result = $this->unescapeNumeric($trimmed);
                             $this->base = parse_url(resolve_relative_iri($this->base, $result));
                             yield Parser::BASE => [ $trimmed ];
                             break;
+
                         case $this->actions['iriPrefixedName']:
+
                             $iri = $this->parser->sigil(0);
                             if (!isset($this->resolvedPrefixedIri[$iri])) {
                                 $prefix = substr($iri, 0, strpos($iri, ':'));
@@ -136,103 +155,158 @@ class TrigParser implements Parser
                             }
                             $this->nodes[] = [ self::IRI_NODE => $this->resolvedPrefixedIri[$iri] ];
                             break;
+
                         case $this->actions['iriRef']:
+
                             $escaped = $this->unescapeNumeric(trim($this->parser->sigil(0), '<>'));
                             if (preg_match('/[<>\x00-\x20\{\}"\|\^`\\\\]+/', $escaped)) {
                                 throw new ParserException("Invalid IRIREF [{$this->parser->sigil(0)}]");
                             }
                             $this->nodes[] = [ self::IRI_NODE => resolve_relative_iri($this->base, $escaped) ];
+
                             break;
+
                         case $this->actions['BlankNodeAnon']:
+
                             $this->nodes[] = [ self::BLANK_NODE => $this->generateBlankNode($this->blankNodeCounter++) ];
                             break;
+
                         case $this->actions['BlankNodeLabel']:
+
                             $blankLabel = $this->parser->sigil(0);
                             if (!isset($this->blankNodeMap[$blankLabel])) {
                                 $this->blankNodeMap[$blankLabel] = $this->generateBlankNode($this->blankNodeCounter++);
                             }
                             $this->nodes[] = [ self::BLANK_NODE => $this->blankNodeMap[$blankLabel] ];
                             break;
+
                         case $this->actions['graph']:
                         case $this->actions['wrappedGraph']:
+
                             $node = array_pop($this->nodes);
                             (self::IRI_NODE == key($node)) ? yield Parser::GRAPH => [  current($node) ] : yield Parser::GRAPH_BLANK_NODE => [ current($node) ];
                             break;
+
+                        case $this->actions['blankNodePropertyList']:
+
+                            yield Parser::SUBJECT_BLANK_NODE => [ $this->generateBlankNode($this->blankNodeCounter++) ];
+                            yield Parser::BLANK_NODE_PROPERTY_LIST_CLOSE => null;
+                            break;
+
                         case $this->actions['subjectWithoutGraph']:
                         case $this->actions['subjectBlank']:
                         case $this->actions['subjectIri']:
+
                             $node = array_pop($this->nodes);
                             (self::IRI_NODE == key($node)) ? yield Parser::SUBJECT => [ current($node) ] : yield Parser::SUBJECT_BLANK_NODE => [ current($node) ];
+                            $this->previousAction = $this->parser->reduceId;
                             break;
+
                         case $this->actions['predicateIri']:
-                            yield Parser::PREDICATE => [ current(array_pop($this->nodes)) ];
-                            break;
                         case $this->actions['predicateA']:
-                            yield Parser::PREDICATE => [ Namespaces::RDF_TYPE ];
+
+                            // For blankNodePropertyList we need to not only check for open brackets but also check if it's preceded by a predicate or none if it's a subject.
+                            if (!empty($this->openBrackets) && (in_array($this->previousAction, $this->blankNodePropListStartActions) || is_null($this->previousAction)) ) {
+                                array_pop($this->openBrackets);
+                                yield Parser::BLANK_NODE_PROPERTY_LIST_OPEN => null;
+                            }
+
+                            $this->previousAction = $this->parser->reduceId;
+                            yield Parser::PREDICATE => [ ($this->parser->reduceId == $this->actions['predicateIri']) ? current(array_pop($this->nodes)) : Namespaces::RDF_TYPE ];
+
                             break;
+
                         case $this->actions['objectBlank']:
-                        case $this->actions['objectBlankNode']:
                         case $this->actions['objectIri']:
+
                             $node = array_pop($this->nodes);
                             (self::IRI_NODE == key($node)) ? yield Parser::OBJECT_IRI => [ current($node) ] : yield Parser::OBJECT_BLANK_NODE => [ current($node) ];
                             break;
+
                         case $this->actions['objectBoolean']:
+
                             yield Parser::OBJECT_WITH_DATATYPE => [
                                 trim($this->parser->sigil(0), '"\''),
                                 Namespaces::XSD_BOOLEAN,
                             ];
+
                             break;
                         case $this->actions['objectInteger']:
+
                             yield Parser::OBJECT_WITH_DATATYPE => [
                                 trim($this->parser->sigil(0), '"\''),
                                 Namespaces::XSD_INTEGER,
                             ];
                             break;
+
                         case $this->actions['objectDecimal']:
+
                             yield Parser::OBJECT_WITH_DATATYPE => [
                                 trim($this->parser->sigil(0), '"\''),
                                 Namespaces::XSD_DECIMAL,
                             ];
                             break;
+
                         case $this->actions['objectDouble']:
+
                             yield Parser::OBJECT_WITH_DATATYPE => [
                                 trim($this->parser->sigil(0), '"\''),
                                 Namespaces::XSD_DOUBLE,
                             ];
                             break;
+
                         case $this->actions['objectString']:
+
                             yield Parser::OBJECT_WITH_DATATYPE => [
                                 $this->string,
                                 Namespaces::XSD_STRING,
                             ];
                             break;
+
                         case $this->actions['objectStringIri']:
+
                             yield Parser::OBJECT_WITH_DATATYPE => [
                                 $this->string,
                                 current(array_pop($this->nodes)),
                             ];
                             break;
+
                         case $this->actions['objectStringLang']:
+
                             yield Parser::OBJECT_WITH_LANG_TAG => [
                                 $this->string,
                                 Namespaces::RDF_LANG_STRING,
                                 $this->parser->sigil(1),
                             ];
                             break;
+
                         case $this->actions['stringLiteralQuote']:
                         case $this->actions['stringLiteralSingleQuote']:
+
                             $result = $this->parser->sigil(0);
                             $this->string = $this->unescapeString($this->unescapeNumeric(substr($result, 1, strlen($result) - 2)));
                             break;
+
                         case $this->actions['stringLiteralLongQuote']:
                         case $this->actions['stringLiteralLongSingleQuote']:
+
                             $result = $this->parser->sigil(0);
                             $this->string = $this->unescapeString($this->unescapeNumeric(substr($result, 3, strlen($result) - 6)));
                             break;
+
+                        case $this->actions['trigDocDirective']:
+                        case $this->actions['trigDocBlock']:
+
+                            // Clean up before we process the next directive or block.
+                            $this->previousAction = null;
+                            $this->openBrackets = [];
+
                     }
                     break;
             }
+
             $this->parser->advance();
+
         } while (ParleParser::ACTION_ACCEPT != $this->parser->action);
     }
 
@@ -322,9 +396,8 @@ HEREDOC;
     protected function buildRules()
     {
         $this->parser->push('START', 'trigDoc');
-
-        $this->parser->push('trigDoc', 'trigDoc directive');
-        $this->parser->push('trigDoc', 'trigDoc block');
+        $this->actions['trigDocDirective'] = $this->parser->push('trigDoc', 'trigDoc directive');
+        $this->actions['trigDocBlock'] = $this->parser->push('trigDoc', 'trigDoc block');
         $this->parser->push('trigDoc', 'directive');
         $this->parser->push('trigDoc', 'block');
         $this->parser->push('trigDoc', '');
@@ -361,8 +434,8 @@ HEREDOC;
         $this->actions['objectIri'] = $this->parser->push('object', 'iri');
         $this->parser->push('object', 'literal');
         $this->actions['objectBlank'] = $this->parser->push('object', 'blank');
-        $this->actions['objectBlankNode'] = $this->parser->push('object', 'blankNodePropertyList');
-        $this->parser->push('blankNodePropertyList', " '[' predicateObjectList ']' ");
+        $this->parser->push('object', 'blankNodePropertyList');
+        $this->actions['blankNodePropertyList'] = $this->parser->push('blankNodePropertyList', " '[' predicateObjectList ']' ");
         $this->parser->push('verb', 'predicate');
         $this->actions['predicateA'] = $this->parser->push('verb', "'a'");
         $this->actions['predicateIri'] = $this->parser->push('predicate', 'iri');
@@ -440,6 +513,12 @@ HEREDOC;
         $this->lexer->push(self::NIL, $this->parser->tokenId('NIL'));
         $this->lexer->push(self::ANON, $this->parser->tokenId('ANON'));
         $this->lexer->push('[\s\n\t]+', Token::SKIP);
+
+        // Add open brackets.
+        $this->lexer->callout($this->parser->tokenId("'['"), function(){
+            $this->openBrackets[] = 1;
+        });
+
         $this->lexer->build();
     }
 }
