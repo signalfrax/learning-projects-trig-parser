@@ -15,6 +15,8 @@ use RDFPhp\Namespaces;
  * Class TrigParser
  * @package RDF\Parser
  *
+ * The parser is implemented using a Lexer and Scanner.
+ * For both Parle is used.
  */
 class TrigParser implements Parser
 {
@@ -36,15 +38,19 @@ class TrigParser implements Parser
     protected $prefixes = [];
     protected $base = [];
     protected $string = null;
+    protected $previousAction = null;
 
-    // Nodes is a stack which hold the iri /blanks for the next RDF terms to be processed.
+    // Nodes is a stack that holds iri references or blanks for the next RDF terms to be processed.
     protected $nodes = [];
+
+    // Instance variables for processing blank- nodes and property lists.
     protected $blankNodeCounter = 0;
     protected $blankNodeMap = [];
-
-    protected $previousAction = null;
     protected $blankNodePropListStartActions = [];
     protected $openBrackets = [];
+
+    // Instance variables for processing collections
+    protected $openParenthesis = [];
 
     const WS = "\x20|\x9|\xD|\xA";
     const HEX = "[0-9]|[a-f]|[A-F]";
@@ -127,6 +133,8 @@ class TrigParser implements Parser
                         case $this->actions['sparqlPrefix']:
                         case $this->actions['prefixID']:
 
+                            // Prefixes are added to a prefix map.
+                            // All unicode codes are unescaped before adding adding the prefix to the map.
                             $prefix = trim($this->parser->sigil(1), ':');
                             $iri = $this->unescapeNumeric(trim($this->parser->sigil(2), '<>'));
                             $this->prefixes[$prefix] = $iri;
@@ -136,6 +144,10 @@ class TrigParser implements Parser
                         case $this->actions['base']:
                         case $this->actions['sparqlBase']:
 
+                            // The base is used to resolve relative iri references.
+                            // Base directives are cascading meaning that a base itself, if relative, will be resolved
+                            // with a previous base.
+                            // If no bases are provided then the default base in this parser is used.
                             $trimmed = trim($this->parser->sigil(1), '<>');
                             $result = $this->unescapeNumeric($trimmed);
                             $this->base = parse_url(resolve_relative_iri($this->base, $result));
@@ -144,6 +156,9 @@ class TrigParser implements Parser
 
                         case $this->actions['iriPrefixedName']:
 
+                            // Prefixed iris need to be resolved according to the prefix directives.
+                            // All reserved characters need to be unescaped and the namespace of the prefix
+                            // prepended to the localname. e.g. xsd:integer -> http://www.w3.org/2001/XMLSchema#integer
                             $iri = $this->parser->sigil(0);
                             if (!isset($this->resolvedPrefixedIri[$iri])) {
                                 $prefix = substr($iri, 0, strpos($iri, ':'));
@@ -158,6 +173,7 @@ class TrigParser implements Parser
 
                         case $this->actions['iriRef']:
 
+                            // All iri references need to be unescaped, resolved and validated.
                             $escaped = $this->unescapeNumeric(trim($this->parser->sigil(0), '<>'));
                             if (preg_match('/[<>\x00-\x20\{\}"\|\^`\\\\]+/', $escaped)) {
                                 throw new ParserException("Invalid IRIREF [{$this->parser->sigil(0)}]");
@@ -168,11 +184,14 @@ class TrigParser implements Parser
 
                         case $this->actions['BlankNodeAnon']:
 
+                            // For each anonymous blank node a new blank node is generated.
                             $this->nodes[] = [ self::BLANK_NODE => $this->generateBlankNode($this->blankNodeCounter++) ];
                             break;
 
                         case $this->actions['BlankNodeLabel']:
 
+                            // For each blank node label a new blank node is generated added to a blank node map.
+                            // All occurrences of this labeled blank node are replaced by the generated blank node.
                             $blankLabel = $this->parser->sigil(0);
                             if (!isset($this->blankNodeMap[$blankLabel])) {
                                 $this->blankNodeMap[$blankLabel] = $this->generateBlankNode($this->blankNodeCounter++);
@@ -189,9 +208,17 @@ class TrigParser implements Parser
 
                         case $this->actions['blankNodePropertyList']:
 
+                            // Let the RDF decoder know that we are done with processing the current BlankNodePropertyList.
                             yield Parser::SUBJECT_BLANK_NODE => [ $this->generateBlankNode($this->blankNodeCounter++) ];
                             yield Parser::BLANK_NODE_PROPERTY_LIST_CLOSE => null;
                             break;
+
+                        case $this->actions['collectionEmpty']:
+
+                            $this->nodes[] = [ self::IRI_NODE => Namespaces::RDF_NIL ];
+                            break;
+
+                        case $this->actions['collectionObjects']:
 
                         case $this->actions['subjectWithoutGraph']:
                         case $this->actions['subjectBlank']:
@@ -205,7 +232,12 @@ class TrigParser implements Parser
                         case $this->actions['predicateIri']:
                         case $this->actions['predicateA']:
 
-                            // For blankNodePropertyList we need to not only check for open brackets but also check if it's preceded by a predicate or none if it's a subject.
+                            // BlankNodePropertyList can be in the subject or object position.
+                            // We trigger the processing of blank node property list (BNPL) by looking at the openBrackets and the previous action.
+                            // When the previous action is a predicate and we have an open bracket then the BNPL is in the object position.
+                            // When the previous action is none then the BNPL is in the subject position.
+                            // For both of these actions we yield a BLANK_NODE_PROPERTY_LIST_OPEN so that the RDF encoder knows which predicates and objects
+                            // to attach to the BNPL blank node.
                             if (!empty($this->openBrackets) && (in_array($this->previousAction, $this->blankNodePropListStartActions) || is_null($this->previousAction)) ) {
                                 array_pop($this->openBrackets);
                                 yield Parser::BLANK_NODE_PROPERTY_LIST_OPEN => null;
@@ -283,6 +315,7 @@ class TrigParser implements Parser
                         case $this->actions['stringLiteralQuote']:
                         case $this->actions['stringLiteralSingleQuote']:
 
+                            // String literals are trimmed of single/double quotes, unicodes and strings (\t\n\r\b) are escaped.
                             $result = $this->parser->sigil(0);
                             $this->string = $this->unescapeString($this->unescapeNumeric(substr($result, 1, strlen($result) - 2)));
                             break;
@@ -290,6 +323,7 @@ class TrigParser implements Parser
                         case $this->actions['stringLiteralLongQuote']:
                         case $this->actions['stringLiteralLongSingleQuote']:
 
+                            // String literals are trimmed of single/double quotes, unicodes and strings (\t\n\r\b) are escaped.
                             $result = $this->parser->sigil(0);
                             $this->string = $this->unescapeString($this->unescapeNumeric(substr($result, 3, strlen($result) - 6)));
                             break;
@@ -300,6 +334,7 @@ class TrigParser implements Parser
                             // Clean up before we process the next directive or block.
                             $this->previousAction = null;
                             $this->openBrackets = [];
+                            $this->openParenthesis = [];
 
                     }
                     break;
@@ -310,12 +345,22 @@ class TrigParser implements Parser
         } while (ParleParser::ACTION_ACCEPT != $this->parser->action);
     }
 
+    /**
+     * Unescape unicode characters.
+     *
+     * It's called numeric to keep it in line with the official name used by the W3C Trig Spec.
+     *
+     * @param string $token
+     * @return string
+     */
     protected function unescapeNumeric(string $token): string
     {
         return preg_replace_callback([
             '/\\\\u([0-9A-Fa-f]{4,4})/',
             '/\\\\U([0-9A-Fa-f]{8,8})/',
         ], function($matches) {
+
+            // This is the only way to programmatically generate a unicode string.
             $code = <<<HEREDOC
                 return sprintf("%s", "\\u{{$matches[1]}}");
 HEREDOC;
@@ -323,6 +368,12 @@ HEREDOC;
         } , $token);
     }
 
+    /**
+     * Unescape string escapes. :)
+     *
+     * @param string $token
+     * @return string
+     */
     protected function unescapeString(string $token): string
     {
         return preg_replace_callback('/\\\\([tbnrf"\'\\\\])/', function($matches) {
@@ -333,6 +384,8 @@ HEREDOC;
             } else if ('b' == $matches[1]) {
                 return "\x8";
             } else {
+
+                // The only way to programmatically generate unescaped strings.
                 $code = <<<HEREDOC
                 return sprintf("%s", "\\{$matches[1]}");
 HEREDOC;
@@ -341,6 +394,12 @@ HEREDOC;
         } , $token);
     }
 
+    /**
+     * Unescape reserved characters for the local name of a prefixed name.
+     *
+     * @param string $token
+     * @return string
+     */
     protected function unescapeReservedCharacters(string $token): string
     {
         return preg_replace("/\\\\([~\.\-\!\$&'\(\)\*\+,;\=\/\?#@%_])/", '$1', $token);
@@ -444,8 +503,8 @@ HEREDOC;
         $this->parser->push('literal', 'RDFLiteral');
         $this->parser->push('blank', 'BlankNode');
         $this->parser->push('blank', 'collection');
-        $this->parser->push('collection', " '()' ");
-        $this->parser->push('collection', "'(' objects ')'");
+        $this->actions['collectionEmpty'] = $this->parser->push('collection', " '()' ");
+        $this->actions['collectionObjects'] = $this->parser->push('collection', "'(' objects ')'");
         $this->parser->push('objects', 'objects object');
         $this->parser->push('objects', 'object');
         $this->actions['BlankNodeLabel'] = $this->parser->push('BlankNode', 'BLANK_NODE_LABEL');
@@ -514,9 +573,14 @@ HEREDOC;
         $this->lexer->push(self::ANON, $this->parser->tokenId('ANON'));
         $this->lexer->push('[\s\n\t]+', Token::SKIP);
 
-        // Add open brackets.
+        // Signal blank node property list
         $this->lexer->callout($this->parser->tokenId("'['"), function(){
             $this->openBrackets[] = 1;
+        });
+
+        // Signal collection list
+        $this->lexer->callout($this->parser->tokenId("'('"), function(){
+            $this->openParenthesis[] = 1;
         });
 
         $this->lexer->build();

@@ -420,7 +420,24 @@ class TrigParserTest extends TestCase
 
     public function test_empty_collection()
     {
-        $this->markTestIncomplete("Add proper support for blanks and collection");
+        $content = $this->loadFixture("w3c-test-suite/empty_collection.trig");
+        $p = new TrigParser();
+
+        $actual = [];
+        foreach ($p->parse($content) as $token => $values) {
+            $actual[][$token] = $values;
+        }
+
+        $this->assertEquals([
+            [ Parser::SUBJECT => [ 'http://a.example/s' ]],
+            [ Parser::PREDICATE => [ 'http://a.example/p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://www.w3.org/1999/02/22-rdf-syntax-ns#nil' ]],
+            [ Parser::SUBJECT => [ 'http://a.example/s' ]],
+            [ Parser::PREDICATE => [ 'http://a.example/p' ]],
+            [ Parser::OBJECT_IRI => [ 'http://www.w3.org/1999/02/22-rdf-syntax-ns#nil' ]],
+            [ Parser::GRAPH => [ 'http://example/graph' ]],
+        ],$actual);
+
     }
 
     public function test_first()
